@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f7f7f7"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_centre_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_my_mes_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@color/color_ffffff"
+                android:layout_marginTop="@dimen/space_10"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="充值特惠"
+                    android:textColor="#1B1B1B" />
+
+
+
+                <TextView
+                    android:id="@+id/tvPreferenceMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/space_30"
+                    tools:text="查看转单状态"
+                    android:textColor="@color/color_000000" />
+                <ImageView
+                    android:id="@+id/tvPreferenceImg"
+                    android:layout_width="@dimen/space_15"
+                    android:layout_height="@dimen/space_15"
+                    android:src="@mipmap/ic_right_jt"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_10"
+                    />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff"
+                android:padding="@dimen/space_10"
+                android:text="充值金额"
+                android:layout_marginTop="@dimen/space_10"
+                android:textColor="@color/color_000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/space_10"
+                android:paddingBottom="@dimen/space_10"
+                android:paddingTop="@dimen/space_30"
+                android:paddingLeft="@dimen/space_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/color_000000" />
+
+                <EditText
+                    android:id="@+id/edtInputMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@color/color_000000"
+                    android:layout_marginLeft="@dimen/space_10"
+                    tools:text="1000000000000000001111111111111111111111111111110000000000000000000000" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/space_10"
+                android:paddingRight="@dimen/space_10"
+                android:paddingBottom="@dimen/space_10"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_eeeeee"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_10"
+                    android:text="最多可充值10000.00元"
+                    android:layout_marginTop="@dimen/space_5"/>
+
+            </LinearLayout>
+
+
+
+            <com.escort.carriage.android.ui.view.list.FillListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_30"
+                android:layout_marginBottom="@dimen/space_30"
+                android:background="@color/color_ffffff"
+                android:padding="@dimen/space_10"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="@dimen/space_10"
+                android:listSelector="@android:color/transparent" />
+
+
+            <TextView
+                android:id="@+id/tvToPlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/shape_login_btn_bg"
+                android:gravity="center"
+                android:text="确定充值"
+                android:textColor="@color/color_ffffff" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

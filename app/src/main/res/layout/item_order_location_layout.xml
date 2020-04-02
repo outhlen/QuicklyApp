@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ll_start_site"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="@dimen/space_15"
+            android:layout_height="@dimen/space_15"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/space_4"
+            android:src="@drawable/dot_0bc02d" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="出发地"
+            android:textColor="#1B1B1B" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvStartSite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="请选择出发地"
+            android:textColor="#868CA2"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="@dimen/space_15"
+            android:layout_height="@dimen/space_15"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_10"
+            android:src="@mipmap/ic_right_jt" />
+    </LinearLayout>
+</LinearLayout>

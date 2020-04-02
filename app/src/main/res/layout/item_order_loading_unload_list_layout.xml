@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_10">
+
+    <ImageView
+        android:id="@+id/ivItem"
+        android:layout_width="@dimen/space_17"
+        android:layout_height="@dimen/space_17"
+        android:layout_marginRight="@dimen/space_3"
+        android:scaleType="centerInside"
+        tools:src="@drawable/icon_carriage_money" />
+
+    <TextView
+        android:id="@+id/tvItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/color_000000"
+        tools:text="运费金额：" />
+
+</LinearLayout>

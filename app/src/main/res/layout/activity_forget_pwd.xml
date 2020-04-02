@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFF"
+    >
+   <include layout="@layout/status_toolbar"/>
+    <LinearLayout
+        android:layout_marginTop="58dp"
+        android:padding="38dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:textColor="@color/color00"
+            android:textSize="22sp"
+            android:text="找回密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!--用户名-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_marginTop="58dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tv_user_name_title"
+                    android:text="     +86"
+                    android:textColor="#141414"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:inputType="phone"
+                    android:background="@null"
+                    android:id="@+id/etUserName"
+                    android:maxLength="11"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_user_name_title"
+                    android:hint="请输入手机号"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+            <View
+                android:layout_marginTop="8dp"
+                android:background="#ffededed"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"/>
+        </LinearLayout>
+
+        <!--验证码-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_marginTop="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tv_pwd_title"
+                    android:text="验证码"
+                    android:visibility="invisible"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:background="@null"
+                    android:id="@+id/etSmsCode"
+                    android:inputType="number"
+                    android:layout_centerVertical="true"
+                    android:maxLength="6"
+                    android:layout_toRightOf="@id/tv_pwd_title"
+                    android:hint="请输入验证码"
+                    android:layout_toLeftOf="@id/tvGetCheckCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tvGetCheckCode"
+                    android:text="获取验证码"
+                    android:textColor="#FFDD28"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+            <View
+                android:layout_marginTop="8dp"
+                android:background="#ffededed"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNext"
+            android:layout_marginTop="68dp"
+            android:gravity="center"
+            android:background="@drawable/shape_login_btn_bg"
+            android:textColor="@color/color_ffffff"
+            android:text="确认，下一步"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvLoginError"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录遇到问题？"
+            android:textColor="#ff999999"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

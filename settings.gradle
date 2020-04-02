@@ -1,0 +1,2 @@
+include ':app', ':basics', ':niceimageview', ':tripartiteLib', ':passlibrary'
+rootProject.name='My Application'

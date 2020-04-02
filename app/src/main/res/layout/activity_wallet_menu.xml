@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_centre_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f7f7f7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff">
+
+                <LinearLayout
+                    android:id="@+id/llMyMoneyGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space_10"
+                    android:background="@drawable/icon_wallet_menu_top"
+                    android:orientation="vertical"
+                    android:padding="@dimen/space_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_10"
+                        android:layout_marginTop="@dimen/space_15"
+                        android:text="总资产(元)"
+                        android:textColor="@color/color_ffffff" />
+
+                    <TextView
+                        android:id="@+id/tvMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_10"
+                        android:layout_marginTop="@dimen/space_15"
+                        android:layout_marginBottom="@dimen/space_15"
+                        android:singleLine="true"
+                        android:textColor="@color/color_ffffff"
+                        android:textSize="@dimen/text_size_18"
+                        android:textStyle="bold"
+                        tools:text="测试" />
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_10"
+                android:background="@color/color_ffffff"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/llBankNumGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/space_35"
+                        android:layout_height="@dimen/space_35"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icon_wallet_menu_bank" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_000000"
+                        android:text="银行卡" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/wallet_menu_coupon_group"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/space_40"
+                    android:layout_marginRight="@dimen/space_40"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/space_40"
+                        android:layout_height="@dimen/space_40"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icon_wallet_menu_coupon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_000000"
+                        android:text="优惠卷" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/wallet_menu_recharge_group"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/space_40"
+                        android:layout_height="@dimen/space_40"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icon_wallet_menu_recharge" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_000000"
+                        android:text="特惠充值" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_wallet_menu_discounts"
+                android:layout_width="match_parent"
+                android:layout_height="126dp"
+
+                android:padding="@dimen/space_10"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_wallet_menu_discounts"
+                />
+            <LinearLayout
+                android:id="@+id/wallet_menu_purse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_5"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_wallet_menu_purse" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="押金记录"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看转单状态"
+                    android:textColor="#868CA2" />
+                <ImageView
+                    android:layout_width="@dimen/space_15"
+                    android:layout_height="@dimen/space_15"
+                    android:src="@mipmap/ic_right_jt"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_10"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wallet_menu_serve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_wallet_menu_serve" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="信息服务记录"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看转单状态"
+                    android:textColor="#868CA2" />
+                <ImageView
+                    android:layout_width="@dimen/space_15"
+                    android:layout_height="@dimen/space_15"
+                    android:src="@mipmap/ic_right_jt"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_10"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wallet_menu_car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_1"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_wallet_menu_car" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="运费记录"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看转单状态"
+                    android:textColor="#868CA2" />
+                <ImageView
+                    android:layout_width="@dimen/space_15"
+                    android:layout_height="@dimen/space_15"
+                    android:src="@mipmap/ic_right_jt"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_10"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/wallet_menu_bonus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_wallet_menu_bonus" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="奖金记录"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看转单状态"
+                    android:textColor="#868CA2" />
+                <ImageView
+                    android:layout_width="@dimen/space_15"
+                    android:layout_height="@dimen/space_15"
+                    android:src="@mipmap/ic_right_jt"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_10"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wallet_menu_performance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_1"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_wallet_menu_performance" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="业绩记录"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看转单状态"
+                    android:textColor="#868CA2" />
+                <ImageView
+                    android:layout_width="@dimen/space_15"
+                    android:layout_height="@dimen/space_15"
+                    android:src="@mipmap/ic_right_jt"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_10"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

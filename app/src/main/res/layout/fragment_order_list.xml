@@ -1,0 +1,107 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_10"
+        android:paddingRight="@dimen/space_10"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.escort.carriage.android.ui.view.text.DrawableTextView
+                android:id="@+id/tvItem01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/space_10"
+                android:paddingTop="@dimen/space_10"
+                android:text="出发地"
+                android:drawablePadding="@dimen/space_5"
+                app:dt_right_drawable="@mipmap/home_top_jt"
+                app:dt_right_height="5dp"
+                app:dt_right_width="8.5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.escort.carriage.android.ui.view.text.DrawableTextView
+                android:id="@+id/tvItem02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/space_10"
+                android:paddingTop="@dimen/space_10"
+                android:text="目的地"
+                android:drawablePadding="@dimen/space_5"
+                app:dt_right_drawable="@mipmap/home_top_jt"
+                app:dt_right_height="5dp"
+                app:dt_right_width="8.5dp" />
+
+        </LinearLayout>
+        <!--app:dt_right_drawable="@mipmap/home_bottom_jt"-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <com.escort.carriage.android.ui.view.text.DrawableTextView
+                android:id="@+id/tvItem04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/space_10"
+                android:paddingTop="@dimen/space_10"
+                android:text="条件筛选  "
+                app:dt_right_drawable="@mipmap/home_top_jt"
+                app:dt_right_height="5dp"
+                app:dt_right_width="8.5dp" />
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/rl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <!--    <include layout="@layout/include_error" />
+
+        <include layout="@layout/include_empty" />-->
+    <include layout="@layout/commen_empty" />
+</LinearLayout>

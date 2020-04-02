@@ -1,0 +1,89 @@
+ext {
+    android = [
+            applicationId    : "com.escort.carriage.android",
+            compileSdkVersion: 28,
+            minSdkVersion    : 21,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0.1"
+    ]
+
+    manifestPlaceholders = [
+
+            authorities      : "com.escort.carriage.android.fileprovider",
+            file_path        : "escort",
+
+
+            //服务器地址  测试站   正式站
+            serverHostKey    : "http://xiaoer.jinanluke.com:8182/api/",
+//            serverHostValue  : "http://192.168.8.43:8182/api/",
+            serverHostValue  : "http://xiaoer.jinanluke.com:8182/api/",
+            //分享地址  分为key 和 value   一般value为密文
+            webHostKey       : "",
+            webHostValue     : "",
+
+            JPUSH_PKGNAME : rootProject.ext.android.applicationId,
+            JPUSH_APPKEY : "9217944fa890f724bc68b99b", //JPush上注册的包名对应的appkey.  ccf7e4e79209d40db782b1a5
+            JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+
+
+            AMAP_KEY : "bd3372f61e0007cd1c953caaef760899", //高德地图.
+
+    ]
+
+
+    dependencies = [
+            "appcompat-v7"         : "com.android.support:appcompat-v7:28.0.0",
+            "design"               : 'com.android.support:design:28.+',
+            "test-runner"          : 'com.android.support.test:runner:1.0.2',
+            "test-espresso"        : 'com.android.support.test.espresso:espresso-core:3.0.2',
+            "junit"                : 'junit:junit:4.12',
+            //分包依赖
+            "multidex"             : 'com.android.support:multidex:1.0.3',
+            //okHttp网络请求
+            "okhttp"               : 'com.squareup.okhttp3:okhttp:3.10.0',
+            "ok-mockwebserver"     : 'com.squareup.okhttp3:mockwebserver:3.10.0',
+            //fastJson
+            "fastjson"             : 'com.alibaba:fastjson:1.2.62',
+            //eventbus事件总线
+            "eventbus"             : 'org.greenrobot:eventbus:3.1.1',
+            //Glide加载图片
+            "glide-annotations"    : 'com.android.support:support-annotations:28.0.0',//为了解决 glide 4.8 不支持 androidx的问题
+            "glide-okhttp3"        : 'com.github.bumptech.glide:okhttp3-integration:4.8.0',
+            "glide-compiler"       : 'com.github.bumptech.glide:compiler:4.8.0',
+            "glide"                : 'com.github.bumptech.glide:glide:4.8.0',
+            //gif
+            "gif-drawable"         : 'pl.droidsonroids.gif:android-gif-drawable:1.2.15',
+            //butterknife
+            "butterknife"          : 'com.jakewharton:butterknife:10.2.0',
+            "butterknife-compiler" : 'com.jakewharton:butterknife-compiler:10.2.0',
+            //图片裁剪
+            "ucrop"                : 'com.github.yalantis:ucrop:2.2.2',
+            //下拉刷新上拉加载
+            "smartRefreshLayout"   : 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0',
+            "smartRefreshHeader"   : 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0',//没有使用特殊Header，可以不加这行
+            //ViewPager指示器
+            "magicIndicator"       : 'com.github.hackware1993:MagicIndicator:1.5.0',
+            //轮播图
+            "banner"               : 'com.youth.banner:banner:1.4.10',
+            //鲁班压缩图片
+            "Luban"                : 'top.zibin:Luban:1.1.8',
+            //扫描
+            "zxing"                : 'com.google.zxing:core:3.3.3',
+
+
+
+            "okgo"                 : 'com.lzy.net:okgo:3.0.4',//OkGo 是对okHttp的封装
+            "okserver"             : 'com.lzy.net:okserver:2.0.5',//OkGo上传下载扩展库
+            "glide-transformations": 'jp.wasabeef:glide-transformations:3.1.1',//一个基于Glide的transformation库,拥有裁剪,着色,模糊,滤镜等多种转换效果
+            "roundedimageview"     : 'com.makeramen:roundedimageview:2.3.0', //带圆角，边框的的ImageView
+            "SVGAPlayer"           : 'com.github.yyued:SVGAPlayer-Android:2.4.0', //svga播放器
+            "qiniu-sdk"            : 'com.qiniu:qiniu-android-sdk:7.2.1',//七牛云存储
+            "tencent-cosxml"       : 'com.tencent.qcloud:cosxml:5.4.13',//腾讯云存储
+            "tencent-wechat-sdk"   : 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6',//微信sdk,支付登录分享
+            "tencent-bugly"        : 'com.tencent.bugly:crashreport:2.6.6',//腾讯bugly
+            "arouter"              : 'com.alibaba:arouter-api:1.4.1',//ARouter
+            "arouter-compiler"     : 'com.alibaba:arouter-compiler:1.2.2',
+    ]
+
+}

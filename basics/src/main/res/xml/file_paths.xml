@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path name="gsports" path="gsports"/>
+    <external-path name="temp" path="temp"/>
+    <external-path name="gsports_down" path="gsports/down"/>
+    <external-path name="gsports_temp" path="gsports/temp"/>
+    <external-path name="gsports_publishtemp" path="gsports/publishtemp"/>
+
+    <!--适配Q 后最新的文件地址-->
+    <external-files-path name="quruo_Download" path="Download" />
+    <external-files-path name="quruo_Pictures" path="Pictures" />
+    <external-files-path name="quruo_Documents" path="Documents" />
+    <external-files-path name="quruo_pdf" path="pdf" />
+</paths>
+
+<!--
+<files-path name="name" path="path" /> 对应getFilesDir()。
+<cache-path name="name" path="path" /> 对应getCacheDir()。
+<external-path name="name" path="path" /> 对应Environment.getExternalStorageDirectory()。
+<external-files-path name="name" path="path" /> 对应getExternalFilesDir()。
+<external-cache-path name="name" path="path" /> 对应getExternalCacheDir()。-->

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFF"
+    >
+
+    <include layout="@layout/status_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="58dp"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置密码完成注册"
+            android:textColor="@color/color00"
+            android:textSize="22sp" />
+
+        <!--设置密码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="58dp">
+
+                <TextView
+                    android:id="@+id/tv_user_name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:text="         设置密码"
+                    android:textColor="#141414" />
+
+                <EditText
+                    android:maxLength="10"
+                    android:textSize="16sp"
+                    android:inputType="textPassword"
+                    android:id="@+id/etPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_user_name_title"
+                    android:background="@null"
+                    android:hint="6-10位数字和字母组合" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="8dp"
+                android:background="#ffededed" />
+        </LinearLayout>
+
+        <!--密码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp">
+
+                <TextView
+                    android:textColor="#141414"
+                    android:id="@+id/tv_pwd_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:text="重新输入密码"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:maxLength="10"
+                    android:textSize="16sp"
+                    android:id="@+id/etPwd2"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_pwd_title"
+                    android:background="@null"
+                    android:hint="请再次输入密码,保持一致" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="8dp"
+                android:background="#ffededed" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvFinishRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:background="@drawable/shape_login_btn_bg"
+            android:gravity="center"
+            android:text="完成注册"
+            android:textColor="@color/color_ffffff" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="登录遇到问题？"
+            android:textColor="#ff999999" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.escort.carriage.android.ui.view.text.DrawableTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawableTextView"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:dt_right_drawable="@drawable/item_red_jh"
+    app:dt_right_width="12dp"
+    app:dt_right_height="12dp"
+    >
+
+</com.escort.carriage.android.ui.view.text.DrawableTextView>

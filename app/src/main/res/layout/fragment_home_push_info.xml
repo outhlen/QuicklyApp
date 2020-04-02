@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f7f7f7"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_20"
+            android:paddingBottom="@dimen/space_30"
+            android:background="@color/color_ffffff"
+            >
+
+            <TextView
+                android:id="@+id/mesPushTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="消息推送中"
+                android:textColor="@color/color_1285fd"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/space_10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mesPushTitle"
+                android:layout_alignLeft="@+id/mesPushTitle"
+                android:textSize="@dimen/text_size_10"
+                android:text="热门订单、竞价，打开推送好货不放过"/>
+
+            <ImageView
+                android:layout_width="@dimen/space_x76"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/space_30"
+                android:src="@drawable/icon_home_push_ht"
+                android:layout_marginTop="@dimen/space_10"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvExitPush"
+            android:layout_marginTop="-20dp"
+            android:gravity="center"
+            android:background="@drawable/shape_login_btn_bg"
+            android:textColor="@color/color_ffffff"
+            android:text="关闭接单"
+            android:layout_marginLeft="@dimen/space_50"
+            android:layout_marginRight="@dimen/space_50"
+            android:textSize="@dimen/text_size_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@color/color_ffffff"
+            android:layout_marginTop="@dimen/space_15"
+            android:padding="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="@dimen/text_size_16"
+                android:text="是否支持城市配送"
+                android:textColor="#1B1B1B" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="查看转单状态"
+                android:textColor="#868CA2" />
+            <Switch
+                android:id="@+id/ivCsps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginRight="@dimen/space_10"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/space_1"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="支持省级地区"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/tvSelectProvince"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="请选择配送省级地区"
+                    android:textColor="#868CA2" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/space_10"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/color_ffffff"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="支持市级地区"
+                    android:textColor="#1B1B1B" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/tvSelectCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="请选择配送市级地区"
+                    android:textColor="#868CA2" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/color_ffffff"
+            android:padding="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="@dimen/text_size_16"
+                android:text="是否匹配押金订单"
+                android:textColor="#1B1B1B" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="查看转单状态"
+                android:textColor="#868CA2" />
+            <Switch
+                android:id="@+id/ivYjInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginRight="@dimen/space_10"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:textSize="@dimen/text_size_16"
+            android:text="专线列表"
+            android:textColor="#1B1B1B"
+            android:background="@color/color_ffffff"
+            />
+        <com.escort.carriage.android.ui.view.list.FillListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10"
+            android:paddingBottom="@dimen/space_10"
+            />
+
+        <TextView
+            android:id="@+id/tvAddCircuit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="新增线路"
+            android:textColor="#0E7CFF"
+            android:background="@drawable/bg_home_add_xl"
+            android:layout_marginTop="@dimen/space_20"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginLeft="@dimen/space_30"
+            android:layout_marginRight="@dimen/space_30"
+            android:paddingTop="@dimen/space_3"
+            android:paddingBottom="@dimen/space_3"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

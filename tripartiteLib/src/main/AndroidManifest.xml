@@ -1,0 +1,30 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tripartitelib.android" >
+
+
+    <application>
+        <!-- 支付宝 支付 开始 -->
+
+        <activity
+            android:name=".alipay.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+
+        <!-- 支付宝 支付 结束 -->
+        <!-- 高德地图配置开始 -->
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="${AMAP_KEY}" />
+
+        <service android:name="com.amap.api.track.AMapTrackService" />
+        <service android:name="com.amap.api.location.APSService" />
+
+        <!-- 高德地图配置结束 -->
+
+    </application>
+
+
+</manifest>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_rectangle_b_c0000000_custom"
+    android:gravity="center"
+    android:alpha="60"
+    android:orientation="vertical"
+     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_rectangle_b_white_j_10_corners"
+        android:layout_margin="@dimen/space_x40"
+        android:paddingBottom="@dimen/space_x6"
+        android:paddingLeft="@dimen/space_x18"
+        android:paddingRight="@dimen/space_x18"
+        android:paddingTop="@dimen/space_x10"
+        >
+
+    <ImageView
+        android:id="@+id/mytoast_image"
+        android:layout_marginTop="@dimen/space_x15"
+        android:layout_marginBottom="@dimen/space_x15"
+        android:layout_width="@dimen/space_x55"
+        android:layout_height="@dimen/space_x55"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter"
+        />
+    <!--android:indeterminateDrawable="@drawable/progress_medium_nim"-->
+
+    <TextView
+        android:id="@+id/mytoast_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/space_y10"
+        android:gravity="center_horizontal"
+        android:text="@string/loading"
+        android:textSize="@dimen/text_size_16"
+        android:textColor="@android:color/black"
+        />
+    </LinearLayout>
+</LinearLayout>

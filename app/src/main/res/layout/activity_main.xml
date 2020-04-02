@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.escort.carriage.android.ui.view.ScrollLayout
+            android:id="@+id/scroll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+<!--            <com.amap.api.maps2d.MapView-->
+<!--                android:id="@+id/map_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"/>-->
+            <!--
+            <include
+                layout="@layout/view_main"/>-->
+            <!--
+                    <include
+                        layout="@layout/view_bottom"/>-->
+
+            <com.escort.carriage.android.ui.view.BottomView
+                android:id="@+id/bottom_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </com.escort.carriage.android.ui.view.ScrollLayout>
+
+<!--        <include layout="@layout/view_slide_menu"/>-->
+
+        <com.escort.carriage.android.ui.view.SlideMenuView
+            android:id="@+id/slideMenuView"
+            android:layout_width="match_parent"
+            android:layout_gravity="left"
+            android:layout_height="match_parent"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_head"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+
+        <ImageView
+            android:id="@+id/iv_head_img1"
+            android:src="@mipmap/img_user_head_img_default"
+            android:layout_width="46dp"
+            android:layout_height="46dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:src="@mipmap/img_index_msg"
+            android:layout_width="18dp"
+            android:layout_height="18dp"/>
+        <ImageView
+            android:id="@+id/ivSetting"
+            android:layout_marginStart="8dp"
+            android:src="@mipmap/img_index_setting"
+            android:layout_width="18dp"
+            android:layout_height="18dp"/>
+
+
+
+    </LinearLayout>
+
+    <!--头条部分-->
+    <LinearLayout
+        android:id="@+id/ll_news"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_tou_tiao_bg"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="18dp"
+        android:layout_below="@id/ll_head"
+        android:padding="4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@mipmap/img_index_tou_tiao_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.escort.carriage.android.ui.view.TextSwitchView
+            android:layout_width="0dp"
+            android:id="@+id/tsv"
+            android:layout_weight="1"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:src="@mipmap/img_tou_tiao_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

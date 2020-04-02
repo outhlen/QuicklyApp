@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_hint_not_title_two_btn_templet_context"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_y20"
+        android:padding="@dimen/space_x20"
+        android:gravity="center"
+        tools:text="确定要清除历史搜索？"
+        android:textColor="@color/color_000000"
+        android:textSize="@dimen/text_size_16"
+         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_y20"
+        android:background="#f3f3f3"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_hint_not_title_two_btn_templet_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:text="@string/cancel"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_y10"
+            android:paddingBottom="@dimen/space_y10"
+            />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f1"
+            />
+        <TextView
+            android:id="@+id/dialog_hint_not_title_two_btn_templet_confirm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:text="@string/confirm"
+            android:textColor="@color/color_4b93fd"
+            android:gravity="center"
+            android:padding="@dimen/space_y10"/>
+
+    </LinearLayout>
+
+</LinearLayout>

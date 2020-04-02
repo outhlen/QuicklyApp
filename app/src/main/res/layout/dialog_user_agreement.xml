@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/dialog_hint_two_btn_templet_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/space_17"
+        android:gravity="center"
+        android:text="服务协议与隐私条款"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_18"/>
+
+    <TextView
+        android:id="@+id/dialog_hint_two_btn_templet_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:lineSpacingExtra="@dimen/space_3"
+        android:layout_marginLeft="@dimen/space_40"
+        android:layout_marginTop="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_40"
+        android:layout_marginBottom="@dimen/space_30"
+        android:text=""
+        android:textSize="@dimen/text_size_14"
+        android:textColor="@color/color_424242"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f3f3f3"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_hint_two_btn_templet_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_999999"
+            android:text="退出应用"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_y10"
+            android:paddingBottom="@dimen/space_y10"
+            />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f1"
+            />
+        <TextView
+            android:id="@+id/dialog_hint_two_btn_templet_confirm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="同意"
+            android:textColor="@color/color_4b93fd"
+            android:gravity="center"
+            android:padding="@dimen/space_y10"/>
+
+    </LinearLayout>
+
+</LinearLayout>

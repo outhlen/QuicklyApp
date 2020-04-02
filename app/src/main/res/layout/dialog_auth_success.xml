@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#0000"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_auth_dialog_top_bg">
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:gravity="center"
+            android:paddingStart="38dp"
+            android:paddingEnd="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            tools:text="山东某某贸易发展有限公司"
+            android:textColor="#fff7f7f7"
+            android:textSize="22sp" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/ivGeRen"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/img_ren_zheng_ge_ren_v"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/ivGeRenImage"
+            android:visibility="gone"
+            android:src="@drawable/img_ren_zheng_v"
+            android:layout_alignRight="@+id/ivGeRen"
+            android:layout_marginRight="-14dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"/>
+
+        <ImageView
+            android:id="@+id/ivCompanyNameImage"
+            android:src="@drawable/img_ren_zheng_v"
+            android:layout_alignRight="@+id/tvCompanyName"
+            android:layout_marginRight="-14dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_auth_dialog_bottom_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="恭喜您，认证通过！"
+            android:textColor="#ffff0000"
+            android:textSize="21sp" />
+
+
+        <TextView
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="现在您可以快速下单了" />
+
+        <TextView
+            android:id="@+id/tvKnow"
+            android:layout_marginStart="38dp"
+            android:layout_marginEnd="38dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/shape_login_btn_bg"
+            android:gravity="center"
+            android:text="知道了"
+            android:textColor="@color/color0E" />
+
+    </LinearLayout>
+
+</LinearLayout>

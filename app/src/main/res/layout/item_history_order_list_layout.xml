@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space_10">
+
+    <com.escort.carriage.android.ui.view.imgview.RoundedImagView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/space_60"
+        android:layout_height="@dimen/space_60"
+        android:layout_marginLeft="@dimen/space_10"
+        android:scaleType="fitCenter" />
+
+
+    <TextView
+        android:id="@+id/tvStartLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivImage"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        tools:text="测试数据" />
+
+    <ImageView
+        android:id="@+id/ivLocationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_toRightOf="@+id/tvStartLocation"
+        android:src="@drawable/img_history_source_right" />
+
+    <TextView
+        android:id="@+id/tvEndtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_toLeftOf="@+id/tvTime"
+        android:layout_toRightOf="@+id/ivLocationImage"
+        android:layout_marginRight="@dimen/space_10"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        tools:text="测试数据" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEndtLocation"
+        android:layout_alignLeft="@+id/tvStartLocation"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_marginTop="@dimen/space_3"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="12sp"
+        tools:text="行驶立场" />
+
+    <ImageView
+        android:id="@+id/ivLocation"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_below="@+id/tvContent"
+        android:layout_alignLeft="@+id/tvContent"
+        android:layout_marginTop="@dimen/space_5"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/home_location_smarl" />
+
+    <TextView
+        android:id="@+id/tvMileage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivLocation"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_toLeftOf="@+id/tvBidding"
+        android:layout_toRightOf="@+id/ivLocation"
+        android:maxLines="1"
+        android:textSize="10sp"
+        tools:text="行驶立场" />
+
+    <TextView
+        android:id="@+id/tvMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMileage"
+        android:layout_alignLeft="@+id/ivLocation"
+        android:layout_marginTop="@dimen/space_3"
+        android:textSize="@dimen/text_size_10" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvMoney"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/text_size_10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/color_f7f7f7"
+        android:layout_below="@+id/tvTime"
+        />
+
+</RelativeLayout>

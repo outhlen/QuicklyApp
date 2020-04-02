@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        manifestPlaceholders = rootProject.ext.manifestPlaceholders
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", 'x86'
+        }
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file("./keystore/xiaoeryabiao.jks")
+            storePassword "123456"
+            keyAlias "chengyunban"
+            keyPassword "123456"
+
+        }
+
+        debug {
+            storeFile file("./keystore/debug.keystore")
+        }
+    }
+
+    buildTypes {
+        release {
+            //是否开启混淆   暂时先不混淆 最后添加配置文件
+            minifyEnabled false
+            // 移除无用的resource文件  同混淆一起配置
+            shrinkResources false
+            //指定签名为 release
+            signingConfig signingConfigs.release
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "RELEASE", "true")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "RELEASE", "false")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+repositories {
+    flatDir {
+        dirs 'libs', '../tripartiteLib/libs'
+    }
+}
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    //basics 基本包
+    implementation project(':basics')
+    implementation project(':niceimageview')
+    implementation project(':passlibrary')
+    implementation project(path: ':tripartiteLib')
+    //butterknife
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    //    //分包
+    implementation rootProject.ext.dependencies["multidex"]
+    //轮播 banner
+    implementation rootProject.ext.dependencies["banner"]
+    androidTestImplementation rootProject.ext.dependencies["test-runner"]
+    androidTestImplementation rootProject.ext.dependencies["test-espresso"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    //圆形头像
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    //自定义翻页效果
+    implementation 'com.xenione.libs:tab-digit:1.0.2'
+    //自定义 seekBar
+    implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
+    //bottom-navigation-bar
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+    //
+    implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
+    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+    //地区选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.8'
+    //butterknife
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    //极光推送
+    implementation 'cn.jiguang.sdk:jpush:3.4.0'
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.1'
+    //    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    api 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
+}

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/topPopView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F7F6F9"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_alignBottom="@+id/llInfoGroup"
+            android:layout_alignTop="@+id/statusBarView"
+            android:src="@mipmap/bg_home_main_header"/>
+
+        <View
+            android:id="@+id/statusBarView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            />
+
+        <com.escort.carriage.android.ui.view.imgview.RoundImageView
+            android:id="@+id/iv_head_img1"
+            android:src="@mipmap/img_user_head_img_default"
+            android:layout_below="@+id/statusBarView"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_width="46dp"
+            android:layout_height="46dp"/>
+
+        <TextView
+            android:id="@+id/tv_head_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_ffffff"
+            android:layout_alignBottom="@+id/iv_head_img1"
+            android:layout_alignTop="@+id/iv_head_img1"
+            android:text="首页"
+            android:textSize="18sp"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/ivMess"
+            android:src="@mipmap/img_index_msg"
+            android:layout_width="28dp"
+            android:layout_height="33dp"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/space_10"
+            android:paddingTop="@dimen/space_15"
+            android:layout_alignTop="@+id/iv_head_img1"
+            />
+
+        <!--头条部分-->
+        <LinearLayout
+            android:id="@+id/ll_news"
+            android:gravity="center_vertical"
+            android:background="#ffffff"
+            android:layout_marginTop="18dp"
+            android:layout_below="@id/tv_head_title"
+            android:padding="@dimen/space_5"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@mipmap/img_index_tou_tiao_logo"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.escort.carriage.android.ui.view.TextSwitchView
+                android:layout_width="0dp"
+                android:id="@+id/tsv"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@mipmap/img_tou_tiao_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_20"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llInfoGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_b_ffffff_bj_10dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/ll_news"
+            android:layout_marginTop="@dimen/space_20"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <!--接单设置-->
+            <LinearLayout
+                android:id="@+id/ll_order_setting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@mipmap/home_top_setting" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="接单设置"
+                        android:textColor="#141414"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/userSettingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未开启，订单暂不推送"
+                        android:textColor="#FB8A3D"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/color_666666"
+                android:layout_marginTop="@dimen/space_5"
+                android:layout_marginBottom="@dimen/space_5"
+                />
+
+            <!--货源大厅-->
+            <LinearLayout
+                android:id="@+id/ll_goods_lobby"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@mipmap/home_top_hydt" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="货源大厅"
+                        android:textColor="#141414"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查看更多订单信息"
+                        android:textColor="#999999"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frgGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F7F6F9"
+        />
+
+</LinearLayout>

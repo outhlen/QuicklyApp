@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:translationZ="3dp"
+    android:background="@drawable/shape_main_bottom_view_bg"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rg_box"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight=".5"/>
+        <RadioButton
+            android:maxLines="1"
+            android:id="@+id/rb_release_source"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/selector_main_view_bottom_radio_button_bg"
+            android:text="发布货源"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:maxLines="1"
+            android:id="@+id/rb_direct"
+            android:background="@drawable/selector_main_view_bottom_radio_button_bg"
+            android:gravity="center"
+            android:button="@null"
+            android:text="专线直达"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:maxLines="1"
+            android:id="@+id/rb_city_delivery"
+            android:background="@drawable/selector_main_view_bottom_radio_button_bg"
+            android:gravity="center"
+            android:button="@null"
+            android:text="城市配送"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight=".5"/>
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fl_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

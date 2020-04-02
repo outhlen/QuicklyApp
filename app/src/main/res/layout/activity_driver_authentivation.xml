@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/toolbar_centre_title"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/color_f7f7f7"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="#FEFAD5"
+                android:paddingStart="18dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="8dp"
+                android:text="信息仅用于平台审核，不会对您信息进行公开或泄露给任何第三方。"
+                android:textColor="#ffff9606"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_180"
+                android:layout_margin="14dp"
+                android:gravity="center"
+                >
+
+                <LinearLayout
+                    android:id="@+id/imageGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_180"
+                    android:background="@mipmap/shape_ren_zheng_bg"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivImg"
+                        android:layout_width="138dp"
+                        android:layout_height="100dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/icon_driver" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="12dp"
+
+                        android:gravity="center_horizontal|bottom"
+                        android:text="点击上传驾驶证 - 主页"
+                        android:textColor="#ff333333"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+                <com.escort.carriage.android.ui.view.imgview.RoundedImagView
+                    android:id="@+id/ivImageView"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/imageGroup"
+                    android:layout_alignRight="@+id/imageGroup"
+                    android:layout_alignTop="@+id/imageGroup"
+                    android:layout_alignBottom="@+id/imageGroup"
+                    android:scaleType="centerCrop"
+                    />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvAddCar"
+        android:layout_marginTop="@dimen/space_30"
+        android:gravity="center"
+        android:background="@drawable/shape_login_btn_bg"
+        android:textColor="@color/color_ffffff"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginBottom="@dimen/space_30"
+        android:text="提交驾驶证信息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

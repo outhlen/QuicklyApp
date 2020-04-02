@@ -1,0 +1,503 @@
+package com.escort.carriage.android.ui.activity.mes;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
+import com.alibaba.security.biometrics.build.G;
+import com.androidybp.basics.fastjson.JsonManager;
+import com.androidybp.basics.glide.GlideManager;
+import com.androidybp.basics.okhttp3.OkgoUtils;
+import com.androidybp.basics.ui.base.ProjectBaseActivity;
+import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
+import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
+import com.androidybp.basics.utils.date.ProjectDateUtils;
+import com.androidybp.basics.utils.hint.ToastUtil;
+import com.escort.carriage.android.R;
+import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.home.AddrBean;
+import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
+import com.escort.carriage.android.entity.request.RequestEntity;
+import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
+import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.ui.view.text.DrawableTextView;
+import com.escort.carriage.android.utils.ChineseNumUtill;
+import com.escort.carriage.android.utils.mes.MesNumUtils;
+
+import java.util.HashMap;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class OrderInfoActivity extends ProjectBaseActivity {
+    @BindView(R.id.item_head_bar_iv_back)
+    ImageView itemHeadBarIvBack;
+    @BindView(R.id.item_head_bar_tv_title)
+    TextView itemHeadBarTvTitle;
+    @BindView(R.id.item_head_bar_tv_red)
+    TextView itemHeadBarTvRed;
+    @BindView(R.id.item_head_bar_iv_right)
+    ImageView itemHeadBarIvRight;
+    @BindView(R.id.tvStartLocation)
+    TextView tvStartLocation;
+    @BindView(R.id.ivLocationImage)
+    ImageView ivLocationImage;
+    @BindView(R.id.tvEndtLocation)
+    TextView tvEndtLocation;
+    @BindView(R.id.tvContent)
+    TextView tvContent;
+    @BindView(R.id.tvMileage)
+    TextView tvMileage;
+    @BindView(R.id.tvStatus)
+    TextView tvStatus;
+    @BindView(R.id.tvOderName)
+    TextView tvOderName;
+    @BindView(R.id.orderNum)
+    TextView orderNum;
+    @BindView(R.id.tvOderBulk)
+    TextView tvOderBulk;
+    @BindView(R.id.orderWeight)
+    TextView orderWeight;
+    @BindView(R.id.tvThreeExceedTitle)
+    TextView tvThreeExceedTitle;
+    @BindView(R.id.tvLoadingDischargeInfo)
+    TextView tvLoadingDischargeInfo;
+    @BindView(R.id.tvThreeExceed)
+    TextView tvThreeExceed;
+    @BindView(R.id.tvRemarkInfo)
+    TextView tvRemarkInfo;
+    @BindView(R.id.gvImageGroup)
+    GridView gvImageGroup;
+    @BindView(R.id.tvCarriageMoney)
+    TextView tvCarriageMoney;
+    @BindView(R.id.tvCarriageTime)
+    TextView tvCarriageTime;
+    @BindView(R.id.llLocationGroup)
+    LinearLayout llLocationGroup;
+    @BindView(R.id.iv_head_img)
+    ImageView ivHeadImg;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_use_day)
+    TextView tvUseDay;
+    @BindView(R.id.ivCallPhone)
+    ImageView ivCallPhone;
+    @BindView(R.id.btnBidding)
+    TextView btnBidding;
+    @BindView(R.id.imageOne)
+    ImageView imageOne;
+    @BindView(R.id.imageTwo)
+    ImageView imageTwo;
+    @BindView(R.id.imageThree)
+    ImageView imageThree;
+    @BindView(R.id.tvIsTb)
+    DrawableTextView tvIsTb;
+    @BindView(R.id.tvCargoValue)
+    TextView tvCargoValue;
+    @BindView(R.id.tvTurnAllowSingle)
+    TextView tvTurnAllowSingle;
+    @BindView(R.id.tvInsuranceServicesGroup)
+    LinearLayout insuranceServicesGroup;
+    @BindView(R.id.tvInsuranceServices)
+    TextView tvInsuranceServices;
+    @BindView(R.id.tvInsuranceMoneyGroup)
+    LinearLayout insuranceMoneyGroup;
+    @BindView(R.id.tvInsuranceMoney)
+    TextView tvInsuranceMoney;
+    @BindView(R.id.tvInvoiceType)
+    TextView tvInvoiceType;
+    private OrderInfoEntity infoEntity;
+
+    private int openType = 1;//打开类型  默认是1   1：货源大厅  2：我的订单 3:历史订单
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarCompatManager.setStatusBar(Color.parseColor("#FFFFFF"), this);
+        setContentView(R.layout.activity_oder_info);
+        ButterKnife.bind(this);
+        setTitleBar();
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+        openType = intent.getIntExtra("openType", 1);
+        if (!TextUtils.isEmpty(id)) {
+            getInfo(id);
+        }
+
+    }
+
+    private void setTitleBar() {
+        itemHeadBarTvTitle.setText("订单详情");
+        itemHeadBarIvRight.setVisibility(View.VISIBLE);
+        itemHeadBarIvRight.setImageResource(R.mipmap.img_index_msg);
+//        itemHeadBarTvRed.setVisibility(View.VISIBLE);
+//        itemHeadBarTvRed.setText("20");
+
+    }
+
+
+    /**
+     * 详情
+     */
+    public void getInfo(String id) {
+
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, String> data = new HashMap<>();
+        data.put("orderNumber", id);
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderInfoEntity>() {
+            @Override
+            public void onResponse(ResponseOrderInfoEntity resp) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (resp != null) {
+                    if (resp.success) {
+                        infoEntity = resp.getData();
+                        intPageViewData();
+                    } else {
+                        ToastUtil.showToastString(resp.message);
+                    }
+                }
+            }
+
+            @Override
+            public Class<ResponseOrderInfoEntity> getClazz() {
+                return ResponseOrderInfoEntity.class;
+            }
+        });
+
+    }
+
+    private void intPageViewData() {
+        //设置状态
+        setPhoneAndOrderType();
+        if (infoEntity.addr != null && infoEntity.addr.size() > 0) {
+            AddrBean addrBean = infoEntity.addr.get(0);
+            tvStartLocation.setText(addrBean.startCityName);
+            tvEndtLocation.setText(addrBean.endCityName);
+        }
+        String contentStr = "";
+
+        if (TextUtils.equals("0", infoEntity.getIsDeposit())) {
+            contentStr += "无押金";
+        } else {
+            contentStr += "押金" + infoEntity.getDeposit();
+        }
+
+        if (infoEntity.receipt == 1) {
+            contentStr += "     需要回单";
+        } else {
+            contentStr += "     无需回单";
+        }
+
+        contentStr += "     " + infoEntity.getIntention() + "优先";
+
+
+        tvContent.setText(contentStr);
+        tvMileage.setText("运输里程约：" + infoEntity.getDistance() + "km");
+        //货物名称
+        tvOderName.setText(infoEntity.cargoName);
+        //货物数量
+        orderNum.setText(infoEntity.cargoCount + "件");
+        //货物重量
+        tvOderBulk.setText(infoEntity.cargoWeight + "吨");
+        //货物体积
+        orderWeight.setText(infoEntity.cargoVolume + "m³");
+        //装卸信息
+        tvLoadingDischargeInfo.setText(infoEntity.loadNumAndDischargeNum);
+        //是否三超
+        if (TextUtils.equals("0", infoEntity.isOverspeedOvermanTransfinite)) {
+            tvThreeExceed.setText("否");
+        } else {
+            tvThreeExceed.setText("是");
+        }
+
+        //备注信息
+        tvRemarkInfo.setText(infoEntity.remark);
+
+
+
+        //设置图片
+        if (!TextUtils.isEmpty(infoEntity.imgUrl1)) {
+            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl1, imageOne);
+        }
+        if (!TextUtils.isEmpty(infoEntity.imgUrl2)) {
+            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl2, imageTwo);
+        }
+        if (!TextUtils.isEmpty(infoEntity.imgUrl3)) {
+            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl3, imageThree);
+        }
+
+        //设置多装多卸的条目
+        setLocation();
+
+        //运费金额
+        if(infoEntity.orderStatus == 0){
+            tvCarriageMoney.setText("未竞价");
+        } else {
+            tvCarriageMoney.setText(infoEntity.expectFreightRate + "元");
+        }
+
+        //订单时间
+        tvCarriageTime.setText(ProjectDateUtils.getTimeDay("yyyy-MM-dd HH:mm:ss", infoEntity.orderPlaceTime));
+        //货值单价
+        tvCargoValue.setText(infoEntity.cargoValue == 0d ? "0元" : infoEntity.cargoValue + "元");
+        //允许转单
+        if(infoEntity.isAllowTurn == 1){
+            tvTurnAllowSingle.setText("是");
+        } else {
+            tvTurnAllowSingle.setText("否");
+        }
+        //设置是否需要保单
+        if(TextUtils.isEmpty(infoEntity.insuranceComName)){
+            tvIsTb.setVisibility(View.INVISIBLE);
+            insuranceServicesGroup.setVisibility(View.GONE);
+            insuranceMoneyGroup.setVisibility(View.GONE);
+        } else {
+            tvIsTb.setVisibility(View.VISIBLE);
+            //保险服务
+            tvInsuranceServices.setText(infoEntity.insuranceComName);
+            //保险费用
+            tvInsuranceMoney.setText(TextUtils.isEmpty(infoEntity.insurancePay)? "0元" : infoEntity.insurancePay + "元");
+        }
+
+        //发票类型
+        if(TextUtils.equals("s", infoEntity.taxType)){
+            tvInvoiceType.setText("专业发票");
+        } else if(TextUtils.equals("p", infoEntity.taxType)){
+            tvInvoiceType.setText("普通发票");
+        } else {
+            tvInvoiceType.setText("不需要发票");
+        }
+
+
+        //货主姓名
+        tvName.setText(infoEntity.shipperName);
+        //货主 公司名称
+        tvUseDay.setText(infoEntity.startComp);
+        //货主头像
+        if (!TextUtils.isEmpty(infoEntity.shipperImg)) {
+            GlideManager.getGlideManager().loadImage(infoEntity.shipperImg, ivHeadImg);
+        }
+
+    }
+
+    private void setPhoneAndOrderType() {
+        if (openType == 1) {
+            //显示底部按钮
+            btnBidding.setVisibility(View.VISIBLE);
+            ivCallPhone.setVisibility(View.INVISIBLE);
+            tvStatus.setVisibility(View.INVISIBLE);
+        } else if (openType == 2) {
+            //显示状态 跟电话号码
+            btnBidding.setVisibility(View.INVISIBLE);
+            ivCallPhone.setVisibility(View.VISIBLE);
+            tvStatus.setVisibility(View.VISIBLE);
+            String statusName = "";
+
+            switch (infoEntity.orderStatus) {//-1取消 0 待接单 1 已接单 2 前往载货地 3 抵达载货地 4 载货完成 5 出发目的地 6 抵达目的地 7 卸货完成 8 已结单
+                case -1:
+                    statusName = "取消";
+                    break;
+                case 0:
+                    statusName = "待接单";
+                    break;
+
+                case 1:
+                    statusName = "已接单";
+                    break;
+
+                case 2:
+                    statusName = "前往载货地";
+                    break;
+                case 3:
+                    statusName = "抵达载货地";
+                    break;
+                case 4:
+                    statusName = "载货完成";
+                    break;
+                case 5:
+                    statusName = "出发目的地";
+                    break;
+                case 6:
+                    statusName = "抵达目的地";
+                    break;
+                case 7:
+                    statusName = "卸货完成";
+                    break;
+                case 8:
+                    statusName = "已结单";
+                    break;
+            }
+            tvStatus.setText(statusName);
+        } else if(openType == 3){
+            //显示底部按钮
+            btnBidding.setVisibility(View.INVISIBLE);
+            ivCallPhone.setVisibility(View.VISIBLE);
+            tvStatus.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setLocation() {
+        int truckLoadingNum = getTruckLoadingNum();
+        int unloadNum = getUnloadNum();
+        if (infoEntity.addr != null && infoEntity.addr.size() > 0) {
+            llLocationGroup.removeAllViews();
+            ////设置 多条装车数据
+            setTruckLoadingView(truckLoadingNum);
+            //设置多条卸车数据
+            setUnloadNum(unloadNum);
+        }
+
+    }
+
+    private void setUnloadNum(int unloadNum) {
+        if (unloadNum > infoEntity.addr.size()) {
+            unloadNum = infoEntity.addr.size();
+        }
+
+
+        for (int x = 0; x < unloadNum; x++) {
+            View inflate = View.inflate(this, R.layout.item_order_loading_unload_list_layout, null);
+            AddrBean addrBean = infoEntity.addr.get(x);
+            String addrStr = addrBean.endProvinceName + addrBean.endCityName + addrBean.endAreaName + addrBean.endAddr;
+            setTruckLoadingAndUnloadView(1, x, inflate, addrStr);
+        }
+    }
+
+    private void setTruckLoadingView(int truckLoadingNum) {
+        if (truckLoadingNum > infoEntity.addr.size()) {
+            truckLoadingNum = infoEntity.addr.size();
+        }
+
+
+        for (int x = 0; x < truckLoadingNum; x++) {
+            View inflate = View.inflate(this, R.layout.item_order_loading_unload_list_layout, null);
+            AddrBean addrBean = infoEntity.addr.get(x);
+            String addrStr = addrBean.startProvinceName + addrBean.startCityName + addrBean.startAreaName + addrBean.startAddr;
+            setTruckLoadingAndUnloadView(0, x, inflate, addrStr);
+        }
+    }
+
+    private void setTruckLoadingAndUnloadView(int type, int position, View viewGroup, String addrStr) {
+        ImageView iv = viewGroup.findViewById(R.id.ivItem);
+        TextView tv = viewGroup.findViewById(R.id.tvItem);
+        String str;
+        if (type == 0) {
+            str = "(第" + ChineseNumUtill.numberToChinese(position + 1) + "装货地)";
+            if (position < 1) {
+                iv.setImageResource(R.drawable.icon_text_zhuang);
+            } else {
+                iv.setImageResource(R.drawable.bg_b_ffdd29_circular_size);
+            }
+        } else {
+            str = "(第" + ChineseNumUtill.numberToChinese(position + 1) + "卸货地)";
+            if (position < 1) {
+                iv.setImageResource(R.drawable.icon_text_xie);
+            } else {
+                iv.setImageResource(R.drawable.bg_b_3699ff_circular_size);
+            }
+        }
+        SpannableString spannableString = new SpannableString(addrStr + str);
+        //设置字体前景色
+        spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), addrStr.length(), spannableString.toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红色
+
+        tv.setText(spannableString);
+        llLocationGroup.addView(viewGroup);
+    }
+
+    /**
+     * 装车地点数
+     *
+     * @return
+     */
+    private int getTruckLoadingNum() {
+        int num = 1;
+        try {
+            String substring = infoEntity.loadNumAndDischargeNum.substring(0, 1);
+            num = Integer.valueOf(substring);
+        } catch (Exception e) {
+
+        }
+        return num;
+    }
+
+    /**
+     * 卸车地点数
+     *
+     * @return
+     */
+    private int getUnloadNum() {
+
+        int num = 1;
+        try {
+            String substring = infoEntity.loadNumAndDischargeNum.substring(2, 3);
+            num = Integer.valueOf(substring);
+        } catch (Exception e) {
+
+        }
+        return num;
+    }
+
+
+    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.item_head_bar_iv_back:
+                finish();
+                break;
+            case R.id.item_head_bar_iv_right:
+                MesNumUtils.getMesNumUtils().openMesAct(this);
+                break;
+            case R.id.ivCallPhone:
+                callPhone(infoEntity.shipperPhone);
+                break;
+            case R.id.btnBidding:
+                Intent intent = new Intent(this, BiddingActivity.class);
+                intent.putExtra("orderNumber", infoEntity.orderNumber);
+                intent.putExtra("intention", infoEntity.intention);
+                startActivityForResult(intent, 333);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 333 && resultCode == 666) {
+            finish();
+        }
+    }
+
+    public void biddingFinishpage() {
+        setResult(666);
+        finish();
+    }
+
+
+    /**
+     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+     *
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
+    }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
+    android:id="@+id/loser_page"
+    android:visibility="gone"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/loser_page_image"
+            android:layout_width="@dimen/space_x150"
+            android:layout_height="@dimen/space_x150"
+            android:layout_centerInParent="true"
+            android:src="@drawable/loader_loser" />
+        <TextView
+            android:id="@+id/loser_page_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loser_page_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/space_y10"
+            android:text="@string/point_me_to_reload" />
+</RelativeLayout>

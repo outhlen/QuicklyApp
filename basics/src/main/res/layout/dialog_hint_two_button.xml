@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/space_x10">
+
+    <TextView
+        android:id="@+id/dialog_hint_two_button_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        tools:text="@string/prompt"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_18" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/space_y10"
+        android:background="@color/color_999999" />
+
+    <TextView
+        android:id="@+id/dialog_hint_two_button_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:minLines="4"
+        android:lineSpacingExtra="@dimen/space_3"
+        android:layout_margin="@dimen/space_x10"
+        tools:text="呵呵哈哈哈或或或或或或或或或或或或或或或或或或或"
+        />
+
+    <View
+        android:id="@+id/dialog_hint_two_button_xian"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_e5e5e5"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <TextView
+            android:id="@+id/dialog_hint_two_button_leftbutton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:text="左边按钮"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_y10"
+            android:paddingBottom="@dimen/space_y10"
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_e5e5e5"
+            />
+        <TextView
+            android:id="@+id/dialog_hint_two_button_rightbutton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:text="右边按钮"
+            android:textColor="@color/color_4b93fd"
+            android:gravity="center"
+            android:padding="@dimen/space_y10"
+
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

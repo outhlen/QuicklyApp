@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_style"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:navigationIcon="@drawable/selector_title_btn_back"
+    app:title=" ">
+    <TextView
+        android:id="@+id/toolbar_style_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="我是标题"
+        android:layout_gravity="center"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_20" />
+
+</androidx.appcompat.widget.Toolbar>

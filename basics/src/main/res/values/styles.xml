@@ -1,0 +1,58 @@
+<resources>
+
+
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@color/color_dddddd</item>
+        <item name="colorPrimary">@color/actionbar_color</item>
+    </style>
+
+
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@android:color/white</item> <!--  敲定颜色-->
+        <item name="android:textSize">@dimen/text_size_16</item> <!--  搞掂字体大小-->
+    </style>
+
+
+    <style name="CustomProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!-- 加载页面的等待动画 -->
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+    <!-- 全局加载 loading的配置 -->
+    <style name="LoadingStyle">
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">3500</item>
+        <item name="android:minWidth">@dimen/space_x50</item>
+        <item name="android:maxWidth">@dimen/space_x50</item>
+        <item name="android:minHeight">@dimen/space_x50</item>
+        <item name="android:maxHeight">@dimen/space_x50</item>
+    </style>
+
+    <style name="pull_style">
+        <item name="pullDrawable">@drawable/pinter_pull</item>
+    </style>
+
+    <!--  popup 显示方式 -->
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+</resources>

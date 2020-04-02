@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llGroup"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@color/color_ffffff"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/statusBarView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_20"
+            android:text="货物名称"
+            android:textColor="@color/color_000000" />
+
+        <EditText
+            android:id="@+id/edtGoodName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_15"
+            android:background="@drawable/bg_bx_c3c3c3_bj_3dp"
+            android:hint="请输入货物名称"
+            android:maxLines="1"
+            android:padding="@dimen/space_5"
+            android:textColorHint="#c3c3c3"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_30"
+            android:text="货物重量（吨）"
+            android:textColor="@color/color_000000" />
+
+        <com.escort.carriage.android.ui.view.seekbar.DoubleHeadedDragonBar
+            android:id="@+id/seekbarHwzl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginRight="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_10"
+            app:text_color="#3699FF"
+            app:button_img="@drawable/home_select_seebar_img"
+            app:button_height="15dp"
+            app:button_width="15dp"
+            app:bg_color="#999"
+            app:value_color="#3699FF"
+            app:seek_height="3dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_30"
+            android:text="货物体积（方）"
+            android:textColor="@color/color_000000" />
+
+        <com.escort.carriage.android.ui.view.seekbar.DoubleHeadedDragonBar
+            android:id="@+id/seekbarHwtj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginRight="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_10"
+            app:text_color="#3699FF"
+            app:button_img="@drawable/home_select_seebar_img"
+            app:button_height="15dp"
+            app:button_width="15dp"
+            app:bg_color="#999"
+            app:value_color="#3699FF"
+            app:seek_height="3dp"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_15"
+            android:background="@color/color_f7f7f7" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_20"
+            android:text="货运类型"
+            android:textColor="@color/color_000000" />
+
+        <RadioGroup
+            android:id="@+id/grdioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/text_size_10"
+            android:layout_marginRight="@dimen/space_15"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_suggestion_feedback"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingTop="@dimen/space_3"
+                android:paddingBottom="@dimen/space_3"
+                android:text="快速货运"
+                android:textColor="@drawable/bg_text_color"
+                android:textSize="@dimen/text_size_10" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_suggestion_feedback"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingTop="@dimen/space_3"
+                android:paddingBottom="@dimen/space_3"
+                android:text="专线直达"
+                android:textColor="@drawable/bg_text_color"
+                android:textSize="@dimen/text_size_10" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_1"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_suggestion_feedback"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingTop="@dimen/space_3"
+                android:paddingBottom="@dimen/space_3"
+                android:text="城市配送"
+                android:textColor="@drawable/bg_text_color"
+                android:textSize="@dimen/text_size_10" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_15"
+            android:background="@color/color_f7f7f7" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_20"
+            android:text="订单时间"
+            android:textColor="@color/color_000000" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_15">
+
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_25"
+                android:background="@drawable/bg_bx_c3c3c3_bj_3dp"
+                android:gravity="center"
+                android:text="2020/03/01"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/endTime"
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_25"
+                android:background="@drawable/bg_bx_c3c3c3_bj_3dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="2020/03/01"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_toLeftOf="@+id/endTime"
+                android:layout_toRightOf="@+id/startTime"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_marginTop="@dimen/space_12"
+                android:background="@color/color_666666"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/startTime"
+                android:layout_alignRight="@+id/startTime"
+                android:layout_below="@+id/startTime"
+                android:layout_marginTop="@dimen/space_8"
+                android:text="开始时间"
+                android:gravity="center"
+                android:textColor="@color/color_666666"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/endTime"
+                android:layout_alignRight="@+id/endTime"
+                android:layout_below="@+id/endTime"
+                android:layout_marginTop="@dimen/space_8"
+                android:text="结束时间"
+                android:gravity="center"
+                android:textColor="@color/color_666666"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_f7f7f7"
+            >
+
+            <com.escort.carriage.android.ui.view.text.DrawableTextView
+                android:id="@+id/tvReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/space_20"
+                android:textColor="#FF9C0E"
+                android:drawablePadding="@dimen/space_5"
+                android:padding="@dimen/space_10"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_size_12"
+                app:dt_left_drawable="@mipmap/icon_home_select_reset"
+                app:dt_left_height="14dp"
+                app:dt_left_width="14dp"
+                android:text="重置内容"
+                />
+
+            <TextView
+                android:id="@+id/tvSelect"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:background="@drawable/bg_b_3699ff_bj_3dp"
+                android:textColor="@color/color_ffffff"
+                android:layout_below="@+id/tvReset"
+                android:text="查询"
+                android:textSize="@dimen/text_size_16"
+                android:layout_marginLeft="@dimen/space_30"
+                android:layout_marginRight="@dimen/space_30"
+                android:paddingTop="@dimen/space_5"
+                android:paddingBottom="@dimen/space_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/finishView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#35000000"
+        android:layout_toLeftOf="@+id/llGroup" />
+</RelativeLayout>

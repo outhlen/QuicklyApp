@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/toolbar_centre_title"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_ffffff"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_10"
+                >
+
+                <com.escort.carriage.android.ui.view.imgview.RoundedImagView
+                    android:id="@+id/ivDrivingImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_x144"
+
+                    />
+                <TextView
+                    android:id="@+id/tvDrivingAuthentication"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/space_10"
+                    android:paddingBottom="@dimen/space_10"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:textColor="#0E7CFF"
+                    android:background="@drawable/bg_bx_0e7cff_bj_5dp"
+                    android:layout_marginLeft="@dimen/space_40"
+                    android:layout_marginRight="@dimen/space_40"
+                    android:text="重新认证"/>
+            </LinearLayout>
+
+            <View
+                android:background="@color/color_f7f7f7"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10"
+                />
+            <com.escort.carriage.android.ui.view.list.FillListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+    <TextView
+        android:id="@+id/tvAddCar"
+        android:layout_marginTop="@dimen/space_30"
+        android:gravity="center"
+        android:background="@drawable/shape_login_btn_bg"
+        android:textColor="@color/color_ffffff"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginBottom="@dimen/space_30"
+        android:text="上传车辆信息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

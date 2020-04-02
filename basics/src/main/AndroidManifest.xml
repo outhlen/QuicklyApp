@@ -1,0 +1,41 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androidybp.basics" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application
+            android:allowBackup="true"
+            android:supportsRtl="true">
+
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${authorities}"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+        </provider>
+
+        <!--服务器地址-->
+        <meta-data
+                android:name="SERVER_HOST"
+                android:value="${serverHostValue}"/>
+        <!--分享使用的地址-->
+        <meta-data
+                android:name="WEB_HOST"
+                android:value="${webHostValue}"/>
+
+
+        <!--数据保存的根目录地址-->
+        <meta-data
+                android:name="FILE_HOST"
+                android:value="${file_path}"/>
+        <!--适配7.0-->
+        <meta-data
+                android:name="AUTHORITIES"
+                android:value="${authorities}"/>
+
+
+    </application>
+</manifest>

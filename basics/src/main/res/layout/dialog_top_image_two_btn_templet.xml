@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/dialog_top_image_two_btn_templet_image"
+        android:layout_width="@dimen/space_x40"
+        android:layout_height="@dimen/space_x40"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/space_y20"
+        tools:src="@drawable/zhuyi"
+        android:scaleType="fitCenter"
+        />
+
+    <TextView
+        android:id="@+id/dialog_top_image_two_btn_templet_context"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        tools:text="我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容"
+        android:textSize="@dimen/text_size_18"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/space_x20"
+        android:lineSpacingExtra="@dimen/space_y8"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_f1f1f1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_top_image_two_btn_templet_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:text="@string/cancel"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_y10"
+            android:paddingBottom="@dimen/space_y10"
+            />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f1"
+            />
+        <TextView
+            android:id="@+id/dialog_top_image_two_btn_templet_confirm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:text="@string/confirm"
+            android:textColor="@color/color_4b93fd"
+            android:gravity="center"
+            android:padding="@dimen/space_y10"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

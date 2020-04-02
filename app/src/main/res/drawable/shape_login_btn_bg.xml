@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- 先设为长方形 -->
+
+    <!-- 设置圆角-->
+    <corners
+        android:radius="28dp" />
+    <!-- 设置边框
+    <stroke
+        android:width="1px"
+        android:color="#E5972B" />-->
+    <!-- 设置背景 -->
+    <solid android:color="#1285FD" />
+    <!-- 如果太窄了-->
+    <padding
+        android:bottom="10dp"
+        android:left="16dp"
+        android:right="16dp"
+        android:top="10dp" />
+
+</shape>

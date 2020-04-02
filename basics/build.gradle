@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        manifestPlaceholders = rootProject.ext.manifestPlaceholders
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            //是否开启混淆   暂时先不混淆 最后添加配置文件
+            minifyEnabled true
+            //指定签名为 release
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["design"]
+    androidTestImplementation rootProject.ext.dependencies["test-runner"]
+    androidTestImplementation rootProject.ext.dependencies["test-espresso"]
+
+    testImplementation rootProject.ext.dependencies["junit"]
+
+
+    //okhttp3
+    api rootProject.ext.dependencies["okhttp"]
+    testImplementation rootProject.ext.dependencies["ok-mockwebserver"]
+
+    //eventbus
+    api rootProject.ext.dependencies["eventbus"]
+
+    //glide 库
+    implementation rootProject.ext.dependencies["glide-annotations"]
+    annotationProcessor rootProject.ext.dependencies["glide-annotations"]
+    api rootProject.ext.dependencies["glide-okhttp3"]
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    implementation (rootProject.ext.dependencies["glide"]){
+        exclude group: "com.android.support"//忽略Glide中的 Support
+    }
+
+    //fastjson
+    api rootProject.ext.dependencies["fastjson"]
+
+    //butterknife
+    api rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+
+    //SmartRefreshLayout
+    api rootProject.ext.dependencies["smartRefreshLayout"]
+    api rootProject.ext.dependencies["smartRefreshHeader"]//没有使用特殊Header，可以不加这行
+
+    api ('com.lzy.net:okgo:3.0.4') {
+        exclude group: "okhttp3"
+    }
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:alpha="60"
+    android:background="@drawable/shape_dialog_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/space_6"
+    android:paddingLeft="@dimen/space_18"
+    android:paddingRight="@dimen/space_18"
+    android:paddingTop="@dimen/space_10" >
+
+    <com.androidybp.basics.ui.view.MessImageView
+        android:id="@+id/progress_bar"
+        style="@style/LoadingStyle"
+        android:layout_marginTop="@dimen/space_6"
+        android:layout_marginBottom="@dimen/space_6"
+        android:layout_width="@dimen/space_x50"
+        android:layout_height="@dimen/space_x50"
+        android:background="@drawable/anim_loading"
+        />
+
+    <ImageView
+        android:id="@+id/iv_loading_result"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/space_6"
+        android:layout_marginBottom="@dimen/space_6"
+        android:layout_width="@dimen/space_x50"
+        android:layout_height="@dimen/space_x50" />
+    <!--android:indeterminateDrawable="@drawable/progress_medium_nim"-->
+
+    <TextView
+        android:id="@+id/id_tv_loadingmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/loading"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

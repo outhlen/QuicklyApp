@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space_10">
+
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/space_60"
+        android:layout_height="@dimen/space_60"
+        android:layout_marginLeft="@dimen/space_10"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/tvStartLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivImage"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        tools:text="测试数据" />
+
+    <ImageView
+        android:id="@+id/ivLocationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_toRightOf="@+id/tvStartLocation"
+        android:src="@drawable/img_history_source_right" />
+
+    <TextView
+        android:id="@+id/tvEndtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivLocationImage"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        tools:text="测试数据" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEndtLocation"
+        android:layout_alignLeft="@+id/tvStartLocation"
+        android:layout_marginRight="@dimen/space_10"
+        android:maxLines="1"
+        android:textSize="10sp"
+
+        tools:text="测试数据" />
+
+    <LinearLayout
+        android:id="@+id/contentGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTime"
+        android:layout_alignLeft="@+id/tvTime"
+        android:layout_marginTop="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivImage"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/space_3">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="货物名称"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvCargoName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="货物名称" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/space_3">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="货物数量"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/cargoCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="货物数量" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/space_3">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="重量/体积"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvCargoWeightVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="重量/体积" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="包装方式"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvPackingManner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="重量/体积" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contentGroup"
+        android:layout_margin="@dimen/space_10"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/btnOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_2"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            tools:background="@drawable/bg_b_3e9fff_bj_3dp"
+            tools:text="前往装货" />
+
+        <TextView
+            android:id="@+id/btnTwo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_2"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            tools:background="@drawable/bg_b_67c337_bj_3dp"
+            tools:text="路线导航" />
+
+        <TextView
+            android:id="@+id/btnThree"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_2"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            tools:background="@drawable/bg_b_e7a339_bj_3dp"
+            tools:text="查看详情" />
+
+        <TextView
+            android:id="@+id/btnFour"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_2"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            tools:background="@drawable/bg_b_f56c6c_bj_3dp"
+            tools:text="撤单" />
+
+        <TextView
+            android:id="@+id/btnFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_2"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            tools:background="@drawable/bg_b_999999_bj_3dp"
+            tools:text="撤单" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10"
+        android:layout_below="@+id/buttonGroup"
+        android:background="@color/color_f7f7f7" />
+</RelativeLayout>

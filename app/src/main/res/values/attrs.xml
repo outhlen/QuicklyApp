@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StyleBottomLayout">
+        <attr name="item_icon_tint" format="reference"/>
+        <attr name="itemIconWidth" format="dimension"/>
+        <attr name="itemIconHeight" format="dimension"/>
+        <attr name="item_text_color" format="reference"/>
+        <attr name="item_text_size" format="dimension"/>
+        <attr name="itemTextTopMargin" format="dimension"/>
+        <attr name="floatingEnable" format="boolean">false</attr>
+        <attr name="floatingUp" format="dimension"/>
+        <attr name="menu" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="StyleBottomItemView">
+        <attr name="icon" format="reference"/>
+        <attr name="title" format="string"/>
+        <attr name="floating" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeCaptchaView">
+        <attr name="captchaWidth" format="dimension"/>
+        <attr name="captchaHeight" format="dimension"/>
+        <attr name="matchDeviation" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="dt_top_width" format="dimension"/>
+        <attr name="dt_top_height" format="dimension"/>
+        <attr name="dt_left_width" format="dimension"/>
+        <attr name="dt_left_height" format="dimension"/>
+        <attr name="dt_right_width" format="dimension"/>
+        <attr name="dt_right_height" format="dimension"/>
+        <attr name="dt_bottom_width" format="dimension"/>
+        <attr name="dt_bottom_height" format="dimension"/>
+        <attr name="dt_top_drawable" format="reference"/>
+        <attr name="dt_left_drawable" format="reference"/>
+        <attr name="dt_right_drawable" format="reference"/>
+        <attr name="dt_bottom_drawable" format="reference"/>
+    </declare-styleable>
+
+    <!-- 授权密码输入框 -->
+    <declare-styleable name="CustomPasswordInputView">
+        <attr name="maxCount" format="integer" />
+        <attr name="pwdcircleColor" format="color" />
+        <attr name="pwdCircleRadius" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="devideLineColor" format="color" />
+
+        <attr name="divideLineWidth" format="dimension" />
+        <attr name="divideLineColor" format="color" />
+        <attr name="rectAngle" format="dimension" />
+    </declare-styleable>
+
+    <!-- 自定义圆形头像 -->
+    <declare-styleable name="roundedimageview">
+        <attr name="border_thickness" format="reference|dimension" />
+        <attr name="border_inside_color" format="reference|color" />
+        <attr name="border_outside_color" format="reference|color" />
+        <attr name="backage_color" format="reference|color" />
+        <attr name="cornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="NiceImageView">
+        <attr name="is_circle" format="boolean" />
+        <attr name="is_cover_src" format="boolean" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_top_left_radius" format="dimension" />
+        <attr name="corner_top_right_radius" format="dimension" />
+        <attr name="corner_bottom_left_radius" format="dimension" />
+        <attr name="corner_bottom_right_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="inner_border_width" format="dimension" />
+        <attr name="inner_border_color" format="color" />
+        <attr name="mask_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="DoubleHeadedDragonBar">
+        <!--进度条按钮宽高-->
+        <attr name="button_width" format="dimension" />
+        <attr name="button_height" format="dimension" />
+        <!--进图条按钮图片-->
+        <attr name="button_img" format="reference"/>
+        <!--单位字体颜色-->
+        <attr name="text_color" format="color"/>
+        <!--进图条背景颜色-->
+        <attr name="bg_color" format="color"/>
+        <!--进度条颜色-->
+        <attr name="value_color" format="color"/>
+        <!--进度条宽-->
+        <attr name="seek_height" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="surplusSpacingMode" format="enum">
+            <enum name="SURPLUSSPACINGMODE_AUTO" value="0" />
+            <enum name="SURPLUSSPACINGMODE_SHARE" value="1" />
+            <enum name="SURPLUSSPACINGMODE_SPACE" value="2"/>
+        </attr>
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="verticalSpacing" format="dimension" />
+        <attr name="maxLines" format="integer" />
+
+    </declare-styleable>
+
+</resources>

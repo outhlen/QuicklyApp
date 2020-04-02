@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+
+                android:text="新增接单线路"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_16" />
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvPageShowText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:maxLines="1"
+                app:minTextSize="@dimen/text_size_4"
+                android:layout_marginLeft="@dimen/space_10"
+                android:textColor="#FFA70E"
+                android:gravity="bottom"
+                android:text="投标提示:货主意向速度优先"
+                />
+
+            <ImageView
+                android:id="@+id/ivClose"
+                android:layout_width="@dimen/space_20"
+                android:layout_height="@dimen/space_20"
+                android:padding="@dimen/space_3"
+                android:src="@mipmap/close" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1"
+            android:background="@color/color_f7f7f7" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_10"
+    android:layout_marginLeft="@dimen/space_30"
+    android:layout_marginRight="@dimen/space_30"
+    android:layout_marginBottom="@dimen/space_10"
+    android:layout_marginTop="@dimen/space_10"
+    android:background="@drawable/bg_bx_c3c3c3_bj_3dp"
+    >
+
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:hint="请输入自定义价格"
+        android:textSize="@dimen/text_size_12"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_000000"
+        android:inputType="numberDecimal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_000000"
+        android:text="元"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llEndSiteGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="预计送达时间："
+                android:textColor="#1B1B1B" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvEndSite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="请选择预计送达时间"
+                android:textColor="#868CA2"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="@dimen/space_15"
+                android:layout_height="@dimen/space_15"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginRight="@dimen/space_10"
+                android:src="@mipmap/ic_right_jt" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0E7CFF"
+            android:layout_marginTop="@dimen/space_10"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8"
+            android:text="提交竞拍"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+    </ScrollView>
+    <View
+        android:id="@+id/finishView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#35000000"
+        android:layout_above="@+id/main" />
+</RelativeLayout>

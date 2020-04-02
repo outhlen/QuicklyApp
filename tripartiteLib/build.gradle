@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        manifestPlaceholders = rootProject.ext.manifestPlaceholders
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", 'x86'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':basics')
+    /** 微信    */
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation(name: 'alipaySdk-15.7.4-20200228192259', ext: 'aar')
+    api files('libs/AMap3DMap_6.9.2_AMapNavi_6.9.0_AMapSearch_6.9.2_AMapTrack_1.1.0_AMapLocation_4.7.0_20190710.jar')
+    implementation files('libs/Msc.jar')
+
+
+}
