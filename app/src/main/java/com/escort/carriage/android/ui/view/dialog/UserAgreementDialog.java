@@ -157,7 +157,7 @@ public class UserAgreementDialog extends Dialog implements View.OnClickListener{
             String str2 = "《用户协议》";
             String str3 = "和";
             String str4 = "《隐私政策》";
-            String str5 = "的各项条款。如您同，请点击同意开始接受我们的服务。";
+            String str5 = "的各项条款。如您同意，请点击同意开始接受我们的服务。";
             contextView.append(str1);
             SpannableString spannableString2 = new SpannableString(str2);
             MyClickableSpan clickableSpan = new MyClickableSpan();
