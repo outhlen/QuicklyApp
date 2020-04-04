@@ -165,7 +165,7 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if(s != null ){
                     if(s.success){
-                        ToastUtil.showToastString("竞价成功");
+                        ToastUtil.showToastString("竞价投出");
                         OrderInfoActivity context = (OrderInfoActivity) BiddingPopupWindow.this.context;
                         context.biddingFinishpage();
                     }else {
