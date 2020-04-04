@@ -107,7 +107,9 @@ public class VueActivity extends BaseWebViewActivity {
         }
         UserEntity userInfo = CacheDBMolder.getInstance().getUserInfo(null);
         if(userInfo != null){
-            url += "&phone=" + userInfo.getPhone() + "&isSetTradePassword=" + userInfo.getIsSetTradePassword();
+            url += "&phone=" + userInfo.getPhone()
+                    + "&isSetTradePassword=" + userInfo.getIsSetTradePassword()
+                    + "&selfRecommend=" + userInfo.getSelfRecommend();
         }
 
         LogUtils.showE("LHF", "网页url = " + url);
