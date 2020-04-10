@@ -35,6 +35,7 @@ import com.escort.carriage.android.entity.response.home.ResponseMyOrderListItemE
 import com.escort.carriage.android.entity.response.home.ShengListBean;
 import com.escort.carriage.android.entity.response.home.ShiListBean;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.activity.mes.OrderInfoActivity;
 import com.escort.carriage.android.ui.activity.mes.SelectOrderActivity;
 import com.escort.carriage.android.ui.adapter.home.HistoryOrderListAdapter;
@@ -125,12 +126,7 @@ public class HistoryOrderListFragment extends BaseFragment implements BGARefresh
         if (historyOrderListRequestEnity == null) {
             historyOrderListRequestEnity = new HistoryOrderListRequestEnity();
         }
-
-        HistoryOrderListRequestEnity.PageEntity pageEntity = new HistoryOrderListRequestEnity.PageEntity();
-        pageEntity.setPageNumber(page);
-        pageEntity.setPageSize(10);
-        historyOrderListRequestEnity.page = pageEntity;
-
+        historyOrderListRequestEnity.page = RequestEntityUtils.getPageBeanOrders(page, 10);
         requestEntity.setData(historyOrderListRequestEnity);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.ORDER_GETORDERLIST, jsonString).execute(new MyStringCallback<ResponseMyOrderListItemEntity>() {

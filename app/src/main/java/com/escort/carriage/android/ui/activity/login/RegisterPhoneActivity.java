@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.entity.UserEntity;
 import com.androidybp.basics.fastjson.JsonManager;
@@ -21,6 +23,7 @@ import com.androidybp.basics.ui.base.ProjectBaseEditActivity;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.action_bar.StatusBarUtil;
+import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.verification.VerificationUtil;
 import com.escort.carriage.android.R;
@@ -28,6 +31,7 @@ import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.tripartitelib.android.amap.AmapUtils;
 
 import java.util.HashMap;
 
@@ -49,6 +53,9 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
     private Unbinder bind;
     private int openType;//0:注册 1：微信注册 需要将用户信息返回
 
+    private double longitude;//经度
+    private double latitude;//纬度
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +63,7 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
         setContentView(R.layout.activity_register_phone);
         bind = ButterKnife.bind(this);
         setPageActionBar();
-
+        getLocation();
         Intent intent = getIntent();
         if(intent != null){
             openType = intent.getIntExtra("openType", 0);
@@ -139,6 +146,13 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
             String nickname = intent.getStringExtra("nickname");
             if (!TextUtils.isEmpty(nickname)){
                 data.put("nickname", nickname);
+            }
+
+            if(longitude != 0){
+                data.put("longitudeRegister", longitude);
+            }
+            if(latitude != 0){
+                data.put("latitudeRegister", latitude);
             }
             requestEntity.setData(data);
             String jsonString = JsonManager.createJsonString(requestEntity);
@@ -237,7 +251,29 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
 
     }
 
+    /**
+     * 获取经纬度
+     */
+    private void getLocation() {
+        AmapUtils.getAmapUtils().getLocation(new AMapLocationListener() {
 
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        latitude = aMapLocation.getLatitude();
+                        longitude = aMapLocation.getLongitude();
+                    } else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        LogUtils.showI("MainActivity", "AmapError   location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        });
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

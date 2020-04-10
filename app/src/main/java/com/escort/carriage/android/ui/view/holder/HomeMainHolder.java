@@ -28,6 +28,7 @@ import com.escort.carriage.android.entity.request.home.NewsListReqBean;
 import com.escort.carriage.android.entity.response.home.NewsTitleListBean;
 import com.escort.carriage.android.entity.response.home.ResponseCircuitListEntity;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.activity.HomeActivity;
 import com.escort.carriage.android.ui.activity.mes.NewsListActivity;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
@@ -38,6 +39,8 @@ import com.escort.carriage.android.ui.view.TextSwitchView;
 import com.escort.carriage.android.ui.view.imgview.RoundImageView;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
 import com.tripartitelib.android.iflytek.IflytekUtils;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -148,7 +151,7 @@ public class HomeMainHolder {
 
         RequestEntity requestEntity = new RequestEntity(0);
         NewsListReqBean reqBean = new NewsListReqBean();
-        reqBean.setNewsType("2");//类别（1 发货方 2 承接方）
+        reqBean.setNewsType("2");//类别（1 发货方 2 司机端）
         requestEntity.setData(reqBean);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.SYSNEW_GETTITLELIST, jsonString).execute(new MyStringCallback<NewsTitleListBean>() {
@@ -228,10 +231,17 @@ public class HomeMainHolder {
 
                 break;
             case R.id.ll_goods_lobby:
-                if(viewShowType == 1){
-                    startHomeListFragment();
-                }
+                showHomeListFrag();
                 break;
+        }
+    }
+
+    /**
+     * 显示货源大厅
+     */
+    public void showHomeListFrag() {
+        if(viewShowType == 1){
+            startHomeListFragment();
         }
     }
 
@@ -250,7 +260,9 @@ public class HomeMainHolder {
         //调用接口获取数据
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(activity, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
-        requestEntity.setData(new Object());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("page", RequestEntityUtils.getPageBeanOrders(1, 100));
+        requestEntity.setData(hashMap);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.DRIVELINE_GETLIST, jsonString).execute(new MyStringCallback<ResponseCircuitListEntity>() {
             @Override

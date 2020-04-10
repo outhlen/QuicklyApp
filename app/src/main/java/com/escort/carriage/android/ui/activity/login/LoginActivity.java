@@ -24,6 +24,7 @@ import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.action_bar.StatusBarUtil;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
+import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.verification.VerificationUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
@@ -86,8 +87,8 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
 //        etUserName.setText("17865159987");
 //        etPwd.setText("123456a");
 
-//        etUserName.setText("13075364484");
-//        etPwd.setText("123456qq");
+//        etUserName.setText("13700000003");
+//        etPwd.setText("123456a");
 
 
     }
@@ -109,7 +110,8 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         toolbar.setBackgroundResource(android.R.color.white);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         TextView tvTitle = findViewById(R.id.toolbar_centre_title_right_button_title);
-        tvTitle.setText("");
+        tvTitle.setTextColor(ResourcesTransformUtil.getColor(R.color.color_000000));
+        tvTitle.setText("欢迎登录司机端");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

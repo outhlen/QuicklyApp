@@ -32,7 +32,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="新增接单线路"
+                        android:text="装货确认"
                         android:textColor="@color/color_000000"
                         android:textSize="@dimen/text_size_16" />
 
@@ -61,6 +61,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_1"
                     android:background="@color/color_f7f7f7" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space_10"
+                    android:text="请按流程依次确认"
+                    android:textSize="@dimen/text_size_10"
+                    android:textColor="@color/color_ee4646"
+                    />
 
                 <LinearLayout
                     android:id="@+id/llTopGroup"

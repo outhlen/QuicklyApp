@@ -64,7 +64,7 @@ public class OkgoUtils {
 
 
     public static PostRequest<String> post(String url, String json) {
-        LogUtils.showE("请求的Json", "json = " + json);
+        LogUtils.showE("请求的url = " + url + "    Json", "json = " + json);
         RequestBody body =
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         PostRequest<String> stringPostRequest = OkGo.<String>post(url).tag(ApplicationContext.getInstance().context).upRequestBody(body);

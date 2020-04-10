@@ -38,6 +38,12 @@ public class ProjectUrl {
      */
     public static String ORDERVEHICLE_SENDSMSAPPLYTURN = baseUrl + "undertake/orderVehicle/sendSmsApplyTurn";
 
+    /**
+     * 版本控制
+     */
+    public static String CONFIG_GETVERSION = baseUrl + "undertake/config/getVersion";
+//    public static String CONFIG_GETVERSION = "https://cy.xeyb56.com/a/api/undertake/config/getVersion";
+
 
     /**
      * 短信登录

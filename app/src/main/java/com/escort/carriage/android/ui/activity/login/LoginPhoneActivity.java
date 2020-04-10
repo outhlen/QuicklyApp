@@ -19,6 +19,7 @@ import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.action_bar.StatusBarUtil;
 import com.androidybp.basics.utils.hint.ToastUtil;
+import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.verification.VerificationUtil;
 import com.escort.carriage.android.ProjectApplication;
 import com.escort.carriage.android.R;
@@ -72,7 +73,8 @@ public class LoginPhoneActivity extends ProjectBaseEditActivity{
         toolbar.setBackgroundResource(android.R.color.white);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         TextView tvTitle = findViewById(R.id.toolbar_centre_title_right_button_title);
-        tvTitle.setText("");
+        tvTitle.setTextColor(ResourcesTransformUtil.getColor(R.color.color_000000));
+        tvTitle.setText("欢迎登录司机端");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -326,7 +326,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="代理管理"
+                android:text="申请加盟"
                 android:textColor="#1B1B1B" />
             <View
                 android:layout_width="0dp"
@@ -337,6 +337,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:maxLines="1"
+                android:text="申请成为合作运营商"
                 android:textColor="#868CA2" />
             <ImageView
                 android:layout_width="@dimen/space_15"
@@ -459,6 +461,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:text="我要提议"
                 android:textColor="#868CA2" />
             <ImageView
                 android:layout_width="@dimen/space_15"

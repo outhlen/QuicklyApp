@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="热门订单、竞价，打开推送好货不放过"
+            android:text="热门订单、竞价，打开推送好货不放过呦"
             android:gravity="center"
             android:layout_marginTop="@dimen/space_20"
             />

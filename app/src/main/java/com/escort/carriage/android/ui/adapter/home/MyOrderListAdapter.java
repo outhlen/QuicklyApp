@@ -35,6 +35,8 @@ import com.escort.carriage.android.ui.activity.my.RouteNavigationActivity;
 import com.escort.carriage.android.ui.activity.my.TransfeOrderActivity;
 import com.escort.carriage.android.ui.activity.play.PlayMesFeesActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,6 +66,8 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
     private int reply_evaluate = 10;//回复评价
     private int appeal = 11;//申诉
     private int dispose_revoke = 12;//处理撤单
+
+    private String text = "MyOrderListActivity_updata_positon = ";
 
     public MyOrderListAdapter(@Nullable List<OrderInfoEntity> data, Fragment fragment, int pageType) {
         super(R.layout.item_my_order_list_layout, data);
@@ -127,12 +131,12 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 helper.btnFive.setBackgroundResource(R.drawable.bg_b_999999_bj_3dp);
                 helper.btnFour.setOnClickListener(null);
             } else {
-                if(item.orderTab == 0){
+                if (item.orderTab == 0) {
                     helper.btnFive.setText("撤单");
                     helper.btnFive.setTag(repeal_order);
                     helper.btnFive.setBackgroundResource(R.drawable.bg_b_f56c6c_bj_3dp);
                     helper.btnFive.setOnClickListener(this);
-                } else if(item.orderTab == 1){
+                } else if (item.orderTab == 1) {
                     helper.btnFive.setText("处理撤单");
                     helper.btnFive.setTag(dispose_revoke);
                     helper.btnFive.setBackgroundResource(R.drawable.bg_b_f56c6c_bj_3dp);
@@ -250,7 +254,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
 
         if (item.isAllowTurn == 1) {
-            helper.btnTwo.setText("转单");
+            helper.btnTwo.setText("分拨中转");
             helper.btnTwo.setBackgroundResource(R.drawable.bg_b_f56c6c_bj_3dp);
             helper.btnTwo.setTag(transfer_of_order);
             helper.btnTwo.setTag(R.id.tg_json, item);
@@ -371,7 +375,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                     }
                 }).show();
 
-            } else if(tag1 == dispose_revoke){
+            } else if (tag1 == dispose_revoke) {
                 //处理撤单
                 //撤单
                 new AlertDialog.Builder(fragment.getContext()).setMessage("您是否要进行处理撤单？")
@@ -389,7 +393,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                         setRepealOrderMethod(tag1, item, "0", v);
                         dialog.dismiss();
                     }
-                }).setNeutralButton("取消", new DialogInterface.OnClickListener(){
+                }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -397,7 +401,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                         dialog.dismiss();
                     }
                 }).show();
-            }else if (tag1 == see_order_details) {
+            } else if (tag1 == see_order_details) {
                 //查看详情
                 Intent intent = new Intent(fragment.getActivity(), OrderInfoActivity.class);
                 intent.putExtra("id", item.orderNumber);
@@ -410,6 +414,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 intent.putExtra("json", jsonString);
                 fragment.startActivity(intent);
             } else if (tag1 == go_shipment) {
+
                 //前往装货
                 goShipmentMethod(tag1, item);
 
@@ -419,7 +424,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //开始运输
-                                orderUpdataOrderDetailStatus(tag1, item);
+                                orderUpdataOrderDetailStatus(tag1, item, 2);
                                 dialog.dismiss();
                             }
                         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -442,7 +447,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //卸货完成
-                                orderUpdataOrderDetailStatus(tag1, item);
+                                orderUpdataOrderDetailStatus(tag1, item, 3);
                                 dialog.dismiss();
                             }
                         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -517,7 +522,8 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             }
         });
     }
- /**
+
+    /**
      * 点击 撤单 申请
      *
      * @param orderTabType 是否同意撤单0不同意1同意
@@ -554,7 +560,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             fragment.startActivityForResult(intent, 123);
         } else if (item.isServiceChange == 1) {
             //已经交付
-            orderUpdataOrderDetailStatus(type, item);
+            orderUpdataOrderDetailStatus(type, item, 1);
         }
     }
 
@@ -564,14 +570,21 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
      * @param type
      * @param item
      */
-    private void orderUpdataOrderDetailStatus(int type, OrderInfoEntity item) {
+    private void orderUpdataOrderDetailStatus(int type, OrderInfoEntity item, int toPage) {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("orderNumber", item.orderNumber);
         toService(ProjectUrl.ORDER_UPDATAORDERDETAILSTATUS, type, hashMap, new ServiceCallback() {
             @Override
             public void callback(int type) {
-                //让列表刷新数据
-                fragment.onActivityResult(123, 456, null);
+                if (toPage != -1) {
+                    //跳转至 装货中
+                    EventBus.getDefault().post(text + toPage);
+                } else {
+                    //让列表刷新数据
+                    fragment.onActivityResult(123, 456, null);
+                }
+
+
             }
         });
     }

@@ -25,7 +25,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class MyReceiver extends BroadcastReceiver {
-    private static final String TAG = "MyReceiverTwo";
+    private static final String TAG = "MyReceiver";
 
     private NotificationManager nm;
 
@@ -102,6 +102,7 @@ public class MyReceiver extends BroadcastReceiver {
             switch (jsonBean.getPage()){
                 case 1001://打开APP
                     intent_into_message.setClass(context, HomeActivity.class);
+                    intent_into_message.putExtra("showListInfo", true);
                     context.startActivity(intent_into_message);
                     break;
                 case 1003://中标列表车主app

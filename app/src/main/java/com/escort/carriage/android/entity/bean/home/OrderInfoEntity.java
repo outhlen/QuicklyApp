@@ -90,7 +90,7 @@ public class OrderInfoEntity {
     public String imgUrl2;
     public String imgUrl3;
     public String deposit;
-    public int payMoney;
+    public double payMoney;
     public String isDeposit;
     public String reminder;
     public String trId;
@@ -731,9 +731,6 @@ public class OrderInfoEntity {
         this.deposit = deposit;
     }
 
-    public int getPayMoney() {
-        return payMoney;
-    }
 
     public void setPayMoney(int payMoney) {
         this.payMoney = payMoney;
@@ -1091,5 +1088,13 @@ public class OrderInfoEntity {
 
     public void setReceipt(int receipt) {
         this.receipt = receipt;
+    }
+
+    public double getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(double payMoney) {
+        this.payMoney = payMoney;
     }
 }

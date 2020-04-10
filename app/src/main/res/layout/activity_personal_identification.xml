@@ -278,7 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="14dp"
-                    android:text="联系人"
+                    android:text="紧急联系人"
                     android:textColor="#ff333333"
                     android:textSize="15sp" />
 

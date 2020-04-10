@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="承接方"
+                android:text="司机端"
                 android:background="#1285FD"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"

@@ -33,7 +33,7 @@
                 android:layout_below="@+id/mesPushTitle"
                 android:layout_alignLeft="@+id/mesPushTitle"
                 android:textSize="@dimen/text_size_10"
-                android:text="热门订单、竞价，打开推送好货不放过"/>
+                android:text="热门订单、竞价，打开推送好货不放过呦"/>
 
             <ImageView
                 android:layout_width="@dimen/space_x76"

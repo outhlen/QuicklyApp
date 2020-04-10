@@ -56,9 +56,9 @@ public class HistoryOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, H
         }
 
         helper.tvContent.setText(content);
-        helper.tvMileage.setText("总里程约：" + item.distance + "kM");
+        helper.tvMileage.setText("总里程约：" + item.distance + "km");
         helper.tvTime.setText(ProjectDateUtils.getTimeDay("yyyy-MM-dd HH:mm", item.orderPlaceTime));
-        helper.tvMoney.setText("￥" + item.paramValue);
+        helper.tvMoney.setText("￥" + item.payMoney);
     }
     
 

@@ -33,6 +33,7 @@ import com.escort.carriage.android.entity.response.home.ResponseCircuitListEntit
 import com.escort.carriage.android.entity.response.home.ShengListBean;
 import com.escort.carriage.android.entity.response.home.ShiListBean;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.activity.HomeActivity;
 import com.escort.carriage.android.ui.adapter.home.MyFlowAdapter;
 import com.escort.carriage.android.ui.view.dialog.SelectAddressDialog;
@@ -97,7 +98,9 @@ public class HomePushInfoFragment extends BaseFragment {
         //调用接口获取数据
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
-        requestEntity.setData(new Object());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("page", RequestEntityUtils.getPageBeanOrders(1, 100));
+        requestEntity.setData(hashMap);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.DRIVELINE_GETLIST, jsonString).execute(new MyStringCallback<ResponseCircuitListEntity>() {
             @Override

@@ -75,7 +75,7 @@
 
                 <TextView
                     android:id="@+id/tvMileage"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvContent"
                     android:layout_alignBottom="@+id/ivLocation"
@@ -101,6 +101,22 @@
                     tools:text="待装货"
                     android:textColor="#E6A23C"
                     android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tvOrderType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivImage"
+                    android:layout_alignBottom="@+id/tvMileage"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:padding="@dimen/space_2"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:maxLines="1"
+                    android:layout_marginTop="@dimen/space_3"
+                    tools:text="测试数据"
+                    />
             </RelativeLayout>
 
             <LinearLayout
@@ -168,11 +184,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/tvOderNameTitle"
-                    android:layout_alignBottom="@+id/tvOderNameTitle"
                     android:layout_marginLeft="@dimen/space_15"
                     android:layout_toLeftOf="@+id/orderNumTitle"
                     android:layout_toRightOf="@+id/tvOderNameTitle"
-                    android:maxLines="1"
                     android:paddingRight="@dimen/space_10"
                     android:textColor="@color/color_000000"
                     tools:text="机械设备" />
@@ -194,7 +208,7 @@
                     android:id="@+id/tvOderBulkTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvOderNameTitle"
+                    android:layout_below="@+id/tvOderName"
                     android:layout_marginTop="@dimen/space_10"
                     android:text="货物重量" />
 
@@ -247,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/tvLoadingDischargeInfoTitle"
                     android:layout_toRightOf="@+id/centerView"
-                    android:text="是否三超" />
+                    android:text="配送方式" />
 
                 <TextView
                     android:id="@+id/tvLoadingDischargeInfo"
@@ -460,7 +474,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="允许转单："
+                    android:text="是否中转："
 
                     />
 

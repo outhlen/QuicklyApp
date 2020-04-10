@@ -25,6 +25,7 @@ import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.date.ProjectDateUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
+import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.home.AddrBean;
@@ -42,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderInfoActivity extends ProjectBaseActivity {
+public class OrderInfoActivity extends ProjectBaseActivity implements View.OnClickListener {
     @BindView(R.id.item_head_bar_iv_back)
     ImageView itemHeadBarIvBack;
     @BindView(R.id.item_head_bar_tv_title)
@@ -63,6 +64,8 @@ public class OrderInfoActivity extends ProjectBaseActivity {
     TextView tvMileage;
     @BindView(R.id.tvStatus)
     TextView tvStatus;
+    @BindView(R.id.tvOrderType)
+    TextView tvOrderType;
     @BindView(R.id.tvOderName)
     TextView tvOderName;
     @BindView(R.id.orderNum)
@@ -185,6 +188,8 @@ public class OrderInfoActivity extends ProjectBaseActivity {
     private void intPageViewData() {
         //设置状态
         setPhoneAndOrderType();
+        //设置类型
+        setOrderType(tvOrderType, infoEntity.orderType);
         if (infoEntity.addr != null && infoEntity.addr.size() > 0) {
             AddrBean addrBean = infoEntity.addr.get(0);
             tvStartLocation.setText(addrBean.startCityName);
@@ -219,11 +224,12 @@ public class OrderInfoActivity extends ProjectBaseActivity {
         orderWeight.setText(infoEntity.cargoVolume + "m³");
         //装卸信息
         tvLoadingDischargeInfo.setText(infoEntity.loadNumAndDischargeNum);
-        //是否三超
-        if (TextUtils.equals("0", infoEntity.isOverspeedOvermanTransfinite)) {
-            tvThreeExceed.setText("否");
-        } else {
-            tvThreeExceed.setText("是");
+        //配送方式
+
+        if (TextUtils.equals("1", infoEntity.deliveryWay)) {
+            tvThreeExceed.setText("自提");
+        } else if(TextUtils.equals("2", infoEntity.deliveryWay)){
+            tvThreeExceed.setText("送货");
         }
 
         //备注信息
@@ -234,12 +240,18 @@ public class OrderInfoActivity extends ProjectBaseActivity {
         //设置图片
         if (!TextUtils.isEmpty(infoEntity.imgUrl1)) {
             GlideManager.getGlideManager().loadImage(infoEntity.imgUrl1, imageOne);
+            imageOne.setTag(infoEntity.imgUrl1);
+            imageOne.setOnClickListener(this);
         }
         if (!TextUtils.isEmpty(infoEntity.imgUrl2)) {
             GlideManager.getGlideManager().loadImage(infoEntity.imgUrl2, imageTwo);
+            imageTwo.setTag(infoEntity.imgUrl2);
+            imageTwo.setOnClickListener(this);
         }
         if (!TextUtils.isEmpty(infoEntity.imgUrl3)) {
             GlideManager.getGlideManager().loadImage(infoEntity.imgUrl3, imageThree);
+            imageThree.setTag(infoEntity.imgUrl3);
+            imageThree.setOnClickListener(this);
         }
 
         //设置多装多卸的条目
@@ -296,6 +308,31 @@ public class OrderInfoActivity extends ProjectBaseActivity {
 
     }
 
+    public void setOrderType(TextView textView, String type) {
+        if(TextUtils.isEmpty(type)){
+            type = "0";
+        }
+        switch (type) {
+            case "0"://快速货运
+                textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_1285fd));
+                textView.setBackgroundResource(R.drawable.bg_b_d8effc_bj_3dp);
+                textView.setText("快速货运");
+                break;
+            case "1"://专线直达
+                textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_fe5d1f));
+                textView.setBackgroundResource(R.drawable.bg_b_fee7e4_bj_3dp);
+                textView.setText("专线直达");
+                break;
+            case "2"://城市配送
+                textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_67c23a));
+                textView.setBackgroundResource(R.drawable.bg_b_e9f5e4_bj_3dp);
+                textView.setText("城市配送");
+                break;
+
+
+        }
+    }
+
     private void setPhoneAndOrderType() {
         if (openType == 1) {
             //显示底部按钮
@@ -328,7 +365,7 @@ public class OrderInfoActivity extends ProjectBaseActivity {
                     statusName = "抵达载货地";
                     break;
                 case 4:
-                    statusName = "载货完成";
+                    statusName = "装货完成";
                     break;
                 case 5:
                     statusName = "出发目的地";
@@ -454,6 +491,23 @@ public class OrderInfoActivity extends ProjectBaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageOne:
+            case R.id.imageTwo:
+            case R.id.imageThree:
+                Object tag = v.getTag();
+                if(tag instanceof String){
+                    String url = (String) tag;
+                    Intent intent = new Intent(this, ImageActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                }
+                break;
+        }
+    }
+
     @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -500,4 +554,5 @@ public class OrderInfoActivity extends ProjectBaseActivity {
         intent.setData(data);
         startActivity(intent);
     }
+
 }

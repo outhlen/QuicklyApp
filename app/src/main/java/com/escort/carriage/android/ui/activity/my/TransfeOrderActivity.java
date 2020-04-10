@@ -65,7 +65,7 @@ public class TransfeOrderActivity extends ProjectBaseActivity {
         ButterKnife.bind(this);
         orderNumber = getIntent().getStringExtra("orderNumber");
         setPageActionBar();
-
+        getLocation();
         checkSmsCode.setOnInputListener(new CheckSmsFourCodeView.OnInputListener() {
 
             @Override
@@ -84,7 +84,7 @@ public class TransfeOrderActivity extends ProjectBaseActivity {
         toolbar.setNavigationIcon(R.drawable.ic_back);
         TextView tvTitle = findViewById(R.id.toolbar_centre_title_right_button_title);
         tvTitle.setTextColor(ResourcesTransformUtil.getColor(R.color.color_000000));
-        tvTitle.setText("转单验证");
+        tvTitle.setText("中转验证");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +140,6 @@ public class TransfeOrderActivity extends ProjectBaseActivity {
                         if (s.success) {
                             ToastUtil.showToastString("发送成功");
                             delayed();
-                            getLocation();
                         } else {
                             ToastUtil.showToastString(s.message);
                         }
@@ -242,6 +241,7 @@ public class TransfeOrderActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
+                        ToastUtil.showToastString("中转成功");
                         finishPage();
                     } else {
                         ToastUtil.showToastString(s.message);

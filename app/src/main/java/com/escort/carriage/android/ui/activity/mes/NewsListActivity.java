@@ -96,7 +96,7 @@ public class NewsListActivity extends ProjectBaseActivity {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         NewsListReqBean reqBean = new NewsListReqBean();
-        reqBean.setNewsType("1");//类别（1 发货方 2 承接方）
+        reqBean.setNewsType("1");//类别（1 发货方 2 司机端）
         NewsListReqBean.PageBean page = new NewsListReqBean.PageBean();
         page.setPageNumber(mPageNum);
         page.setPageSize(mPageSize);

@@ -2,6 +2,7 @@ package com.escort.carriage.android.ui.activity.mes;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,10 @@ import com.escort.carriage.android.ui.fragment.home.MyOrderListFragment;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
 import com.escort.carriage.android.utils.tab.TabUtil;
 import com.google.android.material.tabs.TabLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -47,7 +52,7 @@ public class MyOrderListActivity extends ProjectBaseActivity {
     @BindView(R.id.ll_content)
     LinearLayout llContent;
 
-    private String[] titles = {"待取货", "装货中", "运输中", "待结算", "待评价"};
+    private String[] titles = {"待提货", "装货中", "运输中", "待结算", "待评价"};
     private int positioin;
 
     @Override
@@ -58,7 +63,9 @@ public class MyOrderListActivity extends ProjectBaseActivity {
         ButterKnife.bind(this);
         setTitleBar();
         positioin = getIntent().getIntExtra("position", 0);
-
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         setTabLayout();
 
     }
@@ -74,7 +81,31 @@ public class MyOrderListActivity extends ProjectBaseActivity {
 
         }
         tabStripAdapter.addTabAll(arr);
-        vpOrder.setCurrentItem(positioin);
+        setCurrentItem(positioin);
+    }
+
+    private void setCurrentItem(int positioin) {
+        if(vpOrder != null && positioin >= 0 && positioin < titles.length && this.positioin != positioin){
+            vpOrder.setCurrentItem(positioin);
+            this.positioin = positioin;
+        }
+    }
+
+    /**
+     * 更新页面数据
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updataCurrent(String str) {
+        String text = "MyOrderListActivity_updata_positon = ";
+        if(!TextUtils.isEmpty(str) && str.contains(text)){
+            try {
+                String replace = str.replace(text, "");
+                int integer = Integer.valueOf(replace);
+                setCurrentItem(integer);
+            }catch (Exception e){
+
+            }
+        }
     }
 
     private Bundle getBundle(int x) {
@@ -122,5 +153,11 @@ public class MyOrderListActivity extends ProjectBaseActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }

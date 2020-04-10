@@ -133,6 +133,18 @@
                 android:src="@mipmap/ic_right_jt" />
         </LinearLayout>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/space_10"
+            android:textColor="@color/color_e0363d"
+            android:textSize="@dimen/text_size_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:text="竞价前请关注货主开票及保险所产生的费用"
+            />
+
         <TextView
             android:id="@+id/btnNext"
             android:layout_width="match_parent"

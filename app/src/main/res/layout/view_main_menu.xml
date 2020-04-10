@@ -26,22 +26,38 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             />
-
+        <LinearLayout
+            android:id="@+id/iv_head_img_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/statusBarView"
+            android:layout_marginLeft="@dimen/space_10"
+            >
         <com.escort.carriage.android.ui.view.imgview.RoundImageView
             android:id="@+id/iv_head_img1"
             android:src="@mipmap/img_user_head_img_default"
-            android:layout_below="@+id/statusBarView"
-            android:layout_marginLeft="@dimen/space_10"
             android:layout_width="46dp"
             android:layout_height="46dp"/>
+            <TextView
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_ffffff"
+                android:textSize="@dimen/text_size_12"
+                android:layout_marginTop="@dimen/space_3"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="我的"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_head_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/color_ffffff"
-            android:layout_alignBottom="@+id/iv_head_img1"
-            android:layout_alignTop="@+id/iv_head_img1"
+            android:layout_alignBottom="@+id/iv_head_img_group"
+            android:layout_alignTop="@+id/iv_head_img_group"
             android:text="首页"
             android:textSize="18sp"
             android:gravity="center"
@@ -55,7 +71,7 @@
             android:layout_alignParentRight="true"
             android:paddingRight="@dimen/space_10"
             android:paddingTop="@dimen/space_15"
-            android:layout_alignTop="@+id/iv_head_img1"
+            android:layout_alignTop="@+id/iv_head_img_group"
             />
 
         <!--头条部分-->
