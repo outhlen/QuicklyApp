@@ -7,11 +7,13 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -26,6 +28,8 @@ import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.okhttp3.entity.ResponceBean;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
+import com.androidybp.basics.utils.hint.ToastUtil;
+import com.androidybp.basics.utils.resources.Fileprovider;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
 import com.escort.carriage.android.R;
@@ -34,7 +38,6 @@ import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.home.AmapCacheEntity;
 import com.escort.carriage.android.entity.bean.home.VersionEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
-import com.escort.carriage.android.entity.response.home.ResponseAmapCacheEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.view.dialog.AdvertisingImageDialog;
@@ -42,14 +45,25 @@ import com.escort.carriage.android.ui.view.dialog.AuthSuccessDialog;
 import com.escort.carriage.android.ui.view.dialog.VersionDialog;
 import com.escort.carriage.android.ui.view.holder.HomeLeftHolder;
 import com.escort.carriage.android.ui.view.holder.HomeMainHolder;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.OnDownloadListener;
+import com.hjq.http.model.DownloadInfo;
+import com.hjq.http.model.HttpMethod;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.tripartitelib.android.amap.AmapUtils;
 import com.tripartitelib.android.iflytek.IflytekUtils;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import okhttp3.Call;
 
 public class HomeActivity extends ProjectBaseActivity {
     private DrawerLayout drawerLayout;
@@ -57,6 +71,27 @@ public class HomeActivity extends ProjectBaseActivity {
     private FrameLayout leftFrameLayout;
     private HomeLeftHolder homeLeftHoler;
     private HomeMainHolder homeMainHoler;
+
+    /**
+     * Apk 文件
+     */
+    private File mApkFile;
+    /**
+     * 下载地址
+     */
+    private String mDownloadUrl;
+    /**
+     * 文件 MD5
+     */
+    private String mFileMD5;
+    /**
+     * 当前是否下载中
+     */
+    private boolean mDownloading;
+    /**
+     * 当前是否下载完毕
+     */
+    private boolean mDownloadComplete;
 
     private static final String CHANNEL_ID_SERVICE_RUNNING = "CHANNEL_ID_SERVICE_RUNNING";
     private AdvertisingImageDialog advertisingImageDialog;
@@ -281,7 +316,7 @@ public class HomeActivity extends ProjectBaseActivity {
                         VersionEntity jsonBean = JsonManager.getJsonBean(s.data, VersionEntity.class);
                         String versionName = ApplicationContext.getInstance().versionName;
                         int versionCode = ApplicationContext.getInstance().versionCode;
-                        if(jsonBean.terminalId == 1 && jsonBean.groupId == 1 && versionCode != jsonBean.versionCode){
+                        if(jsonBean.terminalId == 1 && jsonBean.groupId == 1 && versionCode > jsonBean.versionCode){
                             if(advertisingImageDialog != null){
                                 advertisingImageDialog.dismiss();
                             }
@@ -307,16 +342,9 @@ public class HomeActivity extends ProjectBaseActivity {
             public void onClickKnow(Dialog dialog, int compulsory) {
                 dialog.dismiss();
                 //跳转浏览器
-                try {
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.VIEW");
-                    Uri content_url = Uri.parse(jsonBean.updateUrl);
-                    intent.setData(content_url);
-                    startActivity(intent);
-
-                } catch (Exception e) {
-
-                }
+                String downLoadUrl = jsonBean.updateUrl;
+                mDownloadUrl = downLoadUrl;
+                setEmpower();
             }
         });
         authSuccessDialog.show();
@@ -328,6 +356,170 @@ public class HomeActivity extends ProjectBaseActivity {
         if (requestCode == 123) {
             getUserInfo();
         }
+    }
+
+    //授权
+    private void setEmpower() {
+        XXPermissions.with(HomeActivity.this)
+                .constantRequest() //可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+                .permission(Permission.Group.STORAGE) //不指定权限则自动获取清单中的危险权限
+                .request(new OnPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+                        if (isAll) {
+                            if (mDownloadComplete) {
+                                // 下载完毕，安装 Apk
+                                installApk();
+                            } else if (!mDownloading) {
+                                // 没有下载，开启下载
+                                downloadApk();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                        if (quick) {
+                            ToastUtil.showToastString("被永久拒绝授权，请手动授予权限");
+                            //如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.gotoPermissionSettings(HomeActivity.this);
+                        } else {
+                            ToastUtil.showToastString("获取权限失败");
+                            //如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.gotoPermissionSettings(HomeActivity.this);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 下载 Apk
+     */
+    private void downloadApk() {
+        ProgressDialog progressDialog = new ProgressDialog(HomeActivity.this);
+        progressDialog.setIcon(null);
+        progressDialog.setTitle("下载");
+        progressDialog.setMessage("正在下载中");
+        progressDialog.setMax(100);
+        //ProgressDialog.STYLE_SPINNER  默认进度条是转圈
+        //ProgressDialog.STYLE_HORIZONTAL  横向进度条
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
+        progressDialog.show();
+        // 创建要下载的文件对象
+        mApkFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), getString(R.string.app_name) + ".apk");
+        EasyHttp.download(HomeActivity.this)
+                .method(HttpMethod.GET)
+                .file(mApkFile)
+                .url(mDownloadUrl)
+                .md5(mFileMD5)
+                .listener(new OnDownloadListener() {
+                    @Override
+                    public void onStart(Call call) {
+                        // 标记为下载中
+                        mDownloading = true;
+                        // 标记成未下载完成
+                        mDownloadComplete = false;
+
+                    }
+
+                    @Override
+                    public void onProgress(DownloadInfo info) {
+                        int downloadProgress = info.getDownloadProgress();
+                        progressDialog.setProgress(downloadProgress);
+                    }
+
+                    @Override
+                    public void onComplete(DownloadInfo info) {
+                        progressDialog.dismiss();
+                        ToastUtil.showToastString("下载完成");
+                        // 标记成下载完成
+                        mDownloadComplete = true;
+                        // 安装 Apk
+                        installApk();
+                    }
+
+                    @SuppressWarnings("ResultOfMethodCallIgnored")
+                    @Override
+                    public void onError(DownloadInfo info, Exception e) {
+                        // 删除下载的文件
+                        info.getFile().delete();
+                        ToastUtil.showToastString("下载失败");
+                    }
+
+                    @Override
+                    public void onEnd(Call call) {
+                        // 标记当前不是下载
+                        mDownloading = false;
+                        ToastUtil.showToastString("下载成功");
+                    }
+                }).start();
+    }
+
+    /**
+     * 安装 Apk
+     */
+
+    private void installApk() {
+
+        try {
+            Intent intent = new Intent();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setAction(Intent.ACTION_VIEW);
+            String type = "application/vnd.android.package-archive";
+            Fileprovider fileprovider = new Fileprovider();
+            Uri uri = fileprovider.getUri(this, mApkFile, intent);
+            intent.setDataAndType(uri, type);
+            startActivity(intent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+//        XXPermissions.with(HomeActivity.this)
+//                .constantRequest() //可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+//                .permission(Permission.REQUEST_INSTALL_PACKAGES) //不指定权限则自动获取清单中的危险权限
+//                .request(new OnPermission() {
+//                    @Override
+//                    public void hasPermission(List<String> granted, boolean isAll) {
+//                        if (isAll) {
+//                            if (mDownloadComplete) {
+//                                // 下载完毕，安装 Apk
+//                                Intent intent = new Intent();
+//                                intent.setAction(Intent.ACTION_VIEW);
+//                                Uri uri;
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                                    uri = FileProvider.getUriForFile(HomeActivity.this, KeyConstant.provider, mApkFile);
+//                                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                                } else {
+//                                    uri = Uri.fromFile(mApkFile);
+//                                }
+//
+//                                intent.setDataAndType(uri, "application/vnd.android.package-archive");
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                startActivity(intent);
+//                            } else if (!mDownloading) {
+//                                // 没有下载，开启下载
+//                                downloadApk();
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void noPermission(List<String> denied, boolean quick) {
+//                        if (quick) {
+//                            ToastUtil.showToastString("被永久拒绝授权，请手动授予权限");
+//                            //如果是被永久拒绝就跳转到应用权限系统设置页面
+//                            XXPermissions.gotoPermissionSettings(HomeActivity.this);
+//                        } else {
+//                            ToastUtil.showToastString("获取权限失败");
+//                            //如果是被永久拒绝就跳转到应用权限系统设置页面
+//                            XXPermissions.gotoPermissionSettings(HomeActivity.this);
+//                        }
+//                    }
+//                });
+
+
     }
 
     @Override

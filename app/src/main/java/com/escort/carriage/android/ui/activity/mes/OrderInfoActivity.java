@@ -227,9 +227,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         //配送方式
 
         if (TextUtils.equals("1", infoEntity.deliveryWay)) {
-            tvThreeExceed.setText("自提");
+            tvThreeExceed.setText("站点提货");
         } else if(TextUtils.equals("2", infoEntity.deliveryWay)){
-            tvThreeExceed.setText("送货");
+            tvThreeExceed.setText("配送到门");
         }
 
         //备注信息

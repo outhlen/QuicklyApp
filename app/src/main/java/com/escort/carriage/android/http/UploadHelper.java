@@ -31,6 +31,9 @@ public class UploadHelper {
     private String BUCKET_NAME = "xeryb";
 
     public UploadHelper(String endpoint, String keyId, String secret, String token, String bucketName) {
+        if(endpoint.contains(bucketName)){
+            endpoint = endpoint.replace(bucketName + ".", "");
+        }
         this.ENDPOINT = endpoint;
         this.accessKeyID = keyId;
         this.accessKeySecret = secret;

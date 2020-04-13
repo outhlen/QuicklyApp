@@ -45,7 +45,7 @@
         android:textSize="@dimen/text_size_13"
         android:layout_marginTop="@dimen/space_10"
         android:layout_marginLeft="@dimen/space_30"
-        android:text="验证码错误"
+        tools:text="验证码错误"
         />
 
     <LinearLayout

@@ -107,6 +107,8 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
                 }
                 break;
         }
+        //无论什么方式 都要将页面关闭
+        finish();
     }
 
     /**
