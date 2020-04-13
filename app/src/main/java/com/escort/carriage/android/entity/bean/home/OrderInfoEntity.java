@@ -50,7 +50,7 @@ public class OrderInfoEntity {
     public int otherPay;
     public int paidAmount;
     public String specificRequirement;
-    public String paymentMethod;
+    public String paymentMethod; //是否发起线下支付  0否 1是
     public String deliveryWay;
     public String carpoolingType;
     public String orderType = "0";

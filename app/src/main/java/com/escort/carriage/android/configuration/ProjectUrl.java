@@ -266,7 +266,6 @@ public class ProjectUrl {
      */
     public static String ORDER_UPDATEORDERDELETE = baseUrl + "undertake/order/updateOrderDelete";
 
-
     /**
      * 装卸列表
      */
@@ -330,5 +329,8 @@ public class ProjectUrl {
      */
     public static String ORDER_GETGOLDFALCON = baseUrl + "undertake/order/getGoldFalcon";
 
-
+    /**
+     * 处理线下支付
+     */
+    public static String ORDER_UPDATEOFFPAY= baseUrl + "undertake/orderVehicle/updateOffPay";
 }
