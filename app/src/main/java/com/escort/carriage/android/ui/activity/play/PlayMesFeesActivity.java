@@ -63,7 +63,10 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
     TextView tvMoney;
     @BindView(R.id.tvYjMoney)
     TextView tvYjMoney;
-
+    @BindView(R.id.tvBxMoney)
+    TextView tvBxMoney;
+    @BindView(R.id.tvFpMoney)
+    TextView tvFpMoney;
     @BindView(R.id.list)
     FillListView filllist;
     @BindView(R.id.tvToPlay)
@@ -71,6 +74,10 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
 
     public String money = "0";
     public String deposit;
+    //保险费
+    public String innsuranceFee;
+    //发票金额
+    public String invoiceFee;
     public String orderNumber;
 
     private final int balanceType = 6;//余额支付
@@ -85,11 +92,21 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
         orderNumber = getIntent().getStringExtra("orderNumber");
         money = getIntent().getStringExtra("money");
         deposit = getIntent().getStringExtra("deposit");
+        innsuranceFee = getIntent().getStringExtra("innsuranceFee");
+        invoiceFee = getIntent().getStringExtra("invoiceFee");
         if(TextUtils.isEmpty(money)){
             money = "0.00";
         }
         if(TextUtils.isEmpty(deposit)){
             deposit = "0.00";
+        }
+
+        if(TextUtils.isEmpty(innsuranceFee)){
+            innsuranceFee = "0.00";
+        }
+
+        if(TextUtils.isEmpty(invoiceFee)){
+            invoiceFee = "0.00";
         }
         setPageActionBar();
         setList();
@@ -110,8 +127,15 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
         tvYjMoney.setText(spannableStringTwo);
 
 
+        SpannableString spannableStringThree = new SpannableString("￥" + innsuranceFee);
+        RelativeSizeSpan sizeSpanThree = new RelativeSizeSpan(0.5f);
+        spannableStringTwo.setSpan(sizeSpanThree, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        tvBxMoney.setText(spannableStringThree);
 
-
+        SpannableString spannableStringFour = new SpannableString("￥" + invoiceFee);
+        RelativeSizeSpan sizeSpanFour = new RelativeSizeSpan(0.5f);
+        spannableStringTwo.setSpan(sizeSpanFour, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        tvFpMoney.setText(spannableStringFour);
     }
 
     private void setPageActionBar() {
