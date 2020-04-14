@@ -16,14 +16,17 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.alibaba.security.biometrics.build.G;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.glide.GlideManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
+import com.androidybp.basics.okhttp3.entity.ResponceJsonEntity;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.date.ProjectDateUtils;
+import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.escort.carriage.android.R;
@@ -36,6 +39,8 @@ import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.view.text.DrawableTextView;
 import com.escort.carriage.android.utils.ChineseNumUtill;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
+import com.tripartitelib.android.amap.AmapUtils;
+
 
 import java.util.HashMap;
 
@@ -122,9 +127,13 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     TextView tvInsuranceMoney;
     @BindView(R.id.tvInvoiceType)
     TextView tvInvoiceType;
+    @BindView(R.id.tvDistances)
+    TextView tvDistances;
     private OrderInfoEntity infoEntity;
 
     private int openType = 1;//打开类型  默认是1   1：货源大厅  2：我的订单 3:历史订单
+    private double longitude;//经度
+    private double latitude;//纬度
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,13 +142,41 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         setContentView(R.layout.activity_oder_info);
         ButterKnife.bind(this);
         setTitleBar();
+        getLocation();
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
+        String flag = intent.getStringExtra("flag");
         openType = intent.getIntExtra("openType", 1);
-        if (!TextUtils.isEmpty(id)) {
+        if (!TextUtils.isEmpty(id) && TextUtils.isEmpty(flag)) {
             getInfo(id);
+        } else if (!TextUtils.isEmpty(id) && TextUtils.equals("flag", "1")) {
+            getInfo2(id);
         }
 
+    }
+
+    /**
+     * 获取经纬度
+     */
+    private void getLocation() {
+        AmapUtils.getAmapUtils().getLocation(new AMapLocationListener() {
+
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        latitude = aMapLocation.getLatitude();
+                        longitude = aMapLocation.getLongitude();
+                    } else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        LogUtils.showI("MainActivity", "AmapError   location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        });
     }
 
     private void setTitleBar() {
@@ -148,12 +185,11 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         itemHeadBarIvRight.setImageResource(R.mipmap.img_index_msg);
 //        itemHeadBarTvRed.setVisibility(View.VISIBLE);
 //        itemHeadBarTvRed.setText("20");
-
     }
 
 
     /**
-     * 详情
+     * 查询订单详情
      */
     public void getInfo(String id) {
 
@@ -184,6 +220,48 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         });
 
     }
+
+    /**
+     * 查询订单详情
+     */
+    public void getInfo2(String id) {
+
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, String> data = new HashMap<>();
+        if(longitude != 0){
+            data.put("longitude", longitude + "");
+        }
+        if(latitude != 0){
+            data.put("latitude", latitude + "");
+        }
+
+        data.put("isLogistics", "1");
+        data.put("orderNumber", id);
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderInfoEntity>() {
+            @Override
+            public void onResponse(ResponseOrderInfoEntity resp) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (resp != null) {
+                    if (resp.success) {
+                        infoEntity = resp.getData();
+                        intPageViewData();
+                    } else {
+                        ToastUtil.showToastString(resp.message);
+                    }
+                }
+            }
+
+            @Override
+            public Class<ResponseOrderInfoEntity> getClazz() {
+                return ResponseOrderInfoEntity.class;
+            }
+        });
+
+    }
+
 
     private void intPageViewData() {
         //设置状态
@@ -225,7 +303,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         //装卸信息
         tvLoadingDischargeInfo.setText(infoEntity.loadNumAndDischargeNum);
         //配送方式
-
         if (TextUtils.equals("1", infoEntity.deliveryWay)) {
             tvThreeExceed.setText("站点提货");
         } else if(TextUtils.equals("2", infoEntity.deliveryWay)){
@@ -234,7 +311,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 
         //备注信息
         tvRemarkInfo.setText(infoEntity.remark);
-
 
 
         //设置图片
@@ -254,8 +330,16 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             imageThree.setOnClickListener(this);
         }
 
+
         //设置多装多卸的条目
-        setLocation();
+        if (TextUtils.isEmpty(infoEntity.distances)) {
+            tvDistances.setVisibility(View.GONE);
+            setLocation();
+        } else {
+            tvDistances.setText(infoEntity.getDistance() + "公里");
+            tvDistances.setVisibility(View.VISIBLE);
+        }
+
 
         //运费金额
         if(infoEntity.orderStatus == 0){
@@ -508,7 +592,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         }
     }
 
-    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding})
+    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding, R.id.showReceipt})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.item_head_bar_iv_back:
@@ -526,7 +610,38 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 intent.putExtra("intention", infoEntity.intention);
                 startActivityForResult(intent, 333);
                 break;
+            case R.id.showReceipt:
+                // 点击查看货运单，调接口调详情页面 todo:
+                showReceipt(infoEntity.orderNumber);
+                break;
         }
+    }
+
+    private void showReceipt(String orderNumber) {
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("orderNumber", orderNumber);
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+
+        OkgoUtils.post(ProjectUrl.GOODS_TRANSPORT_RECEIPT, jsonString).execute(new MyStringCallback<ResponceJsonEntity>() {
+
+            @Override
+            public Class<ResponceJsonEntity> getClazz() {
+                return ResponceJsonEntity.class;
+            }
+
+            @Override
+            public void onResponse(ResponceJsonEntity entity) {
+                // fetch the oss-url of receipt.
+                String pdfUrl = (String)entity.getData();
+//                WebView webView = new WebView();
+//                webView.loadUrl()
+                //View.loadUrl("http://mozilla.github.io/pdf.js/web/viewer.html?file=" + pdfUrl);
+                //webView.loadUrl()
+            }
+
+        });
     }
 
     @Override

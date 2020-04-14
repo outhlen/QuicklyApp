@@ -274,6 +274,7 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
             }
         });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

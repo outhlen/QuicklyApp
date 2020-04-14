@@ -4,6 +4,11 @@ import com.androidybp.basics.configuration.BaseProjectUrl;
 
 public class ProjectUrl {
     private static String baseUrl = BaseProjectUrl.getRequestUrl();
+    /**
+     * 货源大厅推送列表
+     */
+    public static String ORDERVEHICLE_LISTMATCHING = baseUrl + "undertake/orderVehicle/listMatching";
+
 
 
     //获取幻灯片 (其他) 2:APP首页 3:商城 4:俱乐部 5:直播 6:启动图
@@ -100,10 +105,7 @@ public class ProjectUrl {
      */
     public static String SYSNEW_GETSYSNEWINFO = baseUrl + "undertake/sysnew/getSysNewInfo";
 
-    /**
-     * 货源大厅推送列表
-     */
-    public static String ORDERVEHICLE_LISTMATCHING = baseUrl + "undertake/orderVehicle/listMatching";
+
 
     /**
      * 订单详情
@@ -114,6 +116,11 @@ public class ProjectUrl {
      * 竞标
      */
     public static String ORDERVEHICLE_ADD_VEHICLE = baseUrl + "undertake/orderVehicle/add/vehicle";
+
+    /**
+     * 查看货运单
+     */
+    public static String GOODS_TRANSPORT_RECEIPT = baseUrl + "undertake/attestation/getAssumeRole";
 
     /**
      * 线路列表查询

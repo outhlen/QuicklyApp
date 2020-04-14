@@ -64,6 +64,7 @@ public class BiddingActivity extends Activity {
     private String orderNumber;
     private String intention;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
