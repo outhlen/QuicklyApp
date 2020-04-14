@@ -1,18 +1,11 @@
 package com.androidybp.basics.glide;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
-import android.view.View;
 import android.widget.ImageView;
-import androidx.fragment.app.Fragment;
 import com.androidybp.basics.ApplicationContext;
-import com.androidybp.basics.glide.transformation.RotateTransformation;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.LazyHeaders;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -190,6 +183,7 @@ public class GlideManager {
     public void loadImage(String path, ImageView imageView) {
         Glide.with(ApplicationContext.getInstance().context).asDrawable().load(path).into(imageView);
     }
+
     /**
      * @param path      图片加载地址
      * @param imageView 展示图片的控件

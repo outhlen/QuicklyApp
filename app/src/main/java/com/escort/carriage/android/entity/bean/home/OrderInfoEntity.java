@@ -130,6 +130,7 @@ public class OrderInfoEntity {
 
     public String  invoiceFee;//	发票金额（缴纳信息费的时候）
 
+    public String distances;
     public List<AddrBean> addr;
     public List<String> turn;
 
@@ -139,6 +140,14 @@ public class OrderInfoEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDistances() {
+        return distances;
+    }
+
+    public void setDistances(String distances) {
+        this.distances = distances;
     }
 
     public String getOrderNumber() {

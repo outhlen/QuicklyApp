@@ -92,15 +92,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/space_30"
                     android:layout_alignParentRight="true"
-                    android:paddingLeft="@dimen/space_10"
-                    android:paddingRight="@dimen/space_10"
                     android:layout_marginTop="@dimen/space_10"
                     android:background="@drawable/bg_order_dqh"
                     android:gravity="center"
+                    android:paddingLeft="@dimen/space_10"
                     android:paddingTop="@dimen/space_3"
-                    tools:text="待装货"
+                    android:paddingRight="@dimen/space_10"
                     android:textColor="#E6A23C"
-                    android:textSize="@dimen/text_size_15" />
+                    android:textSize="@dimen/text_size_15"
+                    tools:text="待装货" />
 
                 <TextView
                     android:id="@+id/tvOrderType"
@@ -109,22 +109,22 @@
                     android:layout_below="@+id/ivImage"
                     android:layout_alignBottom="@+id/tvMileage"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/space_10"
-                    android:padding="@dimen/space_2"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:maxLines="1"
                     android:layout_marginTop="@dimen/space_3"
-                    tools:text="测试数据"
-                    />
+                    android:layout_marginRight="@dimen/space_10"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2"
+                    android:textSize="10sp"
+                    tools:text="测试数据" />
             </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@color/color_ffffff"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,17 +139,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/space_10"
-                    android:textColor="#E6A23C"
-                    android:text="此订单需要投保"
                     android:drawablePadding="@dimen/space_5"
+                    android:text="此订单需要投保"
+                    android:textColor="#E6A23C"
                     android:textSize="@dimen/text_size_10"
                     app:dt_left_drawable="@drawable/icon_is_tb"
                     app:dt_left_height="9dp"
-                    app:dt_left_width="10dp"
-                    />
+                    app:dt_left_width="10dp" />
 
             </LinearLayout>
-
 
 
             <RelativeLayout
@@ -288,7 +286,7 @@
                     android:maxLines="1"
                     android:paddingRight="@dimen/space_10"
                     android:textColor="@color/color_000000"
-                    tools:text="否" />
+                    tools:text="站点提货" />
 
                 <TextView
                     android:id="@+id/tvRemarkInfoTitle"
@@ -349,6 +347,19 @@
                     android:layout_marginLeft="@dimen/space_20" />
 
             </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/showReceipt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorFF"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="点击查看货运单"
+                android:textColor="#0E7CFF"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -421,7 +432,7 @@
 
             </LinearLayout>
 
-             <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
@@ -454,7 +465,7 @@
 
             </LinearLayout>
 
-             <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
@@ -487,8 +498,8 @@
 
             </LinearLayout>
 
-             <LinearLayout
-                 android:id="@+id/tvInsuranceServicesGroup"
+            <LinearLayout
+                android:id="@+id/tvInsuranceServicesGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
@@ -521,8 +532,8 @@
 
             </LinearLayout>
 
-             <LinearLayout
-                 android:id="@+id/tvInsuranceMoneyGroup"
+            <LinearLayout
+                android:id="@+id/tvInsuranceMoneyGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
@@ -554,7 +565,8 @@
                     tools:text="100元" />
 
             </LinearLayout>
-       <LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
@@ -574,20 +586,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="发票类型："
-
-                    />
+                    android:text="发票类型："/>
 
                 <TextView
                     android:id="@+id/tvInvoiceType"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:textColor="@color/color_000000"
                     tools:text="100元" />
-
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_10"
+                android:paddingRight="@dimen/space_10"
+                android:paddingBottom="@dimen/space_5">
 
+                <ImageView
+                    android:layout_width="@dimen/space_17"
+                    android:layout_height="@dimen/space_17"
+                    android:layout_marginRight="@dimen/space_3"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_invoice_type" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="司机与第一装货地的距离"/>
+
+                <TextView
+                    android:id="@+id/tvDistances"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/color_000000"
+                    tools:text="100公里" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llLocationGroup"
@@ -647,7 +684,6 @@
                     android:layout_width="@dimen/space_30"
                     android:layout_height="@dimen/space_30"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/space_10"
                     android:src="@drawable/icon_call_mobile"
 

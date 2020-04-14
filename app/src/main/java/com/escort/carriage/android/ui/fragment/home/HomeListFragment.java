@@ -171,6 +171,8 @@ public class HomeListFragment extends BaseFragment implements BGARefreshLayout.B
 
         requestEntity.setData(homeListRequestEnity);
         String jsonString = JsonManager.createJsonString(requestEntity);
+
+        // 货源大厅推送列表
         OkgoUtils.post(ProjectUrl.ORDERVEHICLE_LISTMATCHING, jsonString).execute(new MyStringCallback<HomeListEntity>() {
             @Override
             public void onResponse(HomeListEntity entity) {
@@ -183,11 +185,13 @@ public class HomeListFragment extends BaseFragment implements BGARefreshLayout.B
 
                     if (entity != null && entity.getData() != null
                             && entity.getData().getList() != null
-                            && entity.getData().getList().size() > 0) {//有数据
+                            && entity.getData().getList().size() > 0) {
+                        //有数据
                         List<GoodsBean> list = entity.getData().getList();
                         if (entity.data.isLastPage) {
                             allPage = page;
                         }
+
                         ll_empty.setVisibility(View.GONE);
                         rlRefresh.setVisibility(View.VISIBLE);
                         if (adapter == null || adapter.getData() == null || adapter.getData().size() == 0) {
@@ -204,7 +208,8 @@ public class HomeListFragment extends BaseFragment implements BGARefreshLayout.B
                             }
                         }
                     } else {
-                        if (adapter == null || adapter.getData() == null || adapter.getData().size() == 0) {//第一次加载有数据
+                        if (adapter == null || adapter.getData() == null || adapter.getData().size() == 0) {
+                            //第一次加载有数据
                             page--;
                             adapter.notifyDataSetChanged();
                             ToastUtil.showToastString("没有更多了");
@@ -252,14 +257,18 @@ public class HomeListFragment extends BaseFragment implements BGARefreshLayout.B
         adapter = new OrderAdapter(list);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
+            // 查看竞价详情 todo:
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 GoodsBean bean = (GoodsBean) adapter.getData().get(position);
                 Intent intent = new Intent(getActivity(), OrderInfoActivity.class);
                 intent.putExtra("id", bean.getOrderNumber());
+
+                intent.putExtra("flag", "1");
                 startActivityForResult(intent, 333);
             }
         });
+
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
