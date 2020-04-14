@@ -52,10 +52,21 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
     RelativeLayout imageFyGroup;
     @BindView(R.id.ivFyImageView)
     RoundedImagView ivFyImageView;
+    /**
+     * 人车合照
+     */
+    @BindView(R.id.ivRcImg)
+    ImageView ivRcImg;
+    @BindView(R.id.imageRcGroup)
+    RelativeLayout imageRcGroup;
+    @BindView(R.id.ivRcImageView)
+    RoundedImagView ivRcImageView;
+
+
     @BindView(R.id.tvAddCar)
     TextView tvAddCar;
     private SelectPhotoUtils selectPhotoUtils;
-    String frontUrl, backUrl;
+    String frontUrl, backUrl ,imageUrl1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +122,7 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
         selectPhotoUtils.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.ivImg, R.id.ivImageView, R.id.ivFyImg, R.id.ivFyImageView, R.id.tvAddCar})
+    @OnClick({R.id.ivImg, R.id.ivImageView, R.id.ivFyImg, R.id.ivFyImageView, R.id.ivRcImg, R.id.ivRcImageView,  R.id.tvAddCar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivImg:
@@ -122,11 +133,17 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
             case R.id.ivFyImageView:
                 selectPhotoUtils.selectPhoto(2, main);
                 break;
+            case R.id.ivRcImg:
+            case R.id.ivRcImageView:
+                selectPhotoUtils.selectPhoto(3, main);
+                break;
             case R.id.tvAddCar:
                 if(TextUtils.isEmpty(frontUrl)){
                     ToastUtil.showToastString("请上传行驶证信息-主页");
                 } else if(TextUtils.isEmpty(backUrl)){
                     ToastUtil.showToastString("请上传行驶证信息-副页");
+                }else if(TextUtils.isEmpty(imageUrl1)){
+                    ToastUtil.showToastString("请上传司机与车辆合照");
                 } else {
                     commitUrl();
                 }
@@ -148,6 +165,11 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                     ivFyImageView.setVisibility(View.VISIBLE);
                     backUrl = url;
                     GlideManager.getGlideManager().loadImage(url, ivFyImageView);
+                }else if (openType == 3) {
+                    imageRcGroup.setVisibility(View.GONE);
+                    ivRcImageView.setVisibility(View.VISIBLE);
+                    imageUrl1 = url;
+                    GlideManager.getGlideManager().loadImage(url, ivFyImageView);
                 }
             }
         });
@@ -159,6 +181,7 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("frontUrl", frontUrl);
         hashMap.put("backUrl", backUrl);
+        hashMap.put("imageUrl1", imageUrl1);
         requestEntity.setData(hashMap);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.VEHICLE_INFO_ADD, jsonString).execute(new MyStringCallback<ResponceBean>() {

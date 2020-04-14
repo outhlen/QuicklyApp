@@ -33,42 +33,41 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
+                android:layout_height="150dp"
                 android:layout_margin="14dp"
                 android:gravity="center">
 
                 <RelativeLayout
-                    android:id="@+id/imageGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:background="@drawable/icon_xszbg"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
+                        android:id="@+id/imageGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/icon_xszbg"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp">
 
                     <ImageView
-                        android:id="@+id/ivImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/icon_camera" />
+                            android:id="@+id/ivImg"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_camera"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ivImg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="12dp"
-                        android:text="点击上传行驶证信息-主页"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ivImg"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="2dp"
+                            android:text="点击上传行驶证信息-主页"
+                            android:textColor="#000"
+                            android:textSize="14sp"/>
 
                 </RelativeLayout>
-
                 <com.escort.carriage.android.ui.view.imgview.RoundedImagView
                     android:id="@+id/ivImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
+                    android:layout_height="150dp"
                     android:layout_alignLeft="@+id/imageGroup"
                     android:layout_alignTop="@+id/imageGroup"
                     android:layout_alignRight="@+id/imageGroup"
@@ -80,22 +79,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
+                android:layout_height="150dp"
                 android:layout_margin="14dp"
                 android:gravity="center">
 
                 <RelativeLayout
                     android:id="@+id/imageFyGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
+                    android:layout_height="150dp"
                     android:background="@drawable/icon_xszbg"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp">
 
                     <ImageView
                         android:id="@+id/ivFyImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_centerInParent="true"
                         android:scaleType="fitCenter"
                         android:src="@drawable/icon_camera" />
@@ -105,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ivFyImg"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="2dp"
                         android:text="点击上传行驶证信息-副页"
                         android:textColor="#000"
                         android:textSize="14sp" />
@@ -115,13 +114,60 @@
                 <com.escort.carriage.android.ui.view.imgview.RoundedImagView
                     android:id="@+id/ivFyImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
+                    android:layout_height="150dp"
                     android:layout_alignLeft="@+id/imageFyGroup"
                     android:layout_alignTop="@+id/imageFyGroup"
                     android:layout_alignRight="@+id/imageFyGroup"
                     android:layout_alignBottom="@+id/imageFyGroup"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="14dp"
+                    android:gravity="center">
+
+                <RelativeLayout
+                        android:id="@+id/imageRcGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@drawable/icon_xszbg"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp">
+
+                    <ImageView
+                            android:id="@+id/ivRcImg"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_camera" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ivRcImg"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="2dp"
+                            android:text="点击上传人车合照照片"
+                            android:textColor="#000"
+                            android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <com.escort.carriage.android.ui.view.imgview.RoundedImagView
+                        android:id="@+id/ivRcImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_alignLeft="@+id/imageRcGroup"
+                        android:layout_alignTop="@+id/imageRcGroup"
+                        android:layout_alignRight="@+id/imageRcGroup"
+                        android:layout_alignBottom="@+id/imageRcGroup"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
             </RelativeLayout>
         </LinearLayout>
