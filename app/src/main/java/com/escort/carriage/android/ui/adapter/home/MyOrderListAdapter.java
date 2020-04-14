@@ -66,6 +66,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
     private int reply_evaluate = 10;//回复评价
     private int appeal = 11;//申诉
     private int dispose_revoke = 12;//处理撤单
+    private int dispose_payment = 13;//线下支付
 
     private String text = "MyOrderListActivity_updata_positon = ";
 
@@ -303,8 +304,16 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             helper.btnFour.setOnClickListener(null);
         }
 
+        if ("1".equals(item.paymentMethod)) {
+            helper.btnThree.setBackgroundResource(R.drawable.bg_b_3e9fff_bj_3dp);
+            helper.btnThree.setText("线下付款");
+            helper.btnThree.setTag(dispose_payment);
+            helper.btnThree.setTag(R.id.tg_json, item);
+            helper.btnThree.setOnClickListener(this);
+        }else {
+            helper.btnThree.setVisibility(View.GONE);
+        }
 
-        helper.btnThree.setVisibility(View.INVISIBLE);
         helper.btnTwo.setVisibility(View.INVISIBLE);
         helper.btnOne.setVisibility(View.INVISIBLE);
     }
@@ -483,6 +492,24 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 Intent intentOne = new Intent(fragment.getActivity(), AppealActivity.class);
                 intentOne.putExtra("orderNumber", item.orderNumber);
                 fragment.startActivityForResult(intentOne, 123);
+            } else if (tag1 == dispose_payment) {
+                //线下付款
+                new AlertDialog.Builder(fragment.getContext()).setMessage("您是否同意货主线下付款？")
+                        .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //同意
+                                setRepealPaymentMethod(tag1, item, "1", v,4);
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("不同意", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //不同意
+                        setRepealPaymentMethod(tag1, item, "0", v, -1);
+                        dialog.dismiss();
+                    }
+                }).show();
             }
         }
     }
@@ -524,6 +551,30 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
     }
 
     /**
+     * 点击 线下付款 处理
+     *
+     * @param item "requsetType":0//用户类型(0货主1车主)
+     */
+    private void setRepealPaymentMethod(int type, OrderInfoEntity item, String repealType, View view, int toPage) {
+        //已经交付
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("orderNumber", item.orderNumber);
+        hashMap.put("requsetType", repealType);
+        toService(ProjectUrl.ORDER_UPDATEOFFPAY, type, hashMap, new ServiceCallback() {
+            @Override
+            public void callback(int type) {
+                if (toPage != -1) {
+                    //跳转至 装货中
+                    EventBus.getDefault().post(text + toPage);
+                } else {
+                    //让列表刷新数据
+                    fragment.onActivityResult(123, 456, null);
+                }
+            }
+        });
+    }
+
+    /**
      * 点击 撤单 申请
      *
      * @param orderTabType 是否同意撤单0不同意1同意
@@ -557,6 +608,8 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             intent.putExtra("money", item.paramValue);
             intent.putExtra("orderNumber", item.orderNumber);
             intent.putExtra("deposit", item.deposit);
+            intent.putExtra("innsuranceFee", item.innsuranceFee);
+            intent.putExtra("invoiceFee", item.invoiceFee);
             fragment.startActivityForResult(intent, 123);
         } else if (item.isServiceChange == 1) {
             //已经交付
