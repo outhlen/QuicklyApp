@@ -126,6 +126,10 @@ public class OrderInfoEntity {
     public String insurancePay;//	保险金额
     public String taxType;//	保险类型 s 电子增值税普通发票  p 增值税专用发票  否则 不开发票
     public int orderTab;//	0显示：撤单  1显示：处理撤单
+    public String innsuranceFee;//	保險金额（缴纳信息费的时候）
+
+    public String  invoiceFee;//	发票金额（缴纳信息费的时候）
+
     public List<AddrBean> addr;
     public List<String> turn;
 
@@ -1096,5 +1100,21 @@ public class OrderInfoEntity {
 
     public void setPayMoney(double payMoney) {
         this.payMoney = payMoney;
+    }
+
+    public String getInnsuranceFee() {
+        return innsuranceFee;
+    }
+
+    public void setInnsuranceFee(String innsuranceFee) {
+        this.innsuranceFee = innsuranceFee;
+    }
+
+    public String getInvoiceFee() {
+        return invoiceFee;
+    }
+
+    public void setInvoiceFee(String invoiceFee) {
+        this.invoiceFee = invoiceFee;
     }
 }
