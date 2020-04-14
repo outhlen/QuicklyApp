@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.escort.carriage.android.entity.bean.push.PushEntity;
@@ -64,7 +66,12 @@ public class MyReceiver extends BroadcastReceiver {
         try {
             PushEntity jsonBean = JsonManager.getJsonBean(extras, PushEntity.class);
             if(jsonBean.getIsVoice() == 1){
-                IflytekUtils.getIflytekUtils().startSpeaking(context, message);
+                String speakCheck = CacheDBMolder.getInstance().isNotificationSpeak();
+                Log.d("测试",speakCheck);
+                // 初始化设置语音开关
+                if(speakCheck == null || speakCheck.equals("") || speakCheck.equals("0")){
+                    IflytekUtils.getIflytekUtils().startSpeaking(context, message);
+                }
             }
             if(jsonBean.page == 1001){
                 EventBus.getDefault().post("homeAct_updat_data");

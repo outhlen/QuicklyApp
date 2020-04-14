@@ -24,6 +24,7 @@ public class CacheDataEntity {
     public int userLoginType;//用户上一次登录的 标识   0 -- 用户名密码   1 -- 手机验证码登录
     public String wyImToken;//网易IMtoken保存字段
     public boolean isNotification = true;//是否开启推送
+    public String isNotificationSpeak = "0";//是否关闭语音播报
 
     public boolean isNotification() {
         return isNotification;
@@ -33,6 +34,13 @@ public class CacheDataEntity {
         isNotification = notification;
     }
 
+    public String isNotificationSpeak() {
+        return isNotificationSpeak;
+    }
+
+    public void setNotificationSpeak(String notification) {
+        isNotificationSpeak = notification;
+    }
     /**
      * 配置信息状态
      * <p>

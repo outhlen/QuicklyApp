@@ -3,6 +3,7 @@ package com.escort.carriage.android.ui.activity.my;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,8 +26,11 @@ import com.escort.carriage.android.entity.response.login.ResponseUserInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
 
+import android.widget.CompoundButton;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import android.widget.Switch;
 import butterknife.Unbinder;
 
 /**
@@ -34,8 +38,9 @@ import butterknife.Unbinder;
  * @description:
  * @date :2020-03-20 17:05
  */
-public class SettingActivity extends ProjectBaseSingleClickActivity {
+public class SettingActivity extends ProjectBaseSingleClickActivity{
 
+    private Switch aSwitch;
     private Unbinder bind;
 
     @Override
@@ -45,6 +50,29 @@ public class SettingActivity extends ProjectBaseSingleClickActivity {
         setContentView(R.layout.activity_setting);
         bind = ButterKnife.bind(this);
 
+        //实例化
+        aSwitch = (Switch) findViewById(R.id.ivSpeakSwitch);
+        String speakCheck = CacheDBMolder.getInstance().isNotificationSpeak();
+
+        // 初始化设置语音开关
+        if(speakCheck == null || speakCheck.equals("") || speakCheck.equals("0")){
+            aSwitch.setChecked(false);
+        }else {
+            aSwitch.setChecked(true);
+        }
+
+        //设置Switch事件监听
+        // 添加监听
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    CacheDBMolder.getInstance().setNotificationSpeak("1");
+                }else {
+                    CacheDBMolder.getInstance().setNotificationSpeak("0");
+                }
+            }
+        });
         setPageActionBar();
 
     }
@@ -65,8 +93,6 @@ public class SettingActivity extends ProjectBaseSingleClickActivity {
             }
         });
     }
-
-
 
     @OnClick({R.id.llChangeAccount, R.id.llPayPwd, R.id.llLoginPwd, R.id.llChangePhone, R.id.llUserAgreement, R.id.llPrivacyRights, R.id.llAbout, R.id.tvExitLogin})
     public void onViewClicked(View view) {

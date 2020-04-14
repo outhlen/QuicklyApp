@@ -579,7 +579,24 @@ public class CacheDBMolder {
         cacheDataEntity.isNotification = flag;
     }
 
+//   =====================  ↑↑↑↑ 数据二级缓存 ↑↑↑↑　 ===============
 
 
+    public String isNotificationSpeak(){
+        //1、现在 全局缓存数据里面取
+        CacheDataEntity cacheDataEntity = getCacheDataEntity(null);
+        String flag = cacheDataEntity.isNotificationSpeak();
+        return flag;
+    }
 
+    /**
+     * 设置语音播报开关
+     * @param flag
+     */
+    public void setNotificationSpeak(String flag){
+        //1、先保存到全局缓存类中
+        CacheDataEntity cacheDataEntity = getCacheDataEntity(null);
+        cacheDataEntity.setNotificationSpeak(flag);
+        this.mCacheDataEntity = cacheDataEntity;
+    }
 }
