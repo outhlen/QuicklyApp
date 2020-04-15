@@ -51,6 +51,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_10"
                 />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/space_10"
+                android:textColor="@color/color_e0363d"
+                android:textSize="@dimen/text_size_11"
+                android:layout_marginTop="@dimen/space_10"
+                android:text="完成驾驶证认证请上传车辆信息才可押镖接单"
+                />
             <com.escort.carriage.android.ui.view.list.FillListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
