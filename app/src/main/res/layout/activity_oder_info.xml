@@ -605,18 +605,12 @@
                 android:paddingRight="@dimen/space_10"
                 android:paddingBottom="@dimen/space_5">
 
-                <ImageView
-                    android:layout_width="@dimen/space_17"
-                    android:layout_height="@dimen/space_17"
-                    android:layout_marginRight="@dimen/space_3"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/icon_invoice_type" />
-
                 <TextView
+                    android:id="@+id/tvDistancesLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="司机与第一装货地的距离"/>
+                    android:text="与装货地的距离约"/>
 
                 <TextView
                     android:id="@+id/tvDistances"

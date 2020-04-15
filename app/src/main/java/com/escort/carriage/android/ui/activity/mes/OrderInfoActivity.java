@@ -129,6 +129,11 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     TextView tvInvoiceType;
     @BindView(R.id.tvDistances)
     TextView tvDistances;
+    @BindView(R.id.tvDistancesLabel)
+    TextView tvDistancesLabel;
+    @BindView(R.id.showReceipt)
+    TextView showReceipt;
+
     private OrderInfoEntity infoEntity;
 
     private int openType = 1;//打开类型  默认是1   1：货源大厅  2：我的订单 3:历史订单
@@ -147,12 +152,10 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         String id = intent.getStringExtra("id");
         String flag = intent.getStringExtra("flag");
         openType = intent.getIntExtra("openType", 1);
-        if (!TextUtils.isEmpty(id) && TextUtils.isEmpty(flag)) {
+        if (!TextUtils.isEmpty(id)) {
             getInfo(id);
-        } else if (!TextUtils.isEmpty(id) && TextUtils.equals("flag", "1")) {
-            getInfo2(id);
         }
-
+        showReceipt.setVisibility(View.GONE);
     }
 
     /**
@@ -196,47 +199,16 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
-        data.put("orderNumber", id);
-        requestEntity.setData(data);
-        String jsonString = JsonManager.createJsonString(requestEntity);
-        OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderInfoEntity>() {
-            @Override
-            public void onResponse(ResponseOrderInfoEntity resp) {
-                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                if (resp != null) {
-                    if (resp.success) {
-                        infoEntity = resp.getData();
-                        intPageViewData();
-                    } else {
-                        ToastUtil.showToastString(resp.message);
-                    }
-                }
+        if(openType == 1){
+            if(longitude != 0){
+                data.put("longitude", longitude + "");
+            }
+            if(latitude != 0){
+                data.put("latitude", latitude + "");
             }
 
-            @Override
-            public Class<ResponseOrderInfoEntity> getClazz() {
-                return ResponseOrderInfoEntity.class;
-            }
-        });
-
-    }
-
-    /**
-     * 查询订单详情
-     */
-    public void getInfo2(String id) {
-
-        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
-        RequestEntity requestEntity = new RequestEntity(0);
-        HashMap<String, String> data = new HashMap<>();
-        if(longitude != 0){
-            data.put("longitude", longitude + "");
+            data.put("isLogistics", "1");
         }
-        if(latitude != 0){
-            data.put("latitude", latitude + "");
-        }
-
-        data.put("isLogistics", "1");
         data.put("orderNumber", id);
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
@@ -332,12 +304,12 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 
 
         //设置多装多卸的条目
-        if (TextUtils.isEmpty(infoEntity.distances)) {
-            tvDistances.setVisibility(View.GONE);
-            setLocation();
-        } else {
+        if (openType == 1) {
             tvDistances.setText(infoEntity.getDistance() + "公里");
-            tvDistances.setVisibility(View.VISIBLE);
+        } else {
+            tvDistances.setVisibility(View.GONE);
+            tvDistancesLabel.setVisibility(View.GONE);
+            setLocation();
         }
 
 

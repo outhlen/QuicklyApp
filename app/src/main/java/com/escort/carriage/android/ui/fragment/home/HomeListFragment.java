@@ -263,8 +263,6 @@ public class HomeListFragment extends BaseFragment implements BGARefreshLayout.B
                 GoodsBean bean = (GoodsBean) adapter.getData().get(position);
                 Intent intent = new Intent(getActivity(), OrderInfoActivity.class);
                 intent.putExtra("id", bean.getOrderNumber());
-
-                intent.putExtra("flag", "1");
                 startActivityForResult(intent, 333);
             }
         });
