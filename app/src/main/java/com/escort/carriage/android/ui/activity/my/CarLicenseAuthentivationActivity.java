@@ -22,6 +22,7 @@ import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.my.CarLicenseInfoEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
@@ -66,12 +67,17 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
     @BindView(R.id.tvAddCar)
     TextView tvAddCar;
     private SelectPhotoUtils selectPhotoUtils;
-    String frontUrl, backUrl ,imageUrl1;
+    String frontUrl, backUrl,imageUrl1;
+    private CarLicenseInfoEntity.ListBean jsonBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_license_authentivation);
+        String json = getIntent().getStringExtra("json");
+        if(!TextUtils.isEmpty(json)){
+            jsonBean = JsonManager.getJsonBean(json, CarLicenseInfoEntity.ListBean.class);
+        }
         ButterKnife.bind(this);
         setPageActionBar();
         setSelectUtils();
@@ -179,12 +185,20 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> hashMap = new HashMap<>();
+        String url;
         hashMap.put("frontUrl", frontUrl);
         hashMap.put("backUrl", backUrl);
         hashMap.put("imageUrl1", imageUrl1);
+
+        if(jsonBean != null){
+            url = ProjectUrl.VEHICLE_INFO_UPDATE;
+            hashMap.put("id", jsonBean.id);
+        } else {
+            url = ProjectUrl.VEHICLE_INFO_ADD;
+        }
         requestEntity.setData(hashMap);
-        String jsonString = JsonManager.createJsonString(requestEntity);
-        OkgoUtils.post(ProjectUrl.VEHICLE_INFO_ADD, jsonString).execute(new MyStringCallback<ResponceBean>() {
+        String jsonString = JsonManager.createJsonString(requestEntity);//
+        OkgoUtils.post(url, jsonString).execute(new MyStringCallback<ResponceBean>() {
             @Override
             public void onResponse(ResponceBean s) {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
