@@ -92,8 +92,8 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
         orderNumber = getIntent().getStringExtra("orderNumber");
         money = getIntent().getStringExtra("money");
         deposit = getIntent().getStringExtra("deposit");
-        innsuranceFee = getIntent().getStringExtra("innsuranceFee");
-        invoiceFee = getIntent().getStringExtra("invoiceFee");
+        innsuranceFee = getIntent().getStringExtra("insurancePay");
+        invoiceFee = getIntent().getStringExtra("taxPay");
         if(TextUtils.isEmpty(money)){
             money = "0.00";
         }
