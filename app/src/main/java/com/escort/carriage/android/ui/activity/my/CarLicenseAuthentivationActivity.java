@@ -169,7 +169,7 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                     imageRcGroup.setVisibility(View.GONE);
                     ivRcImageView.setVisibility(View.VISIBLE);
                     imageUrl1 = url;
-                    GlideManager.getGlideManager().loadImage(url, ivFyImageView);
+                    GlideManager.getGlideManager().loadImage(url, ivRcImageView);
                 }
             }
         });
