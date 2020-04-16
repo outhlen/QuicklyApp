@@ -87,7 +87,7 @@
                     android:id="@+id/imageFyGroup"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@drawable/icon_xszbg"
+                    android:background="@drawable/icon_jszfy"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp">
 
@@ -134,7 +134,7 @@
                         android:id="@+id/imageRcGroup"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:background="@drawable/icon_xszbg"
+                        android:background="@drawable/vehicle"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp">
 
