@@ -129,12 +129,12 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
 
         SpannableString spannableStringThree = new SpannableString("￥" + innsuranceFee);
         RelativeSizeSpan sizeSpanThree = new RelativeSizeSpan(0.5f);
-        spannableStringTwo.setSpan(sizeSpanThree, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableStringThree.setSpan(sizeSpanThree, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         tvBxMoney.setText(spannableStringThree);
 
         SpannableString spannableStringFour = new SpannableString("￥" + invoiceFee);
         RelativeSizeSpan sizeSpanFour = new RelativeSizeSpan(0.5f);
-        spannableStringTwo.setSpan(sizeSpanFour, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableStringFour.setSpan(sizeSpanFour, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         tvFpMoney.setText(spannableStringFour);
     }
 
