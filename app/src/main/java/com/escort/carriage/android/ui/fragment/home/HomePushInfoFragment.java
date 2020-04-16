@@ -454,7 +454,7 @@ public class HomePushInfoFragment extends BaseFragment {
                 if (entity != null) {
                     if (entity.success) {
                         setCity(proName, cityName);
-                        if(homeMainHolder.cuitListEntity == null){
+                        if(homeMainHolder.cuitListEntity == null || TextUtils.isEmpty(homeMainHolder.cuitListEntity.id)){
                             getPageData();
                         }
                     } else {
