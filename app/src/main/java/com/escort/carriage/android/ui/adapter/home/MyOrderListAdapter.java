@@ -608,8 +608,8 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             intent.putExtra("money", item.paramValue);
             intent.putExtra("orderNumber", item.orderNumber);
             intent.putExtra("deposit", item.deposit);
-            intent.putExtra("innsuranceFee", item.innsuranceFee);
-            intent.putExtra("invoiceFee", item.invoiceFee);
+            intent.putExtra("innsuranceFee", item.insurancePay);
+            intent.putExtra("invoiceFee", item.taxPay);
             fragment.startActivityForResult(intent, 123);
         } else if (item.isServiceChange == 1) {
             //已经交付
