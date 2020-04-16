@@ -238,6 +238,11 @@ public class ProjectUrl {
     public static String VEHICLE_INFO_ADD = baseUrl + "undertake/vehicle/info/add";
 
     /**
+     * 修改行驶证正反面
+     */
+    public static String VEHICLE_INFO_UPDATE = baseUrl + "undertake/vehicle/info/update";
+
+    /**
      * 人脸识别 获取Token
      */
     public static String CLOUDAUTH_GETAUTHKEY = baseUrl + "undertake/cloudAuth/getAuthKey";
