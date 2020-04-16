@@ -15,6 +15,7 @@ public class CircuitListEntity {
      * list : [{"id":"1239476175464480770","userLoginId":"1238440074241159170","startProvinceCode":"370000","startCityCode":"370100","startAreaCode":"370102","endProvinceCode":"420000","endCityCode":"420100","endAreaCode":"420106","isDelete":"0","ststus":"1","startProvinceName":"山东省","startCitName":"济南市","startArea":"历下区","endProvinceName":"湖北省","endCitName":"武汉市","endtArea":"武昌区","list":[{"id":"1239476175674195970","cityCode":"371300","cityName":"临沂市"}]}]
      */
 
+    public String id;
     public int isOpen;//是否开启智能匹配(0 否 1 是) 这个是进入接单设置页面之后，判断的状态，是否接单
     public int cityDistribute;//是否开启城市配送(0 否 1 是) 这个是进入接单设置之后，判断的状态，是否开启城市配送
     public int isDeposit;//是否开启必须交押金功能(0 否 1 是) 这个是进入接单设置之后，判断的状态，是否交押金
@@ -68,6 +69,14 @@ public class CircuitListEntity {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public static class CircuitItemEntity {

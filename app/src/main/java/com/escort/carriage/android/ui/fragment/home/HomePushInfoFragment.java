@@ -442,6 +442,9 @@ public class HomePushInfoFragment extends BaseFragment {
         data.put("provinceName", proName);
         data.put("cityCode", cityCode);
         data.put("cityName", cityName);
+        if(homeMainHolder.cuitListEntity != null){
+            data.put("id",  homeMainHolder.cuitListEntity.id);
+        }
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.VEHICLE_INFO_SAVECITYDISTRIBUTE, jsonString).execute(new MyStringCallback<ResponceBean>() {
