@@ -454,6 +454,9 @@ public class HomePushInfoFragment extends BaseFragment {
                 if (entity != null) {
                     if (entity.success) {
                         setCity(proName, cityName);
+                        if(homeMainHolder.cuitListEntity == null){
+                            getPageData();
+                        }
                     } else {
                         ToastUtil.showToastString(entity.message);
                     }
