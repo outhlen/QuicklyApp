@@ -536,7 +536,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="押镖认证"
+                    android:text="司机认证"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -544,7 +544,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="认证司机，去查看 >"
+                    android:text="完善资料，享受更多服务 >"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp" />
 

@@ -204,7 +204,7 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        ToastUtil.showToastString("数据提交成功");
+                        ToastUtil.showToastString("认证成功");
                         setResult(666);
                         finish();
                     } else {

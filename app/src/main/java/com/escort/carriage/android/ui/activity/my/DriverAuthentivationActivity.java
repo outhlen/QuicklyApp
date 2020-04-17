@@ -146,7 +146,7 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        ToastUtil.showToastString("数据提交成功,请上传车辆信息完成押镖认证");
+                        ToastUtil.showToastString("认证成功,请上传车辆信息完成押镖认证");
                         setResult(345);
                         finish();
                     } else {
