@@ -27,6 +27,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import java.math.BigDecimal;
+
 /**
  * @author Yangbp
  * @description:
@@ -78,7 +80,7 @@ public class WalletMenuActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success && s.data != null) {
-                        tvMoney.setText(String.valueOf(s.data.remaining + s.data.remainingFrozen + s.data.remainingDonation));
+                        tvMoney.setText(String.valueOf(new BigDecimal((s.data.remaining + s.data.remainingFrozen + s.data.remainingDonation)).setScale(2,BigDecimal.ROUND_HALF_UP)));
                     } else {
                         ToastUtil.showToastString(s.message);
                     }
