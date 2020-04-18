@@ -357,10 +357,9 @@
                 android:background="@color/colorFF"
                 android:gravity="center"
                 android:padding="16dp"
-                android:text="点击查看货运单"
+                android:text="点击查看托运单"
                 android:textColor="#0E7CFF"
                 android:textSize="15sp" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

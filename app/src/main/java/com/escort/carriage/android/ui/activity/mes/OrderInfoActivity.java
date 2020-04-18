@@ -1,5 +1,8 @@
 package com.escort.carriage.android.ui.activity.mes;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -34,19 +37,26 @@ import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.home.AddrBean;
 import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
+import com.escort.carriage.android.entity.response.home.HuoYunDanBean;
 import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.http.download.DownLoadManager;
+import com.escort.carriage.android.http.download.DownloadListener;
 import com.escort.carriage.android.ui.view.text.DrawableTextView;
 import com.escort.carriage.android.utils.ChineseNumUtill;
+import com.escort.carriage.android.utils.OpenFileUtils;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
 import com.tripartitelib.android.amap.AmapUtils;
 
 
+import java.io.File;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class OrderInfoActivity extends ProjectBaseActivity implements View.OnClickListener {
     @BindView(R.id.item_head_bar_iv_back)
@@ -155,7 +165,10 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         if (!TextUtils.isEmpty(id)) {
             getInfo(id);
         }
-        showReceipt.setVisibility(View.GONE);
+
+        if (openType == 1){
+            showReceipt.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -584,36 +597,119 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 break;
             case R.id.showReceipt:
                 // 点击查看货运单，调接口调详情页面 todo:
-                showReceipt(infoEntity.orderNumber);
+                getAssumeRoleByOrderNo(infoEntity.orderNumber);
                 break;
         }
     }
 
-    private void showReceipt(String orderNumber) {
+    /**
+     * 通过订单号生成货运单
+     */
+    public void getAssumeRoleByOrderNo(String orderNumber){
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
-        HashMap<String, Object> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap<>();
         data.put("orderNumber", orderNumber);
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
-
-        OkgoUtils.post(ProjectUrl.GOODS_TRANSPORT_RECEIPT, jsonString).execute(new MyStringCallback<ResponceJsonEntity>() {
-
+        OkgoUtils.post(ProjectUrl.GOODS_TRANSPORT_RECEIPT, jsonString).execute(new MyStringCallback<HuoYunDanBean>() {
             @Override
-            public Class<ResponceJsonEntity> getClazz() {
-                return ResponceJsonEntity.class;
+            public void onResponse(HuoYunDanBean resp) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (resp != null) {
+                    if (resp.success) {
+                        //1.弹出提示下载对话框
+                        if (TextUtils.isEmpty(resp.getData())){
+                            ToastUtil.showToastString("货运单获取失败!");
+                        }else {
+                            showDownLoadDialog(resp.getData());
+                        }
+                    } else {
+                        ToastUtil.showToastString(resp.message);
+                    }
+                }
             }
 
             @Override
-            public void onResponse(ResponceJsonEntity entity) {
-                // fetch the oss-url of receipt.
-                String pdfUrl = (String)entity.getData();
-//                WebView webView = new WebView();
-//                webView.loadUrl()
-                //View.loadUrl("http://mozilla.github.io/pdf.js/web/viewer.html?file=" + pdfUrl);
-                //webView.loadUrl()
+            public Class<HuoYunDanBean> getClazz() {
+                return HuoYunDanBean.class;
             }
-
         });
+    }
+
+    /**
+     * 1. 提示下载
+     */
+    private void showDownLoadDialog(String url) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示:");
+        builder.setMessage("下载后查看货运单");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //2.开始下载
+                downloadFile(url);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    ProgressDialog downloadDialog;
+    /**
+     * 2. 开始下载
+     */
+    private void downloadFile(String url){
+
+        downloadDialog = new ProgressDialog(this);
+        downloadDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        downloadDialog.setCancelable(false);
+        downloadDialog.show();
+        LogUtils.showE("LHF", "下载开始" );
+        DownLoadManager.getInstance().download(url,
+                System.currentTimeMillis()+".pdf" // 文件下载名称
+                , new DownloadListener() {
+                    /**
+                     * 下载开始
+                     */
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    /**
+                     * 下载进度
+                     * @param progress - 下载进度百分比
+                     */
+                    @Override
+                    public void onProgress(int progress) {
+                        downloadDialog.setProgress(progress);
+                    }
+
+                    /**
+                     * 下载成功
+                     * @param filePath - 文件下载路径
+                     */
+                    @Override
+                    public void onSuccess(String filePath) {
+                        downloadDialog.dismiss();
+                        ToastUtil.showToastString("下载成功! 文件保存在: " + filePath);
+                        File file = new File(filePath);
+                        if (file.exists()){
+                            OpenFileUtils.openFile(getApplicationContext(),file);
+                        }
+                    }
+
+                    /**
+                     * 下载失败
+                     */
+                    @Override
+                    public void onFailed(String message) {
+                        downloadDialog.dismiss();
+                        ToastUtil.showToastString(message);
+                    }
+                });
     }
 
     @Override
