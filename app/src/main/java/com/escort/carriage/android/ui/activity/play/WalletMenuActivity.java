@@ -80,7 +80,7 @@ public class WalletMenuActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success && s.data != null) {
-                        tvMoney.setText(String.valueOf(new BigDecimal((s.data.remaining + s.data.remainingFrozen + s.data.remainingDonation)).setScale(4,BigDecimal.ROUND_HALF_UP)));
+                        tvMoney.setText(String.valueOf(new BigDecimal((s.data.remaining + s.data.remainingFrozen + s.data.remainingDonation)).setScale(2,BigDecimal.ROUND_HALF_UP)));
                     } else {
                         ToastUtil.showToastString(s.message);
                     }
