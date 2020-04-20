@@ -127,13 +127,9 @@ public class EscortAuthenticationActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        if(driverType == 0){
-                            switchView.setChecked(false);
-                        } else {
-                            switchView.setChecked(true);
-                        }
                         entity.vehicleUsage = driverType;
                     } else {
+                        switchView.setChecked(false);
                         ToastUtil.showToastString(s.message);
                     }
                 }
@@ -255,6 +251,7 @@ public class EscortAuthenticationActivity extends ProjectBaseActivity {
             }
             CarLicenseInfoEntity.ListBean entity = mList.get(position);
 
+            holder.defaultSwitch.setOnCheckedChangeListener(null);
             if(entity.vehicleUsage == 1){
                 holder.defaultSwitch.setChecked(true);
             } else {
