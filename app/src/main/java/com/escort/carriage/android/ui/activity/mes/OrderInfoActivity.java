@@ -318,7 +318,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 
         //设置多装多卸的条目
         if (openType == 1) {
-            tvDistances.setText(infoEntity.getDistance() + "公里");
+            tvDistances.setText(infoEntity.getDistances() + "公里");
         } else {
             tvDistances.setVisibility(View.GONE);
             tvDistancesLabel.setVisibility(View.GONE);
