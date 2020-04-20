@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.androidybp.basics.cache.CacheDBMolder;
-import com.androidybp.basics.entity.UserEntity;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.okhttp3.entity.ResponceBean;
@@ -154,6 +153,7 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
             if(latitude != 0){
                 data.put("latitudeRegister", latitude);
             }
+
             requestEntity.setData(data);
             String jsonString = JsonManager.createJsonString(requestEntity);
             OkgoUtils.post(ProjectUrl.LOGIN_REGISTER, jsonString).execute(new MyStringCallback<ResponseUserEntity>() {

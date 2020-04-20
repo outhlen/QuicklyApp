@@ -55,8 +55,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
+
 
 public class OrderInfoActivity extends ProjectBaseActivity implements View.OnClickListener {
     @BindView(R.id.item_head_bar_iv_back)
@@ -146,7 +145,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 
     private OrderInfoEntity infoEntity;
 
-    private int openType = 1;//打开类型  默认是1   1：货源大厅  2：我的订单 3:历史订单
+    private int openType = 1;//打开类型  默认是1   1：货源大厅     2：我的订单 3:历史订单
     private double longitude;//经度
     private double latitude;//纬度
 
@@ -160,8 +159,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         getLocation();
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
-        String flag = intent.getStringExtra("flag");
-        openType = intent.getIntExtra("openType", 1);
         if (!TextUtils.isEmpty(id)) {
             getInfo(id);
         }
@@ -213,17 +210,14 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
         if(openType == 1){
-            if(longitude != 0){
-                data.put("longitude", longitude + "");
-            }
-            if(latitude != 0){
-                data.put("latitude", latitude + "");
-            }
-
+            data.put("longitude", longitude + "");
+            data.put("latitude", latitude + "");
             data.put("isLogistics", "1");
         }
+
         data.put("orderNumber", id);
         requestEntity.setData(data);
+
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderInfoEntity>() {
             @Override

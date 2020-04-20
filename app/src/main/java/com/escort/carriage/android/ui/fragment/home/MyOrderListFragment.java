@@ -144,6 +144,7 @@ public class MyOrderListFragment extends BaseFragment implements BGARefreshLayou
                         if (entity.data.isLastPage) {
                             allPage = page;
                         }
+
                         llEmpty.setVisibility(View.GONE);
                         rlRefresh.setVisibility(View.VISIBLE);
                         if (adapter == null || adapter.getData() == null || adapter.getData().size() == 0) {
@@ -220,6 +221,7 @@ public class MyOrderListFragment extends BaseFragment implements BGARefreshLayou
 //                startActivityForResult(intent, 333);
             }
         });
+
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {

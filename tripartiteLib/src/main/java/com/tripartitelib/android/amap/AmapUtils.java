@@ -1,20 +1,12 @@
 package com.tripartitelib.android.amap;
 
-import android.annotation.TargetApi;
+
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -23,21 +15,13 @@ import com.amap.api.track.AMapTrackClient;
 import com.amap.api.track.ErrorCode;
 import com.amap.api.track.OnTrackLifecycleListener;
 import com.amap.api.track.TrackParam;
-import com.amap.api.track.query.model.AddTerminalRequest;
-import com.amap.api.track.query.model.AddTerminalResponse;
-import com.amap.api.track.query.model.AddTrackRequest;
-import com.amap.api.track.query.model.AddTrackResponse;
-import com.amap.api.track.query.model.QueryTerminalRequest;
-import com.amap.api.track.query.model.QueryTerminalResponse;
 import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.cache.db.model.DataCacheKeyModel;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
-import com.tripartitelib.android.R;
 import com.tripartitelib.android.amap.listener.SimpleOnTrackLifecycleListener;
-import com.tripartitelib.android.amap.listener.SimpleOnTrackListener;
 
 /**
  * @author Yangbp
@@ -47,7 +31,7 @@ import com.tripartitelib.android.amap.listener.SimpleOnTrackListener;
 public class AmapUtils {
 
     public final static String GAODE_PKG = "com.autonavi.minimap";//高德地图的包名
-    private static AmapUtils amapUtils;
+    private static volatile AmapUtils amapUtils;
 
     private AmapUtils() {
     }
