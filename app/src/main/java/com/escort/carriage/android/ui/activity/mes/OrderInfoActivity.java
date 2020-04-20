@@ -146,6 +146,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     private OrderInfoEntity infoEntity;
 
     private int openType = 1;//打开类型  默认是1   1：货源大厅     2：我的订单 3:历史订单
+    private String orderID = "";//获取货源大厅的数据时
     private double longitude;//经度
     private double latitude;//纬度
 
@@ -156,15 +157,16 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         setContentView(R.layout.activity_oder_info);
         ButterKnife.bind(this);
         setTitleBar();
-        getLocation();
         Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
-        if (!TextUtils.isEmpty(id)) {
-            getInfo(id);
-        }
-
+        orderID = intent.getStringExtra("id");
+        openType = intent.getIntExtra("openType", 1);
         if (openType == 1){
             showReceipt.setVisibility(View.GONE);
+            getLocation();
+        }else {
+            if (!TextUtils.isEmpty(orderID)) {
+                getInfo(orderID);
+            }
         }
     }
 
@@ -181,11 +183,15 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                         //可在其中解析amapLocation获取相应内容。
                         latitude = aMapLocation.getLatitude();
                         longitude = aMapLocation.getLongitude();
+                        if (!TextUtils.isEmpty(orderID)) {
+                            getInfo(orderID);
+                        }
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                         LogUtils.showI("MainActivity", "AmapError   location Error, ErrCode:"
                                 + aMapLocation.getErrorCode() + ", errInfo:"
                                 + aMapLocation.getErrorInfo());
+                        ToastUtil.showToastString("定位失败，请检查是否已开启定位");
                     }
                 }
             }
@@ -210,6 +216,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
         if(openType == 1){
+            LogUtils.showE("传参longitude",longitude+"");
             data.put("longitude", longitude + "");
             data.put("latitude", latitude + "");
             data.put("isLogistics", "1");
