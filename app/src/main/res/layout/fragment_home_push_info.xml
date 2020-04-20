@@ -223,7 +223,7 @@
             android:padding="@dimen/space_10"
             android:layout_marginTop="@dimen/space_10"
             android:textSize="@dimen/text_size_16"
-            android:text="专线列表"
+            android:text="路线列表"
             android:textColor="#1B1B1B"
             android:background="@color/color_ffffff"
             />
