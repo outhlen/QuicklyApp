@@ -6,6 +6,8 @@ import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,9 +29,11 @@ import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.verification.VerificationUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.configuration.VueUrl;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.ui.activity.web.VueActivity;
 import com.tripartitelib.android.amap.AmapUtils;
 
 import java.util.HashMap;
@@ -49,6 +53,14 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
     EditText etSmsCode;
     @BindView(R.id.tvGetCheckCode)
     TextView tvGetCheckCode;
+    @BindView(R.id.tvNext)
+    TextView tvNext;
+    @BindView(R.id.cbAgree)
+    CheckBox cbAgree;
+    @BindView(R.id.tvUserAgreement)
+    TextView tvUserAgreement;
+    @BindView(R.id.tvPrivacyPolicy)
+    TextView tvPrivacyPolicy;
     private Unbinder bind;
     private int openType;//0:注册 1：微信注册 需要将用户信息返回
 
@@ -88,16 +100,38 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
                 finish();
             }
         });
+        cbAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    tvNext.setAlpha(1f);
+                }else{
+                    tvNext.setAlpha(0.5f);
+                }
+            }
+        });
     }
 
-    @OnClick({R.id.tvGetCheckCode, R.id.tvNext, R.id.tvLoginError})
+    @OnClick({R.id.tvGetCheckCode, R.id.tvNext, R.id.tvLoginError, R.id.tvUserAgreement, R.id.tvPrivacyPolicy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvGetCheckCode:
                 getSmsCode();
                 break;
             case R.id.tvNext:
-                next();
+               if(tvNext.getAlpha() == 1f){
+                    next();
+                }
+                break;
+            case R.id.tvUserAgreement://用户协议
+                Intent intentUserAgreement = new Intent(this, VueActivity.class);
+                intentUserAgreement.putExtra("url", VueUrl.userAgreement);
+                startActivity(intentUserAgreement);
+                break;
+            case R.id.tvPrivacyPolicy://隐私权限
+                Intent intentPrivacyAgreement = new Intent(this, VueActivity.class);
+                intentPrivacyAgreement.putExtra("url", VueUrl.privacyAgreement);
+                startActivity(intentPrivacyAgreement);
                 break;
             case R.id.tvLoginError:
                 ToastUtil.showToastString("登录遇到问题，请联系客服");

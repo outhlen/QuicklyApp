@@ -112,6 +112,7 @@
         </LinearLayout>
 
         <TextView
+            android:alpha="0.5"
             android:id="@+id/tvNext"
             android:layout_marginTop="68dp"
             android:gravity="center"
@@ -120,7 +121,45 @@
             android:text="确认，下一步"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center">
 
+            <CheckBox
+                android:id="@+id/cbAgree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="同意"
+                android:textColor="#ff999999" />
+
+            <TextView
+                android:id="@+id/tvUserAgreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="《用户协议》"
+                android:textColor="#1e73ff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="和"
+                android:textColor="#ff999999" />
+
+            <TextView
+                android:id="@+id/tvPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="《隐私政策》"
+                android:textColor="#1e73ff" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="1dp"
