@@ -13,6 +13,7 @@ import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.okhttp3.entity.ResponceBean;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.date.ProjectDateUtils;
+import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -255,17 +256,27 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
 
         if (item.isAllowTurn == 1) {
-            helper.btnTwo.setText("分拨中转");
-            helper.btnTwo.setBackgroundResource(R.drawable.bg_b_f56c6c_bj_3dp);
-            helper.btnTwo.setTag(transfer_of_order);
-            helper.btnTwo.setTag(R.id.tg_json, item);
-            helper.btnTwo.setOnClickListener(this);
+            LogUtils.showE("订单类型：",item.orderType);
+            if(item.orderType.equals("1")){
+                helper.btnTwo.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
+                helper.btnTwo.setText("路线导航");
+                helper.btnTwo.setTag(path_navigation);
+                helper.btnTwo.setTag(R.id.tg_json, item);
+                helper.btnTwo.setOnClickListener(this);
+                helper.btnOne.setVisibility(View.INVISIBLE);
+            }else {
+                helper.btnTwo.setText("分拨中转");
+                helper.btnTwo.setBackgroundResource(R.drawable.bg_b_f56c6c_bj_3dp);
+                helper.btnTwo.setTag(transfer_of_order);
+                helper.btnTwo.setTag(R.id.tg_json, item);
+                helper.btnTwo.setOnClickListener(this);
+                helper.btnOne.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
+                helper.btnOne.setText("路线导航");
+                helper.btnOne.setTag(path_navigation);
+                helper.btnOne.setTag(R.id.tg_json, item);
+                helper.btnOne.setOnClickListener(this);
+            }
 
-            helper.btnOne.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
-            helper.btnOne.setText("路线导航");
-            helper.btnOne.setTag(path_navigation);
-            helper.btnOne.setTag(R.id.tg_json, item);
-            helper.btnOne.setOnClickListener(this);
         } else {
             helper.btnTwo.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
             helper.btnTwo.setText("路线导航");
