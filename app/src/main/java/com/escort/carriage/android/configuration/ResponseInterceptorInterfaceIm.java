@@ -10,12 +10,21 @@ import com.androidybp.basics.configuration.ResponseInterceptorInterface;
 import com.androidybp.basics.okhttp3.entity.ResponceJsonEntity;
 import com.androidybp.basics.ui.manager.activity.ProjectActivityManager;
 import com.escort.carriage.android.ui.activity.login.LoginActivity;
+import com.tripartitelib.android.amap.AmapUtils;
 
 public class ResponseInterceptorInterfaceIm implements ResponseInterceptorInterface {
     @Override
     public void openLoginAct(ResponceJsonEntity jsonBean, int code) {
         Activity act = getOpenAct();
+        //清除所有用户数据
+        ApplicationContext.getInstance().isRegister = false;
+        //删除本地缓存的 高德地图配置
+        CacheDBMolder.getInstance().removeProjectCacheData(DataCacheKeyModel.AMAP_DATA);
+        CacheDBMolder.getInstance().clearData();
+        //高德退出登录
+        AmapUtils.getAmapUtils().stopTrack();
         act.startActivity(new Intent(act, LoginActivity.class));
+        act.finish();
         act.finish();
     }
 
@@ -29,6 +38,8 @@ public class ResponseInterceptorInterfaceIm implements ResponseInterceptorInterf
         //删除本地缓存的 高德地图配置
         CacheDBMolder.getInstance().removeProjectCacheData(DataCacheKeyModel.AMAP_DATA);
         CacheDBMolder.getInstance().clearData();
+        //高德退出登录
+        AmapUtils.getAmapUtils().stopTrack();
         activity.startActivity(new Intent(activity, LoginActivity.class));
         activity.finish();
         finishActs();

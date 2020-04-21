@@ -267,33 +267,33 @@ public class HomeActivity extends ProjectBaseActivity {
 
     private void getAmapInfo() {
 
-        AmapCacheEntity projectDataEntity = CacheDBMolder.getInstance().getProjectDataEntity(DataCacheKeyModel.AMAP_DATA, AmapCacheEntity.class);
-        if (projectDataEntity != null && projectDataEntity.sid != 0 && projectDataEntity.tid != 0 && projectDataEntity.trid != 0) {
-            //获取
-            AmapUtils.getAmapUtils().startTrack(createNotification(this), projectDataEntity.sid, projectDataEntity.tid, projectDataEntity.trid);
-        } else {
-            RequestEntity requestEntity = new RequestEntity(0);
-            requestEntity.setData("");
-            String jsonString = JsonManager.createJsonString(requestEntity);
-            OkgoUtils.post(ProjectUrl.ORDER_GETGOLDFALCON, jsonString).execute(new MyStringCallback<ResponceBean>() {
-                @Override
-                public void onResponse(ResponceBean s) {
-                    if (s != null) {
-                        if (s.success) {
-                            AmapCacheEntity endLocationJson = JsonManager.getJsonBean(s.data, AmapCacheEntity.class);
-                            String json = JsonManager.createJsonString(s.data);
-                            CacheDBMolder.getInstance().setProjectDataEntity(DataCacheKeyModel.AMAP_DATA, json, 1, -1);
-                            AmapUtils.getAmapUtils().startTrack(createNotification(HomeActivity.this), endLocationJson.sid, endLocationJson.tid, endLocationJson.trid);
-                        }
+//        AmapCacheEntity projectDataEntity = CacheDBMolder.getInstance().getProjectDataEntity(DataCacheKeyModel.AMAP_DATA, AmapCacheEntity.class);
+//        if (projectDataEntity != null && projectDataEntity.sid != 0 && projectDataEntity.tid != 0 && projectDataEntity.trid != 0) {
+//            获取
+//            AmapUtils.getAmapUtils().startTrack(createNotification(this), projectDataEntity.sid, projectDataEntity.tid, projectDataEntity.trid);
+//        } else {
+        RequestEntity requestEntity = new RequestEntity(0);
+        requestEntity.setData("");
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.ORDER_GETGOLDFALCON, jsonString).execute(new MyStringCallback<ResponceBean>() {
+            @Override
+            public void onResponse(ResponceBean s) {
+                if (s != null) {
+                    if (s.success) {
+                        AmapCacheEntity endLocationJson = JsonManager.getJsonBean(s.data, AmapCacheEntity.class);
+                        String json = JsonManager.createJsonString(s.data);
+                        CacheDBMolder.getInstance().setProjectDataEntity(DataCacheKeyModel.AMAP_DATA, json, 1, -1);
+                        AmapUtils.getAmapUtils().startTrack(createNotification(HomeActivity.this), endLocationJson.sid, endLocationJson.tid, endLocationJson.trid);
                     }
                 }
+            }
 
-                @Override
-                public Class<ResponceBean> getClazz() {
-                    return ResponceBean.class;
-                }
-            });
-        }
+            @Override
+            public Class<ResponceBean> getClazz() {
+                return ResponceBean.class;
+            }
+        });
+//        }
 
 //        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
 

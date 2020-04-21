@@ -1,12 +1,20 @@
 package com.tripartitelib.android.amap;
 
-
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -15,13 +23,21 @@ import com.amap.api.track.AMapTrackClient;
 import com.amap.api.track.ErrorCode;
 import com.amap.api.track.OnTrackLifecycleListener;
 import com.amap.api.track.TrackParam;
+import com.amap.api.track.query.model.AddTerminalRequest;
+import com.amap.api.track.query.model.AddTerminalResponse;
+import com.amap.api.track.query.model.AddTrackRequest;
+import com.amap.api.track.query.model.AddTrackResponse;
+import com.amap.api.track.query.model.QueryTerminalRequest;
+import com.amap.api.track.query.model.QueryTerminalResponse;
 import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.cache.db.model.DataCacheKeyModel;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
+import com.tripartitelib.android.R;
 import com.tripartitelib.android.amap.listener.SimpleOnTrackLifecycleListener;
+import com.tripartitelib.android.amap.listener.SimpleOnTrackListener;
 
 /**
  * @author Yangbp
@@ -31,7 +47,8 @@ import com.tripartitelib.android.amap.listener.SimpleOnTrackLifecycleListener;
 public class AmapUtils {
 
     public final static String GAODE_PKG = "com.autonavi.minimap";//高德地图的包名
-    private static volatile AmapUtils amapUtils;
+    private static AmapUtils amapUtils;
+    private TrackParam trackParam;
 
     private AmapUtils() {
     }
@@ -288,7 +305,7 @@ public class AmapUtils {
     }
     public void startTrack(Notification notification, long serviceId, long terminalId, long trackId) {
         if (!isGatherRunning || !isServiceRunning) {
-            TrackParam trackParam = new TrackParam(serviceId, terminalId);
+            trackParam = new TrackParam(serviceId, terminalId);
             trackParam.setTrackId(trackId);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 trackParam.setNotification(notification);
@@ -297,6 +314,13 @@ public class AmapUtils {
             aMapTrackClient.startTrack(trackParam, onTrackListener);
         }
     }
+
+    public void stopTrack(){
+        if(aMapTrackClient != null){
+            aMapTrackClient.stopTrack(trackParam, onTrackListener);
+        }
+    }
+
 //    private void startTrack() {
 //        // 先根据Terminal名称查询Terminal ID，如果Terminal还不存在，就尝试创建，拿到Terminal ID后，
 //        // 用Terminal ID开启轨迹服务
