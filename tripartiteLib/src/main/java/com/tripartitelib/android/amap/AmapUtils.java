@@ -287,7 +287,7 @@ public class AmapUtils {
 
     public void initTrace(Context context) {
         aMapTrackClient = new AMapTrackClient(context.getApplicationContext());
-        aMapTrackClient.setInterval(20, 200);//轨迹定位周期60s，上报周期200s
+        aMapTrackClient.setInterval(1, 10);//轨迹定位周期60s，上报周期200s
 //        猎鹰sdk会在无法正常上报轨迹点时将未成功上报的轨迹点缓存在本地，默认最多缓存50MB数据。
 //        可以使用下面的代码修改缓存大小为20MB：
         aMapTrackClient.setCacheSize(20);
@@ -305,8 +305,17 @@ public class AmapUtils {
     }
     public void startTrack(Notification notification, long serviceId, long terminalId, long trackId) {
         if (!isGatherRunning || !isServiceRunning) {
-            trackParam = new TrackParam(serviceId, terminalId);
-            trackParam.setTrackId(trackId);
+            if(trackParam == null){
+                trackParam = new TrackParam(serviceId, terminalId);
+                trackParam.setTrackId(trackId);
+            }
+
+            if(trackParam.getTid() != terminalId || trackParam.getTrackId() != trackId){
+                stopTrack();
+                trackParam = new TrackParam(serviceId, terminalId);
+                trackParam.setTrackId(trackId);
+            }
+
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 trackParam.setNotification(notification);
             }
@@ -316,8 +325,9 @@ public class AmapUtils {
     }
 
     public void stopTrack(){
-        if(aMapTrackClient != null){
+        if(aMapTrackClient != null && trackParam != null){
             aMapTrackClient.stopTrack(trackParam, onTrackListener);
+            trackParam = null;
         }
     }
 
