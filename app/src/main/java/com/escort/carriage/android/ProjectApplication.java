@@ -1,5 +1,6 @@
 package com.escort.carriage.android;
 
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -12,6 +13,15 @@ import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.okhttp3.OkHttpManager;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.thread.ThreadUtils;
+import com.escort.carriage.android.config.AppConfig;
+import com.escort.carriage.android.network.RequestHandler;
+import com.escort.carriage.android.server.ReleaseServer;
+import com.escort.carriage.android.server.TestServer;
+import com.hjq.http.EasyConfig;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.config.IRequestHandler;
+import com.hjq.http.config.IRequestServer;
+import com.hjq.http.model.BodyType;
 import com.tripartitelib.android.iflytek.IflytekUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
@@ -22,10 +32,12 @@ import com.tripartitelib.android.TripartiteLibInitUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.logging.Level;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 public class ProjectApplication extends MultiDexApplication {
 
@@ -51,6 +63,30 @@ public class ProjectApplication extends MultiDexApplication {
 
             }
         });
+
+        // 网络请求框架初始化
+        IRequestServer server;
+        if (AppConfig.isDebug()) {
+            server = new TestServer();
+        } else {
+            server = new ReleaseServer();
+        }
+
+        EasyConfig.with(new OkHttpClient())
+                // 是否打印日志
+                .setLogEnabled(AppConfig.isDebug())
+                // 设置服务器配置
+                .setServer(server)
+                // 设置请求处理策略
+                .setHandler(new RequestHandler())
+                // 设置请求重试次数
+                .setRetryCount(3)
+                // 添加全局请求参数
+                //.addParam("token", "6666666")
+                // 添加全局请求头
+                //.addHeader("time", "20191030")
+                // 启用配置
+                .into();
     }
 
     private void initOkgo() {
@@ -150,4 +186,5 @@ public class ProjectApplication extends MultiDexApplication {
             Log.w(TAG, e);
         }
     }
+
 }

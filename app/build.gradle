@@ -112,4 +112,10 @@ dependencies {
     // RxJava 2.0
     api 'io.reactivex.rxjava2:rxjava:2.2.3'
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    // gson解析，可以自行替换
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.12.8'
+    implementation 'com.squareup.okio:okio:1.12.0'
 }
