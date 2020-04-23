@@ -316,7 +316,7 @@ public class HomeActivity extends ProjectBaseActivity {
                         VersionEntity jsonBean = JsonManager.getJsonBean(s.data, VersionEntity.class);
                         String versionName = ApplicationContext.getInstance().versionName;
                         int versionCode = ApplicationContext.getInstance().versionCode;
-                        if(jsonBean.terminalId == 1 && jsonBean.groupId == 1 && versionCode > jsonBean.versionCode){
+                        if(jsonBean.terminalId == 1 && jsonBean.groupId == 1 && versionCode < jsonBean.versionCode){
                             if(advertisingImageDialog != null){
                                 advertisingImageDialog.dismiss();
                             }
