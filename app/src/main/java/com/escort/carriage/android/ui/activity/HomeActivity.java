@@ -273,7 +273,6 @@ public class HomeActivity extends ProjectBaseActivity {
 //            AmapUtils.getAmapUtils().startTrack(createNotification(this), projectDataEntity.sid, projectDataEntity.tid, projectDataEntity.trid);
 //        } else {
         RequestEntity requestEntity = new RequestEntity(0);
-        requestEntity.setData("");
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.ORDER_GETGOLDFALCON, jsonString).execute(new MyStringCallback<ResponceBean>() {
             @Override
