@@ -32,7 +32,7 @@
             android:background="@drawable/selector_main_view_bottom_radio_button_bg"
             android:gravity="center"
             android:button="@null"
-            android:text="专线直达"
+            android:text="指定专线"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
@@ -42,7 +42,7 @@
             android:background="@drawable/selector_main_view_bottom_radio_button_bg"
             android:gravity="center"
             android:button="@null"
-            android:text="城市配送"
+            android:text="同城配送"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>

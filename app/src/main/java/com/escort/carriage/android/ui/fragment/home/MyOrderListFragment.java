@@ -119,7 +119,6 @@ public class MyOrderListFragment extends BaseFragment implements BGARefreshLayou
 
     private void initDatas() {
         isHandleData = true;
-
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -136,7 +135,6 @@ public class MyOrderListFragment extends BaseFragment implements BGARefreshLayou
                 if (null != rlRefresh) {
                     rlRefresh.endLoadingMore();
                     rlRefresh.endRefreshing();
-
                     if (entity != null && entity.getData() != null
                             && entity.getData().getList() != null
                             && entity.getData().getList().size() > 0) {//有数据
@@ -144,7 +142,6 @@ public class MyOrderListFragment extends BaseFragment implements BGARefreshLayou
                         if (entity.data.isLastPage) {
                             allPage = page;
                         }
-
                         llEmpty.setVisibility(View.GONE);
                         rlRefresh.setVisibility(View.VISIBLE);
                         if (adapter == null || adapter.getData() == null || adapter.getData().size() == 0) {
@@ -157,7 +154,6 @@ public class MyOrderListFragment extends BaseFragment implements BGARefreshLayou
                                     adapter.addData(list);
 //                                    newsItemList.addAll(list);
                                 }
-//                                adapter.notifyDataSetChanged();
                             }
                         }
                     } else {

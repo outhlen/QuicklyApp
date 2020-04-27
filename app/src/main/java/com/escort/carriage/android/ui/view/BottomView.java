@@ -69,7 +69,6 @@ public class BottomView extends LinearLayout implements RadioGroup.OnCheckedChan
                 position = 2;
                 break;
         }
-//        showFragment(position);
     }
 
     private void showFragment(int index) {

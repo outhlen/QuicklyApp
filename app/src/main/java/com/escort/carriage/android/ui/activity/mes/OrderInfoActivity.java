@@ -391,12 +391,12 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             case "1"://专线直达
                 textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_fe5d1f));
                 textView.setBackgroundResource(R.drawable.bg_b_fee7e4_bj_3dp);
-                textView.setText("专线直达");
+                textView.setText("指定专线");
                 break;
             case "2"://城市配送
                 textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_67c23a));
                 textView.setBackgroundResource(R.drawable.bg_b_e9f5e4_bj_3dp);
-                textView.setText("城市配送");
+                textView.setText("同城配送");
                 break;
 
 
@@ -429,10 +429,10 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                     break;
 
                 case 2:
-                    statusName = "前往载货地";
+                    statusName = "前往装货地";
                     break;
                 case 3:
-                    statusName = "抵达载货地";
+                    statusName = "抵达装货地";
                     break;
                 case 4:
                     statusName = "装货完成";

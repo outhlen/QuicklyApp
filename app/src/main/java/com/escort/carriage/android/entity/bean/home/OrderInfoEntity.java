@@ -127,10 +127,19 @@ public class OrderInfoEntity {
     public String taxType;//	保险类型 s 电子增值税普通发票  p 增值税专用发票  否则 不开发票
     public int orderTab;//	0显示：撤单  1显示：处理撤单
 
+    public String driverEvaluate;// 评价
 
     public String distances;
     public List<AddrBean> addr;
     public List<String> turn;
+
+    public String getDriverEvaluate() {
+        return driverEvaluate;
+    }
+
+    public void setDriverEvaluate(String driverEvaluate) {
+        this.driverEvaluate = driverEvaluate;
+    }
 
     public String getId() {
         return id;

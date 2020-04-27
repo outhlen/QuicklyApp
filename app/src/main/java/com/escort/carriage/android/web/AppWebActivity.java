@@ -43,7 +43,6 @@ public class AppWebActivity extends Activity {
     protected void setDatas() {
         url = getIntent().getStringExtra("url");
         roomId = getIntent().getStringExtra("roomId");
-//        url = "http://www.baidu.com";
     }
 
 
@@ -137,7 +136,6 @@ public class AppWebActivity extends Activity {
         //加载显示网页的操作
         webView.loadUrl(url);//通过url地址打开网页
     }
-
 
 
     @Override

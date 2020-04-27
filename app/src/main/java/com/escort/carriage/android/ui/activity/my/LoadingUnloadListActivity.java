@@ -1,15 +1,18 @@
 package com.escort.carriage.android.ui.activity.my;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.security.biometrics.build.G;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.androidybp.basics.fastjson.JsonManager;
@@ -26,7 +29,8 @@ import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.home.ResponseLoadingUnloadItemEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
-import com.escort.carriage.android.ui.adapter.home.MyOrderListAdapter;
+import com.escort.carriage.android.ui.dialog.AutoBottomUIDialog;
+import com.escort.carriage.android.ui.dialog.AutoHideBottomUIDialog;
 import com.escort.carriage.android.ui.view.list.FillListView;
 import com.tripartitelib.android.amap.AmapUtils;
 
@@ -79,6 +83,11 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
     private PageListAdatper adatper;
     private double longitude;//经度
     private double latitude;//纬度
+   // AutoHideBottomUIDialog ICCardDialog;
+    AutoBottomUIDialog ICCardDialog;
+    Button ivRFIDAnim;
+    TextView tvRecordRFIDResult;
+    Float dialogHeight = 460f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +102,19 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
         setList();
         getPageList();
         getLocation();
+        //initICCardDialog();
+    }
+
+    private void initICCardDialog() {
+        ICCardDialog = new AutoBottomUIDialog(this);
+        View view  = getLayoutInflater().inflate(R.layout.dialog_entry_ic_card,null);
+        ICCardDialog.setContentView(view);
+        ICCardDialog.setDialogHeight(dialogHeight);
+        ivRFIDAnim = view.findViewById(R.id.tvRecordResult);
+        tvRecordRFIDResult = view.findViewById(R.id.title_tv);
+        ICCardDialog.setCancelable(false);
+        ICCardDialog.setCanceledOnTouchOutside(false);
+       // ivRFIDAnim.setOnClickListener(this);
     }
 
     private void setList() {
@@ -119,7 +141,7 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
     }
 
     private void setBottomItemGroup() {
-        if(pageType == 0){
+        if (pageType == 0) {
             //装货
             ivItemBottomImage.setImageResource(R.drawable.icon_text_zhuang);
             tvItemBottomContent.setText("确认全部装货完成");
@@ -128,10 +150,10 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
 //                tvItemBottomButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
 //                tvItemBottomButton.setOnClickListener(null);
 //            } else {
-                tvItemBottomButton.setBackgroundResource(R.drawable.bg_b_067dff_circular);
-                tvItemBottomButton.setOnClickListener(this);
+            tvItemBottomButton.setBackgroundResource(R.drawable.bg_b_067dff_circular);
+            tvItemBottomButton.setOnClickListener(this);
 //            }
-        } else if(pageType == 1){
+        } else if (pageType == 1) {
             llBottomGroup.setVisibility(View.GONE);
         }
     }
@@ -140,24 +162,24 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
      * 设置顶部条目
      */
     private void setTopItemGroup() {
-        if(pageType == 0){
+        if (pageType == 0) {
             //装货
             ivItemTopImage.setImageResource(R.drawable.icon_text_zhuang);
             tvItemTopContent.setText("抵达装货地");
             tvItemTopButton.setText("我已抵达");
-            if(orderStatus == 3){
+            if (orderStatus == 3) {
                 tvItemTopButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
                 tvItemTopButton.setOnClickListener(null);
             } else {
                 tvItemTopButton.setBackgroundResource(R.drawable.bg_b_067dff_circular);
                 tvItemTopButton.setOnClickListener(this);
             }
-        } else if(pageType == 1){
+        } else if (pageType == 1) {
             //卸货
             ivItemTopImage.setImageResource(R.drawable.icon_text_xie);
             tvItemTopContent.setText("抵达目的地");
             tvItemTopButton.setText("我已抵达");
-            if(orderStatus == 6){
+            if (orderStatus == 6) {
                 tvItemTopButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
                 tvItemTopButton.setOnClickListener(null);
             } else {
@@ -202,7 +224,7 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
         });
     }
 
-    @OnClick({R.id.ivClose, R.id.btnNext, R.id.tvItemTopButton})
+    @OnClick({R.id.ivClose, R.id.btnNext})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -213,32 +235,81 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
                 }
                 finish();
                 break;
+
         }
     }
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvItemTopButton:
-            case R.id.tvItemBottomButton:
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("orderNumber", orderNumber);
-                toService(ProjectUrl.ORDER_UPDATAORDERDETAILSTATUS, 0, hashMap, new ServiceCallback() {
-                    @Override
-                    public void callback(int type) {
-                        //让控件不可点击
-                        setResult(456);
-                        view.setBackgroundResource(R.drawable.bg_b_999999_circular);
-                        view.setOnClickListener(null);
-                    }
-                });
+                new AlertDialog.Builder(LoadingUnloadListActivity.this)
+                .setMessage("是否确定抵达目的地?")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put("orderNumber", orderNumber);
+                                toService(ProjectUrl.ORDER_UPDATAORDERDETAILSTATUS, 0, hashMap, new ServiceCallback() {
+                                    @Override
+                                    public void callback(int type) {
+                                        //让控件不可点击
+                                        setResult(456);
+                                        tvItemTopButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
+                                        tvItemTopButton.setOnClickListener(null);
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                            }
+                        }).show();
                 break;
+            case R.id.tvItemBottomButton:
+               new AlertDialog.Builder(LoadingUnloadListActivity.this)
+              .setMessage("是否全部完成?")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put("orderNumber", orderNumber);
+                                toService(ProjectUrl.ORDER_UPDATAORDERDETAILSTATUS, 0, hashMap, new ServiceCallback() {
+                                    @Override
+                                    public void callback(int type) {
+                                        //让控件不可点击
+                                        setResult(456);
+                                        tvItemBottomButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
+                                        tvItemBottomButton.setOnClickListener(null);
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                            }
+                        }).show();
 
+                break;
 
 
         }
     }
 
-    private void toService(String url, int type, Object object, ServiceCallback callback){
+    private void toService(String url, int type, Object object, ServiceCallback callback) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         requestEntity.setData(object);
@@ -249,7 +320,7 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        if(callback != null){
+                        if (callback != null) {
                             callback.callback(type);
                         }
                     } else {
@@ -289,7 +360,7 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
         });
     }
 
-    interface ServiceCallback{
+    interface ServiceCallback {
         void callback(int type);
     }
 
@@ -323,25 +394,42 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
                     holder.tvButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("id", entity.getId());
-                            hashMap.put("installType", 1);
-                            hashMap.put("orderNumber", orderNumber);
-                            if(longitude != 0){
-                                hashMap.put("longitude", longitude);
-                            }
-                           if(latitude != 0){
-                               hashMap.put("latitude", latitude);
-                            }
-                            toService(ProjectUrl.ORDERVEHICLE_ADD_STATUS, 2, hashMap, new ServiceCallback() {
-                                @Override
-                                public void callback(int type) {
-                                    //让控件不可点击
-                                    setResult(456);
-                                    holder.tvButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
-                                    holder.tvButton.setOnClickListener(null);
-                                }
-                            });
+                             new AlertDialog.Builder(LoadingUnloadListActivity.this)
+                             .setMessage("是否确认装货?")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            HashMap<String, Object> hashMap = new HashMap<>();
+                                            hashMap.put("id", entity.getId());
+                                            hashMap.put("installType", 1);
+                                            hashMap.put("orderNumber", orderNumber);
+                                            if (longitude != 0) {
+                                                hashMap.put("longitude", longitude);
+                                            }
+                                            if (latitude != 0) {
+                                                hashMap.put("latitude", latitude);
+                                            }
+                                            toService(ProjectUrl.ORDERVEHICLE_ADD_STATUS, 2, hashMap, new ServiceCallback() {
+                                                @Override
+                                                public void callback(int type) {
+                                                    //让控件不可点击
+                                                    setResult(456);
+                                                    holder.tvButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
+                                                    holder.tvButton.setOnClickListener(null);
+                                                }
+                                            });
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
                         }
                     });
                 } else {
@@ -359,25 +447,42 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
                     holder.tvButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("id", entity.getId());
-                            hashMap.put("unloadType", 1);
-                            hashMap.put("orderNumber", orderNumber);
-                            hashMap.put("longitude", longitude);
-                            hashMap.put("latitude", latitude);
+                            new AlertDialog.Builder(LoadingUnloadListActivity.this)
+                                    .setMessage("是否确认卸货?")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            HashMap<String, Object> hashMap = new HashMap<>();
+                                            hashMap.put("id", entity.getId());
+                                            hashMap.put("unloadType", 1);
+                                            hashMap.put("orderNumber", orderNumber);
+                                            hashMap.put("longitude", longitude);
+                                            hashMap.put("latitude", latitude);
 
-//                            hashMap.put("longitude", entity.endLongitude);
-//                            hashMap.put("latitude", entity.endLatitude);
+                                            toService(ProjectUrl.ORDERVEHICLE_ADD_STATUS, 2, hashMap, new ServiceCallback() {
+                                                @Override
+                                                public void callback(int type) {
+                                                    //让控件不可点击
+                                                    setResult(456);
+                                                    holder.tvButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
+                                                    holder.tvButton.setOnClickListener(null);
+                                                }
+                                            });
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
 
-                            toService(ProjectUrl.ORDERVEHICLE_ADD_STATUS, 2, hashMap, new ServiceCallback() {
-                                @Override
-                                public void callback(int type) {
-                                    //让控件不可点击
-                                    setResult(456);
-                                    holder.tvButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
-                                    holder.tvButton.setOnClickListener(null);
-                                }
-                            });
+
+
                         }
                     });
                 } else {
@@ -385,7 +490,6 @@ public class LoadingUnloadListActivity extends Activity implements View.OnClickL
                     holder.tvButton.setBackgroundResource(R.drawable.bg_b_999999_circular);
                 }
             }
-
 
 
             return convertView;

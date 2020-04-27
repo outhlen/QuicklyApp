@@ -103,7 +103,7 @@ public class HomeLeftHolder implements View.OnClickListener {
     public void updataUserInfo(UserInfoEntity userInfoEntity) {
         tvName.setText(userInfoEntity.getNickName());
         tvUseDay.setText("使用小二押镖" + userInfoEntity.days + "天");
-        GlideManager.getGlideManager().loadImageRoundFitCrop(userInfoEntity.headPictureUrl, iv_head_img, 100, R.mipmap.img_user_head_img_default);
+        GlideManager.getGlideManager().loadImageRoundFitCrop(userInfoEntity.headPictureUrl, iv_head_img, 100, R.mipmap.ic_launcher_round);
     }
 
     @Override

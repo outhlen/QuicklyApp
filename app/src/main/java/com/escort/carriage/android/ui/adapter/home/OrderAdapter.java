@@ -82,12 +82,12 @@ public class OrderAdapter extends BaseQuickAdapter<GoodsBean, OrderAdapter.Order
             case "1"://专线直达
                 textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_fe5d1f));
                 textView.setBackgroundResource(R.color.color_fee7e4);
-                textView.setText("专线直达");
+                textView.setText("指定专线");
                 break;
             case "2"://城市配送
                 textView.setTextColor(ResourcesTransformUtil.getColor(R.color.color_67c23a));
                 textView.setBackgroundResource(R.color.color_e9f5e4);
-                textView.setText("城市配送");
+                textView.setText("同城配送");
                 break;
 
 

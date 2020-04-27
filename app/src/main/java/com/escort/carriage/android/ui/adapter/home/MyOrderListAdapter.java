@@ -223,7 +223,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         helper.btnTwo.setTag(path_navigation);
         helper.btnTwo.setTag(R.id.tg_json, item);
         helper.btnTwo.setOnClickListener(this);
-
         helper.btnOne.setVisibility(View.INVISIBLE);
     }
 
@@ -241,13 +240,11 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         helper.btnFive.setTag(see_order_details);
         helper.btnFive.setTag(R.id.tg_json, item);
         helper.btnFive.setOnClickListener(this);
-
         helper.btnFour.setBackgroundResource(R.drawable.bg_b_3e9fff_bj_3dp);
         helper.btnFour.setText("卸货完成");
         helper.btnFour.setTag(unload_accomplish);
         helper.btnFour.setTag(R.id.tg_json, item);
         helper.btnFour.setOnClickListener(this);
-
         helper.btnThree.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
         helper.btnThree.setText("卸货确认");
         helper.btnThree.setTag(unload_affirm);
@@ -283,7 +280,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             helper.btnTwo.setTag(path_navigation);
             helper.btnTwo.setTag(R.id.tg_json, item);
             helper.btnTwo.setOnClickListener(this);
-
             helper.btnOne.setVisibility(View.INVISIBLE);
         }
 
@@ -341,13 +337,20 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         helper.btnFive.setTag(see_order_details);
         helper.btnFive.setTag(R.id.tg_json, item);
         helper.btnFive.setOnClickListener(this);
-
+        String pingjia  = item.getDriverEvaluate();
         helper.btnFour.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
-        helper.btnFour.setText("给予评价");
+        if(!TextUtils.isEmpty(pingjia)){
+            if(pingjia.equals("0")){
+                helper.btnFour.setText("给予评价");
+            }else{
+                helper.btnFour.setText("评价信息");
+            }
+        }else{
+            helper.btnFour.setText("给予评价");
+        }
         helper.btnFour.setTag(reply_evaluate);
         helper.btnFour.setTag(R.id.tg_json, item);
         helper.btnFour.setOnClickListener(this);
-
         //申诉  isComplaint  = 1  申诉按钮显示  = 2时候 不可点击 显示为已申诉   =0不显示按钮
         if (item.isComplaint == 1) {
             helper.btnThree.setVisibility(View.VISIBLE);
@@ -647,7 +650,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                     //让列表刷新数据
                     fragment.onActivityResult(123, 456, null);
                 }
-
 
             }
         });

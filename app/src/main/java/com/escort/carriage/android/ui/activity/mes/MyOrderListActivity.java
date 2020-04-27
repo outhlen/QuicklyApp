@@ -78,7 +78,6 @@ public class MyOrderListActivity extends ProjectBaseActivity {
         for (int x = 0; x < titles.length; x++) {
             TabStripItemEntity tabStripItemEntity = new TabStripItemEntity(titles[x], MyOrderListFragment.class, getBundle(x));
             arr.add(tabStripItemEntity);
-
         }
         tabStripAdapter.addTabAll(arr);
         setCurrentItem(positioin);

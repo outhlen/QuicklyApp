@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
 
                 android:textSize="@dimen/text_size_16"
-                android:text="是否支持城市配送"
+                android:text="是否支持同城配送"
                 android:textColor="#1B1B1B" />
 
             <View

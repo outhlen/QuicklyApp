@@ -48,7 +48,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
         StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.activity_splash_two);
         //初始化Toast组件
@@ -56,8 +55,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
         ApplicationContext.getInstance().setResponseInterceptorInterface(new ResponseInterceptorInterfaceIm());
         inspectUserData();
         permissionUtil = new PermissionUtil();
-
-
 
         CacheDataEntity cacheDataEntity = CacheDBMolder.getInstance().getCacheDataEntity(null);
         if(cacheDataEntity.firstOpen){
@@ -71,7 +68,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
                             cacheDataEntity.firstOpen = false;
                             CacheDBMolder.getInstance().setCacheDataEntity(cacheDataEntity, null, null);
                             requestPermissionMethod(0);
-
                             if (dialog != null)
                                 dialog.dismiss();
 

@@ -141,7 +141,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/space_3"
                 android:paddingBottom="@dimen/space_3"
-                android:text="专线直达"
+                android:text="指定专线"
                 android:textColor="@drawable/bg_text_color"
                 android:textSize="@dimen/text_size_10" />
 
@@ -157,7 +157,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/space_3"
                 android:paddingBottom="@dimen/space_3"
-                android:text="城市配送"
+                android:text="同城配送"
                 android:textColor="@drawable/bg_text_color"
                 android:textSize="@dimen/text_size_10" />
 

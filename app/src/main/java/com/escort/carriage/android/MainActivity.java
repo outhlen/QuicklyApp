@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.ll_news)
     LinearLayout mLlNews;
 
-//    private MainPresenter mPresenter = new MainPresenter(this);
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        AmapUtils.getAmapUtils().startTrack(createNotification(this));
     }
 
     @Override

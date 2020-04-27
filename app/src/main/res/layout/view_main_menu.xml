@@ -65,12 +65,12 @@
 
         <ImageView
             android:id="@+id/ivMess"
-            android:src="@mipmap/img_index_msg"
-            android:layout_width="28dp"
-            android:layout_height="33dp"
+            android:background="@mipmap/img_index_msg"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
-            android:paddingRight="@dimen/space_10"
-            android:paddingTop="@dimen/space_15"
+            android:padding="@dimen/space_10"
+            android:layout_margin="@dimen/space_10"
             android:layout_alignTop="@+id/iv_head_img_group"
             />
 
