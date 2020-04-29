@@ -15,12 +15,28 @@
         android:scaleType="centerInside"
         tools:src="@drawable/icon_carriage_money" />
 
-    <TextView
-        android:id="@+id/tvItem"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textColor="@color/color_000000"
-        tools:text="运费金额：" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/color_000000"
+            tools:text="2321321 " />
+
+        <TextView
+            android:id="@+id/tvItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/color_000000"
+            tools:text="运费金额：" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -79,7 +79,6 @@ public class HomeLeftHolder implements View.OnClickListener {
         bind = ButterKnife.bind(this, viewGroup);
         leftFrameLayout.removeAllViews();
         leftFrameLayout.addView(viewGroup);
-
         initView();
     }
 
@@ -124,7 +123,6 @@ public class HomeLeftHolder implements View.OnClickListener {
             case R.id.ll_my_money:
                 activity.startActivity(new Intent(activity, WalletMenuActivity.class));
                 break;
-
             case R.id.ll_setting:
                 activity.startActivity(new Intent(activity, SettingActivity.class));
                 break;

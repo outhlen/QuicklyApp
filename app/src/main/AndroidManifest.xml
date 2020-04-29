@@ -32,7 +32,7 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-<!--    <uses-permission android:name="android.permission.READ_CONTACTS" />--><!--读取联系人-->
+    <!--    <uses-permission android:name="android.permission.READ_CONTACTS" />--><!--读取联系人-->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> <!-- OPPO手机添加快捷方式的权限 -->
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
@@ -58,8 +58,8 @@
             android:name=".ui.activity.SplashTwoActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            >
-<!--            android:theme="@style/transparent_activity"-->
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -174,8 +174,7 @@
         <activity
             android:name=".ui.activity.my.PersonageAuthenticationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 企业认证 -->
         <activity
@@ -236,8 +235,7 @@
         <activity
             android:name=".ui.activity.my.MyOrderAppraiseActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 申诉 -->
         <activity
@@ -248,8 +246,7 @@
         <activity
             android:name=".ui.activity.my.TransfeOrderActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 我的钱包 -->
         <activity
@@ -267,10 +264,9 @@
             android:name=".ui.activity.web.VueActivity"
             android:screenOrientation="portrait" />
 
-       <activity
+        <activity
             android:name=".ui.activity.mes.ImageActivity"
             android:screenOrientation="portrait" />
-
 
 
         <!-- 微信 开始-->

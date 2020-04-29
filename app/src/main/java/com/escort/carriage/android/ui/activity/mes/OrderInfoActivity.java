@@ -18,13 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.glide.GlideManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
-import com.androidybp.basics.okhttp3.entity.ResponceJsonEntity;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
@@ -42,16 +43,20 @@ import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.download.DownLoadManager;
 import com.escort.carriage.android.http.download.DownloadListener;
+import com.escort.carriage.android.ui.activity.adapter.PhotoListAdapter;
+import com.escort.carriage.android.ui.activity.bean.PhotoBean;
+import com.escort.carriage.android.ui.view.ItemDecoration;
 import com.escort.carriage.android.ui.view.text.DrawableTextView;
 import com.escort.carriage.android.utils.ChineseNumUtill;
 import com.escort.carriage.android.utils.OpenFileUtils;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
+import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.tripartitelib.android.amap.AmapUtils;
-
-
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -114,12 +119,14 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     ImageView ivCallPhone;
     @BindView(R.id.btnBidding)
     TextView btnBidding;
-    @BindView(R.id.imageOne)
-    ImageView imageOne;
-    @BindView(R.id.imageTwo)
-    ImageView imageTwo;
-    @BindView(R.id.imageThree)
-    ImageView imageThree;
+    //    @BindView(R.id.imageOne)
+//    ImageView imageOne;
+//    @BindView(R.id.imageTwo)
+//    ImageView imageTwo;
+//    @BindView(R.id.imageThree)
+//    ImageView imageThree;
+    @BindView(R.id.photo_view)
+    RecyclerView photoView;
     @BindView(R.id.tvIsTb)
     DrawableTextView tvIsTb;
     @BindView(R.id.tvCargoValue)
@@ -142,13 +149,16 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     TextView tvDistancesLabel;
     @BindView(R.id.showReceipt)
     TextView showReceipt;
+    @BindView(R.id.order_num_tv)
+    TextView orderTv;
+    OrderInfoEntity infoEntity;
 
-    private OrderInfoEntity infoEntity;
-
-    private int openType = 1;//打开类型  默认是1   1：货源大厅     2：我的订单 3:历史订单
+    private int openType = 1;//打开类型  默认是1   1：货源大厅   2：我的订单 3:历史订单
     private String orderID = "";//获取货源大厅的数据时
     private double longitude;//经度
     private double latitude;//纬度
+    private PhotoListAdapter mAdapter;
+    List<PhotoBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,14 +170,34 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         Intent intent = getIntent();
         orderID = intent.getStringExtra("id");
         openType = intent.getIntExtra("openType", 1);
-        if (openType == 1){
+        if (openType == 1) {
             showReceipt.setVisibility(View.GONE);
             getLocation();
-        }else {
+        } else {
             if (!TextUtils.isEmpty(orderID)) {
                 getInfo(orderID);
             }
         }
+        list  = new ArrayList<>();
+        photoView.setLayoutManager(new GridLayoutManager(this,3));
+        photoView.addItemDecoration(new GridSpacingItemDecoration(3,25,false));
+        mAdapter = new PhotoListAdapter(OrderInfoActivity.this, R.layout.photo_recycler_layout, list);
+        photoView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, int i) {
+//                Intent intent = new Intent();
+//                intent.putExtra("order",list.get(i));
+//                intent.setClass(OrderBiddingActivity.this, OrderBiddingDetalActivity.class);
+//                startActivity(intent);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder viewHolder, int i) {
+                return false;
+            }
+        });
+
     }
 
     /**
@@ -175,7 +205,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
      */
     private void getLocation() {
         AmapUtils.getAmapUtils().getLocation(new AMapLocationListener() {
-
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
                 if (aMapLocation != null) {
@@ -215,13 +244,12 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
-        if(openType == 1){
-            LogUtils.showE("传参longitude",longitude+"");
+        if (openType == 1) {
+            LogUtils.showE("传参longitude", longitude + "");
             data.put("longitude", longitude + "");
             data.put("latitude", latitude + "");
             data.put("isLogistics", "1");
         }
-
         data.put("orderNumber", id);
         requestEntity.setData(data);
 
@@ -274,8 +302,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         }
 
         contentStr += "     " + infoEntity.getIntention() + "优先";
-
-
+        orderTv.setText(infoEntity.getOrderNumber());
         tvContent.setText(contentStr);
         tvMileage.setText("运输里程约：" + infoEntity.getDistance() + "km");
         //货物名称
@@ -291,31 +318,42 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         //配送方式
         if (TextUtils.equals("1", infoEntity.deliveryWay)) {
             tvThreeExceed.setText("站点提货");
-        } else if(TextUtils.equals("2", infoEntity.deliveryWay)){
+        } else if (TextUtils.equals("2", infoEntity.deliveryWay)) {
             tvThreeExceed.setText("配送到门");
         }
 
         //备注信息
         tvRemarkInfo.setText(infoEntity.remark);
 
+        if(!TextUtils.isEmpty(infoEntity.imgUrl1)){
+            if(list.size()>0){
+                list.clear();
+            }
+            String str[]  = infoEntity.imgUrl1.split(",");
+            for(String url: str){
+                PhotoBean photoBean  = new PhotoBean();
+                photoBean.setUrl(url);
+                list.add(photoBean);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
 
         //设置图片
-        if (!TextUtils.isEmpty(infoEntity.imgUrl1)) {
-            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl1, imageOne);
-            imageOne.setTag(infoEntity.imgUrl1);
-            imageOne.setOnClickListener(this);
-        }
-        if (!TextUtils.isEmpty(infoEntity.imgUrl2)) {
-            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl2, imageTwo);
-            imageTwo.setTag(infoEntity.imgUrl2);
-            imageTwo.setOnClickListener(this);
-        }
-        if (!TextUtils.isEmpty(infoEntity.imgUrl3)) {
-            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl3, imageThree);
-            imageThree.setTag(infoEntity.imgUrl3);
-            imageThree.setOnClickListener(this);
-        }
-
+//        if (!TextUtils.isEmpty(infoEntity.imgUrl1)) {
+//            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl1, imageOne);
+//            imageOne.setTag(infoEntity.imgUrl1);
+//            imageOne.setOnClickListener(this);
+//        }
+//        if (!TextUtils.isEmpty(infoEntity.imgUrl2)) {
+//            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl2, imageTwo);
+//            imageTwo.setTag(infoEntity.imgUrl2);
+//            imageTwo.setOnClickListener(this);
+//        }
+//        if (!TextUtils.isEmpty(infoEntity.imgUrl3)) {
+//            GlideManager.getGlideManager().loadImage(infoEntity.imgUrl3, imageThree);
+//            imageThree.setTag(infoEntity.imgUrl3);
+//            imageThree.setOnClickListener(this);
+//        }
 
         //设置多装多卸的条目
         if (openType == 1) {
@@ -328,7 +366,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 
 
         //运费金额
-        if(infoEntity.orderStatus == 0){
+        if (infoEntity.orderStatus == 0) {
             tvCarriageMoney.setText("未竞价");
         } else {
             tvCarriageMoney.setText(infoEntity.expectFreightRate + "元");
@@ -339,13 +377,13 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         //货值单价
         tvCargoValue.setText(infoEntity.cargoValue == 0d ? "0元" : infoEntity.cargoValue + "元");
         //允许转单
-        if(infoEntity.isAllowTurn == 1){
+        if (infoEntity.isAllowTurn == 1) {
             tvTurnAllowSingle.setText("是");
         } else {
             tvTurnAllowSingle.setText("否");
         }
         //设置是否需要保单
-        if(TextUtils.isEmpty(infoEntity.insuranceComName)){
+        if (TextUtils.isEmpty(infoEntity.insuranceComName)) {
             tvIsTb.setVisibility(View.INVISIBLE);
             insuranceServicesGroup.setVisibility(View.GONE);
             insuranceMoneyGroup.setVisibility(View.GONE);
@@ -354,13 +392,13 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             //保险服务
             tvInsuranceServices.setText(infoEntity.insuranceComName);
             //保险费用
-            tvInsuranceMoney.setText(TextUtils.isEmpty(infoEntity.insurancePay)? "0元" : infoEntity.insurancePay + "元");
+            tvInsuranceMoney.setText(TextUtils.isEmpty(infoEntity.insurancePay) ? "0元" : infoEntity.insurancePay + "元");
         }
 
         //发票类型
-        if(TextUtils.equals("s", infoEntity.taxType)){
+        if (TextUtils.equals("s", infoEntity.taxType)) {
             tvInvoiceType.setText("专业发票");
-        } else if(TextUtils.equals("p", infoEntity.taxType)){
+        } else if (TextUtils.equals("p", infoEntity.taxType)) {
             tvInvoiceType.setText("普通发票");
         } else {
             tvInvoiceType.setText("不需要发票");
@@ -379,7 +417,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     }
 
     public void setOrderType(TextView textView, String type) {
-        if(TextUtils.isEmpty(type)){
+        if (TextUtils.isEmpty(type)) {
             type = "0";
         }
         switch (type) {
@@ -451,7 +489,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                     break;
             }
             tvStatus.setText(statusName);
-        } else if(openType == 3){
+        } else if (openType == 3) {
             //显示底部按钮
             btnBidding.setVisibility(View.INVISIBLE);
             ivCallPhone.setVisibility(View.VISIBLE);
@@ -482,7 +520,13 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             View inflate = View.inflate(this, R.layout.item_order_loading_unload_list_layout, null);
             AddrBean addrBean = infoEntity.addr.get(x);
             String addrStr = addrBean.endProvinceName + addrBean.endCityName + addrBean.endAreaName + addrBean.endAddr;
-            setTruckLoadingAndUnloadView(1, x, inflate, addrStr);
+//            String start_num = TextUtils.isEmpty(addrBean.getStartCellphone()) ? "****" : addrBean.getStartCellphone();
+//            String start_name = TextUtils.isEmpty(addrBean.getStartLinkman()) ? "****" : addrBean.getStartLinkman();
+            String end_num = TextUtils.isEmpty(addrBean.getEndCellphone()) ? "****" : addrBean.getEndCellphone();
+            String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
+//            String startStr = start_name + " " + start_num;
+            String endStr = end_name + " " + end_num;
+            setTruckLoadingAndUnloadView(1, x, inflate, addrStr,endStr);
         }
     }
 
@@ -490,21 +534,27 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         if (truckLoadingNum > infoEntity.addr.size()) {
             truckLoadingNum = infoEntity.addr.size();
         }
-
-
         for (int x = 0; x < truckLoadingNum; x++) {
             View inflate = View.inflate(this, R.layout.item_order_loading_unload_list_layout, null);
             AddrBean addrBean = infoEntity.addr.get(x);
             String addrStr = addrBean.startProvinceName + addrBean.startCityName + addrBean.startAreaName + addrBean.startAddr;
-            setTruckLoadingAndUnloadView(0, x, inflate, addrStr);
+            String start_num = TextUtils.isEmpty(addrBean.getStartCellphone()) ? "****" : addrBean.getStartCellphone();
+            String start_name = TextUtils.isEmpty(addrBean.getStartLinkman()) ? "****" : addrBean.getStartLinkman();
+//            String end_num = TextUtils.isEmpty(addrBean.getEndTelephone()) ? "****" : addrBean.getEndTelephone();
+//            String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
+            String startStr = start_name + "  " + start_num;
+ //           String endStr = end_name + "  " + end_num;
+            setTruckLoadingAndUnloadView(0, x, inflate, addrStr, startStr);
         }
     }
 
-    private void setTruckLoadingAndUnloadView(int type, int position, View viewGroup, String addrStr) {
+    private void setTruckLoadingAndUnloadView(int type, int position, View viewGroup, String addrStr, String startStr) {
         ImageView iv = viewGroup.findViewById(R.id.ivItem);
         TextView tv = viewGroup.findViewById(R.id.tvItem);
+        TextView textTv = viewGroup.findViewById(R.id.tvName);
         String str;
         if (type == 0) {
+            textTv.setText(startStr);
             str = "(第" + ChineseNumUtill.numberToChinese(position + 1) + "装货地)";
             if (position < 1) {
                 iv.setImageResource(R.drawable.icon_text_zhuang);
@@ -512,6 +562,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 iv.setImageResource(R.drawable.bg_b_ffdd29_circular_size);
             }
         } else {
+            textTv.setText(startStr);
             str = "(第" + ChineseNumUtill.numberToChinese(position + 1) + "卸货地)";
             if (position < 1) {
                 iv.setImageResource(R.drawable.icon_text_xie);
@@ -522,7 +573,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         SpannableString spannableString = new SpannableString(addrStr + str);
         //设置字体前景色
         spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), addrStr.length(), spannableString.toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红色
-
         tv.setText(spannableString);
         llLocationGroup.addView(viewGroup);
     }
@@ -563,18 +613,18 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.imageOne:
-            case R.id.imageTwo:
-            case R.id.imageThree:
-                Object tag = v.getTag();
-                if(tag instanceof String){
-                    String url = (String) tag;
-                    Intent intent = new Intent(this, ImageActivity.class);
-                    intent.putExtra("url", url);
-                    startActivity(intent);
-                }
-                break;
+        switch (v.getId()) {
+//            case R.id.imageOne:
+//            case R.id.imageTwo:
+//            case R.id.imageThree:
+//                Object tag = v.getTag();
+//                if (tag instanceof String) {
+//                    String url = (String) tag;
+//                    Intent intent = new Intent(this, ImageActivity.class);
+//                    intent.putExtra("url", url);
+//                    startActivity(intent);
+//                }
+//                break;
         }
     }
 
@@ -606,7 +656,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     /**
      * 通过订单号生成货运单
      */
-    public void getAssumeRoleByOrderNo(String orderNumber){
+    public void getAssumeRoleByOrderNo(String orderNumber) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
@@ -620,9 +670,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 if (resp != null) {
                     if (resp.success) {
                         //1.弹出提示下载对话框
-                        if (TextUtils.isEmpty(resp.getData())){
+                        if (TextUtils.isEmpty(resp.getData())) {
                             ToastUtil.showToastString("货运单获取失败!");
-                        }else {
+                        } else {
                             showDownLoadDialog(resp.getData());
                         }
                     } else {
@@ -658,18 +708,19 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     }
 
     ProgressDialog downloadDialog;
+
     /**
      * 2. 开始下载
      */
-    private void downloadFile(String url){
+    private void downloadFile(String url) {
 
         downloadDialog = new ProgressDialog(this);
         downloadDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         downloadDialog.setCancelable(false);
         downloadDialog.show();
-        LogUtils.showE("LHF", "下载开始" );
+        LogUtils.showE("LHF", "下载开始");
         DownLoadManager.getInstance().download(url,
-                System.currentTimeMillis()+".pdf" // 文件下载名称
+                System.currentTimeMillis() + ".pdf" // 文件下载名称
                 , new DownloadListener() {
                     /**
                      * 下载开始
@@ -697,8 +748,8 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                         downloadDialog.dismiss();
                         ToastUtil.showToastString("下载成功! 文件保存在: " + filePath);
                         File file = new File(filePath);
-                        if (file.exists()){
-                            OpenFileUtils.openFile(getApplicationContext(),file);
+                        if (file.exists()) {
+                            OpenFileUtils.openFile(getApplicationContext(), file);
                         }
                     }
 

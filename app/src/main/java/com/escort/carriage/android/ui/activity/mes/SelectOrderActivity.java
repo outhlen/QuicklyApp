@@ -313,7 +313,6 @@ public class SelectOrderActivity extends Activity {
                 break;
             case R.id.tvSelect:
                 selectOrderEntity.setCargoName(edtGoodName.getText().toString());
-
                 Intent intent = new Intent();
                 intent.putExtra("json", JsonManager.createJsonString(selectOrderEntity));
                 setResult(666, intent);

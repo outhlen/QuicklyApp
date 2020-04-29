@@ -198,6 +198,13 @@ public class ProjectUrl {
      * 文件上传 获取 阿里云 oss 对应配置参数
      */
     public static String CLOUDAUTH_GETASSUMEROLE = baseUrl + "undertake/cloudAuth/getAssumeRole";
+
+    /**
+     *  货运端企业认证 (新增)
+      */
+    public static String CLOUDAUTH_COMMPANY_AUTHOR = baseUrl + "undertake/company/company/businessLicense";
+
+
     /**
      * 文件上传
      */

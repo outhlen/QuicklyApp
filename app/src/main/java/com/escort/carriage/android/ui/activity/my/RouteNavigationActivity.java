@@ -8,6 +8,9 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,16 +38,24 @@ public class RouteNavigationActivity extends Activity {
     @BindView(R.id.finishView)
     View finishView;
     private OrderInfoEntity infoEntity;
-
+    ScaleAnimation scaleAnim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.activity_route_navigation);
         ButterKnife.bind(this);
+        scaleAnim = new ScaleAnimation(1.0f, 0.9f, 1.0f, 0.9f,
+                Animation.RELATIVE_TO_SELF, 0.9f, Animation.RELATIVE_TO_SELF,
+                0.9f);
+        scaleAnim.setRepeatCount(-1);
+        scaleAnim.setDuration(1200);
+        scaleAnim.setInterpolator(new LinearInterpolator());
+        scaleAnim.setFillAfter(true);
         String json = getIntent().getStringExtra("json");
         infoEntity = JsonManager.getJsonBean(json, OrderInfoEntity.class);
         setLocation();
+
         finishView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +147,7 @@ public class RouteNavigationActivity extends Activity {
         spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), addrStr.length(), spannableString.toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红色
 
         tv.setText(spannableString);
-
+        ivToGaode.startAnimation(scaleAnim);
         ivToGaode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

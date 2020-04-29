@@ -123,9 +123,6 @@ public class HomeListFragment extends BaseFragment implements OnRefreshLoadMoreL
     }
 
 
-
-
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -136,9 +133,6 @@ public class HomeListFragment extends BaseFragment implements OnRefreshLoadMoreL
             isVisible = false;
         }
     }
-
-
-
 
 
     private void onVisible() {
@@ -353,7 +347,7 @@ public class HomeListFragment extends BaseFragment implements OnRefreshLoadMoreL
                                 homeListRequestEnity.startCityCode = cityBean.getCityCode();
                                 tvItem01.setText(cityBean.getCity());
                                 tvItem01.setRightDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.home_bottom_jt));
-                               getOrderList(page,reFreshLayout);
+                                getOrderList(1,reFreshLayout);
                             }
                         })
                         .setShowBottom(true)
@@ -371,7 +365,7 @@ public class HomeListFragment extends BaseFragment implements OnRefreshLoadMoreL
                                 homeListRequestEnity.endCityCode = cityBean.getCityCode();
                                 tvItem02.setText(cityBean.getCity());
                                 tvItem02.setRightDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.home_bottom_jt));
-                                getOrderList(page,reFreshLayout);
+                                getOrderList(1,reFreshLayout);
                             }
                         })
                         .setShowBottom(true)
@@ -422,7 +416,7 @@ public class HomeListFragment extends BaseFragment implements OnRefreshLoadMoreL
             tvItem01.setRightDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.home_top_jt));
             tvItem02.setRightDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.home_top_jt));
         }
-        page = 1;
+        getOrderList(1,reFreshLayout);
     }
 
     @Override

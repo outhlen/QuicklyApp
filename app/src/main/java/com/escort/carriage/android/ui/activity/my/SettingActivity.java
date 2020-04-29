@@ -49,11 +49,11 @@ public class SettingActivity extends ProjectBaseSingleClickActivity{
         StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.activity_setting);
         bind = ButterKnife.bind(this);
-
+        CacheDBMolder.getInstance().setNotificationSpeak("1");
         //实例化
         aSwitch = (Switch) findViewById(R.id.ivSpeakSwitch);
-        String speakCheck = CacheDBMolder.getInstance().isNotificationSpeak();
-
+        String speakCheck = CacheDBMolder.getInstance().isNotificationSpeak(); //默认开启语言
+        aSwitch.setChecked(true);
         // 初始化设置语音开关
         if(speakCheck == null || speakCheck.equals("") || speakCheck.equals("0")){
             aSwitch.setChecked(false);

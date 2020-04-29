@@ -53,7 +53,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
     private int pageType = 0;
     private Fragment fragment;
-
     private int repeal_order = 0;//撤单标识
     private int see_order_details = 1;//查看详情
     private int path_navigation = 2;//路线导航
@@ -85,17 +84,13 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             AddrBean addrBean = item.addr.get(0);
             helper.tvStartLocation.setText(addrBean.startCityName);
             helper.tvEndtLocation.setText(addrBean.endCityName);
-
         }
-//        helper.tvStartLocation.setText(item.startCityName);
-//        helper.tvEndtLocation.setText(item.endCityName);
-
+        helper.tvOrderNum.setText( "订单号：***"+item.orderNumber.substring(item.orderNumber.length()-4,item.orderNumber.length()));
         helper.tvTime.setText("订单时间:" + ProjectDateUtils.getTimeDay("yyyy-MM-dd HH:mm", item.orderPlaceTime));
         helper.tvCargoName.setText(item.cargoName);
         helper.cargoCount.setText(item.cargoCount + "件");
         helper.tvCargoWeightVolume.setText(item.cargoWeight + "吨/" + item.cargoVolume + "方");
         helper.tvPackingManner.setText(item.packingManner);
-
         setBottomBtn(helper, item);
     }
 
@@ -692,6 +687,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         TextView tvStartLocation;
         TextView tvEndtLocation;
         TextView tvTime;
+        TextView tvOrderNum;
         TextView tvCargoName;
         TextView cargoCount;
         TextView tvCargoWeightVolume;
@@ -708,6 +704,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             tvStartLocation = view.findViewById(R.id.tvStartLocation);
             tvEndtLocation = view.findViewById(R.id.tvEndtLocation);
             tvTime = view.findViewById(R.id.tvTime);
+            tvOrderNum = view.findViewById(R.id.order_num_tv);
             tvCargoName = view.findViewById(R.id.tvCargoName);
             cargoCount = view.findViewById(R.id.cargoCount);
             tvCargoWeightVolume = view.findViewById(R.id.tvCargoWeightVolume);

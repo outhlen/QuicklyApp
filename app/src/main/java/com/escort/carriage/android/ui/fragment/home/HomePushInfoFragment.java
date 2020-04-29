@@ -3,6 +3,7 @@ package com.escort.carriage.android.ui.fragment.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -69,6 +71,7 @@ public class HomePushInfoFragment extends BaseFragment {
     FillListView filllist;
     @BindView(R.id.tvAddCircuit)
     TextView tvAddCircuit;
+
     private HomeMainHolder homeMainHolder;
     private Unbinder bind;
     HomePushInfoListAdapter homePushInfoListAdapter;
@@ -84,8 +87,6 @@ public class HomePushInfoFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bind = ButterKnife.bind(this, view);
-
-
     }
 
     @Override
@@ -332,7 +333,6 @@ public class HomePushInfoFragment extends BaseFragment {
                 holder = (HomePushInfoListAdapterHolder) convertView.getTag();
             }
             CircuitListEntity.CircuitItemEntity circuitItemEntity = mList.get(position);
-
             holder.tvStartLocation.setText(circuitItemEntity.getStartProvinceName() + circuitItemEntity.getStartCitName());
             holder.tvEndtLocation.setText(circuitItemEntity.getEndProvinceName() + circuitItemEntity.getEndCitName());
             holder.ivPush.setOnCheckedChangeListener(null);
@@ -356,14 +356,34 @@ public class HomePushInfoFragment extends BaseFragment {
                 }
             });
 
-            holder.tvItemEdit.setOnClickListener(new View.OnClickListener() {
+//            holder.tvItemEdit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    AddCircuitPopupWindow addCircuitPopupWindow = new AddCircuitPopupWindow(getActivity(), HomePushInfoFragment.this, 1);
+//                    HomeActivity activity = (HomeActivity) getActivity();
+//                    View view1 = activity.getHomeMainHoler().findView(R.id.statusBarView);
+//                    addCircuitPopupWindow.setUpdataCircuitView(circuitItemEntity);
+//                    addCircuitPopupWindow.showAsDropDown(view1);
+//                }
+//            });
+            //编辑
+            holder.editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     AddCircuitPopupWindow addCircuitPopupWindow = new AddCircuitPopupWindow(getActivity(), HomePushInfoFragment.this, 1);
                     HomeActivity activity = (HomeActivity) getActivity();
                     View view1 = activity.getHomeMainHoler().findView(R.id.statusBarView);
                     addCircuitPopupWindow.setUpdataCircuitView(circuitItemEntity);
                     addCircuitPopupWindow.showAsDropDown(view1);
+                }
+            });
+           //删除
+            holder.delBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mList.remove(position);
+                    setList(mList);
+                    ToastUtil.showToastString("删除成功");
                 }
             });
 
@@ -393,6 +413,8 @@ public class HomePushInfoFragment extends BaseFragment {
             TextView tvItemEdit;
             FlowLayout flowLayout;
             Switch ivPush;
+            RelativeLayout editBtn;
+            RelativeLayout delBtn;
 
             public HomePushInfoListAdapterHolder(View view) {
                 tvStartLocation = view.findViewById(R.id.tvStartLocation);
@@ -400,6 +422,8 @@ public class HomePushInfoFragment extends BaseFragment {
                 tvItemEdit = view.findViewById(R.id.tvItemEdit);
                 flowLayout = view.findViewById(R.id.flowLayout);
                 ivPush = view.findViewById(R.id.ivPush);
+                editBtn  = view.findViewById(R.id.edit_layout);
+                delBtn  = view.findViewById(R.id.del_layout);
             }
         }
     }

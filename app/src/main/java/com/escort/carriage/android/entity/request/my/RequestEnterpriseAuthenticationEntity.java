@@ -19,6 +19,15 @@ public class RequestEnterpriseAuthenticationEntity {
     private String companyAreaCode;
     private String companyAddress;
     private String licencePicture;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getCompanyName() {
         return companyName;

@@ -51,24 +51,44 @@
         android:textSize="14sp"
         tools:text="测试数据" />
 
-    <TextView
-        android:id="@+id/tvTime"
+    <RelativeLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEndtLocation"
         android:layout_alignLeft="@+id/tvStartLocation"
-        android:layout_marginRight="@dimen/space_10"
-        android:maxLines="1"
-        android:textSize="10sp"
+        android:layout_below="@+id/tvEndtLocation">
 
-        tools:text="测试数据" />
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_10"
+            android:maxLines="1"
+            android:textSize="10sp"
+            tools:text="测试数据" />
+
+
+        <TextView
+            android:id="@+id/order_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_10"
+            android:maxLines="1"
+            android:textColor="@color/blue"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"
+            tools:text="订单号：213123" />
+
+    </RelativeLayout>
+
+
 
     <LinearLayout
         android:id="@+id/contentGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTime"
-        android:layout_alignLeft="@+id/tvTime"
+        android:layout_below="@+id/linearlayout"
+        android:layout_alignLeft="@+id/linearlayout"
         android:layout_marginTop="@dimen/space_5"
         android:layout_marginRight="@dimen/space_10"
         android:layout_toRightOf="@+id/ivImage"

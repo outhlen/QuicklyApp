@@ -16,6 +16,7 @@ import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.glide.GlideManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.okhttp3.entity.ResponceBean;
+import com.androidybp.basics.okhttp3.entity.ResponceJsonEntity;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
@@ -26,6 +27,7 @@ import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.CompanyBean;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.request.my.RequestEnterpriseAuthenticationEntity;
 import com.escort.carriage.android.entity.response.home.QuListBean;
@@ -75,6 +77,7 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
     private RequestEnterpriseAuthenticationEntity requestEntity;
     private SelectPhotoUtils selectPhotoUtils;
     private AuthSuccessDialog authSuccessDialog;
+    String remoteUrl,areaCode,cityCode,provinceCode ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,6 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
         setPageActionBar();
         status = getIntent().getIntExtra("status", 0);
         requestEntity = new RequestEnterpriseAuthenticationEntity();
-
         initView();
         setSelectUtils();
         if (status == 2) {
@@ -143,6 +145,9 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
                              @Override
                              public void onCallback(View flag, ShengListBean.DataBean provinceBean, ShiListBean.DataBean cityBean, QuListBean.DataBean areaBean) {
                                  ((TextView)flag).setText(provinceBean.getProvince() + cityBean.getCity() + areaBean.getArea());
+                                 areaCode =  areaBean.getAreaCode();
+                                 cityCode = cityBean.getCityCode();
+                                 provinceCode = provinceBean.getProvinceCode();
                                  requestEntity.setCompanyProvinceCode(provinceBean.getProvinceCode());
                                  requestEntity.setCompanyCityCode(cityBean.getCityCode());
                                  requestEntity.setCompanyAreaCode(areaBean.getAreaCode());
@@ -157,18 +162,26 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
                 String addressDetails = etAddressDetails.getText().toString();
                 if(TextUtils.isEmpty(companyName)){
                     ToastUtil.showToastString("请填写公司名称");
-                } else if(TextUtils.isEmpty(code)){
-                    ToastUtil.showToastString("请填写信用代码");
-                } else if(TextUtils.isEmpty(addressDetails)){
-                    ToastUtil.showToastString("请填写详细地址");
-                } else if(TextUtils.isEmpty(requestEntity.getCompanyProvinceCode())){
-                    ToastUtil.showToastString("请选择地址");
-                } else {
-                    requestEntity.setCompanyName(companyName);
-                    requestEntity.setCreditCode(code);
-                    requestEntity.setCompanyAddress(tvAddress.getText() + addressDetails);
-                    toEnterpriseAuthentication();
+                    return;
                 }
+                if(TextUtils.isEmpty(code)){
+                    ToastUtil.showToastString("请填写信用代码");
+                    return;
+                }
+                if(TextUtils.isEmpty(addressDetails)){
+                    ToastUtil.showToastString("请填写详细地址");
+                    return;
+                }
+                if(TextUtils.isEmpty(requestEntity.getCompanyProvinceCode())){
+                    ToastUtil.showToastString("请选择地址");
+                    return;
+                }
+//                else {
+//                    requestEntity.setCompanyName(companyName);
+//                    requestEntity.setCreditCode(code);
+//                    requestEntity.setCompanyAddress(tvAddress.getText() + addressDetails);
+//                }
+                addAuthenticationInfo();
                     break;
 
         }
@@ -180,7 +193,6 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
         selectPhotoUtils.setCallback(new SelectPhotoUtils.SelectPhotoCallback() {
             @Override
             public void selectPhotoCallback(int selectType, int openType, Uri uri) {
-
                 //将图片设置到控件上
                 switch (openType) {
                     case 1:
@@ -214,7 +226,10 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
             @Override
             public void imageCallback(int openType, String url) {
                 if (openType == 1) {
-                    requestEntity.setLicencePicture(url);
+                    //requestEntity.setLicencePicture(url);
+                    remoteUrl  = url;
+                    requestEntity.setImage(url);
+                    toEnterpriseAuthentication(); //开始认证
                 }
             }
         });
@@ -250,21 +265,61 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
             }
         });
     }
-    /**
-     * 提交认证信息
-     */
+
     private void toEnterpriseAuthentication() {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         requestEntity.setData(this.requestEntity);
         String jsonString = JsonManager.createJsonString(requestEntity);
-        OkgoUtils.post(ProjectUrl.COMPANY_AUTH_AUTHUNDERTAKE, jsonString).execute(new MyStringCallback<ResponceBean>() {
+        OkgoUtils.post(ProjectUrl.CLOUDAUTH_COMMPANY_AUTHOR, jsonString).execute(new MyStringCallback<CompanyBean>() {
             @Override
-            public void onResponse(ResponceBean s) {
+            public void onResponse(CompanyBean s) {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        ToastUtil.showToastString("数据提交成功");
+                        //ToastUtil.showToastString("数据提交成功");
+                        etCompanyName.setText(s.data.getCompanyName());
+                        etCode.setText(s.data.getCreditCode());
+                        etAddressDetails.setText(s.data.getCompanyAddress());
+                    } else {
+                        ToastUtil.showToastString(s.message);
+                    }
+                }
+            }
+
+            @Override
+            public Class<CompanyBean> getClazz() {
+                return CompanyBean.class;
+            }
+        });
+    }
+
+    private void addAuthenticationInfo() {
+        requestEntity  = new RequestEnterpriseAuthenticationEntity();
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestBody = new RequestEntity(0);
+        String name  = etCompanyName.getText().toString();
+        String code  = etCode.getText().toString();
+        String addr  = etAddressDetails.getText().toString();
+        requestEntity.setCompanyName(name);
+        requestEntity.setCreditCode(code);
+        requestEntity.setCompanyAddress(addr);
+        requestEntity.setLicencePicture(remoteUrl);
+        requestEntity.setCompanyAreaCode(areaCode);
+        requestEntity.setCompanyCityCode(cityCode);
+        requestEntity.setCompanyProvinceCode(provinceCode);
+        requestBody.setData(this.requestEntity);
+        String jsonString = JsonManager.createJsonString(requestBody);
+        OkgoUtils.post(ProjectUrl.COMPANY_AUTH_AUTHUNDERTAKE, jsonString).execute(new MyStringCallback<CompanyBean>() {
+            @Override
+            public void onResponse(CompanyBean s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    if (s.success) {
+                        //ToastUtil.showToastString("数据提交成功");
+                        etCompanyName.setText(s.data.getCompanyName());
+                        etCode.setText(s.data.getCreditCode());
+                        etAddressDetails.setText(s.data.getCompanyAddress());
                         finish();
                     } else {
                         ToastUtil.showToastString(s.message);
@@ -273,8 +328,8 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
             }
 
             @Override
-            public Class<ResponceBean> getClazz() {
-                return ResponceBean.class;
+            public Class<CompanyBean> getClazz() {
+                return CompanyBean.class;
             }
         });
     }
