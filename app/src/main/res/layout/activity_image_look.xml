@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    // 这是第三方库提供的，也就是默认的布局文件
+    <include layout="@layout/activity_image_preview_photo"/>
+
+</LinearLayout>

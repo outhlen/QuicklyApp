@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.alibaba.security.biometrics.theme.ALBiometricsConfig;
@@ -18,26 +19,21 @@ import com.escort.carriage.android.network.RequestHandler;
 import com.escort.carriage.android.server.ReleaseServer;
 import com.escort.carriage.android.server.TestServer;
 import com.hjq.http.EasyConfig;
-import com.hjq.http.EasyHttp;
-import com.hjq.http.config.IRequestHandler;
 import com.hjq.http.config.IRequestServer;
-import com.hjq.http.model.BodyType;
-import com.tripartitelib.android.iflytek.IflytekUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.tripartitelib.android.TripartiteLibInitUtils;
+import com.tripartitelib.android.iflytek.IflytekUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.logging.Level;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
 public class ProjectApplication extends MultiDexApplication {
 
@@ -51,12 +47,9 @@ public class ProjectApplication extends MultiDexApplication {
                 initOkgo();
                 TripartiteLibInitUtils.getUtils().registerToWX(ProjectApplication.this);
                 initJPush();
-//                RPSDK.initialize(getApplicationContext());
                 IflytekUtils.getIflytekUtils().initIflytek(ProjectApplication.this);
                 try {
-//                    hookWebView();
                    CloudRealIdentityTrigger.initialize(ProjectApplication.this, true, buildALBiometricsConfig());//第二个参数是本地日志能力（若打开 会记录问题到本地，方便后期排查线上用户问题）
-
                 } catch (Exception e) {
                     LogUtils.showE("application", "阿里云人脸识别初始失败");
                 }
@@ -87,6 +80,15 @@ public class ProjectApplication extends MultiDexApplication {
                 //.addHeader("time", "20191030")
                 // 启用配置
                 .into();
+    }
+
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    private void addService() {
+
     }
 
     private void initOkgo() {
@@ -175,7 +177,6 @@ public class ProjectApplication extends MultiDexApplication {
                     sProviderInstance = staticFactory.invoke(null, delegateConstructor.newInstance());
                 }
             }
-
             if (sProviderInstance != null) {
                 field.set("sProviderInstance", sProviderInstance);
                 Log.i(TAG, "Hook success!");

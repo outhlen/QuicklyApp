@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -43,20 +44,27 @@ import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.download.DownLoadManager;
 import com.escort.carriage.android.http.download.DownloadListener;
+import com.escort.carriage.android.ui.ImageLookActivity;
 import com.escort.carriage.android.ui.activity.adapter.PhotoListAdapter;
 import com.escort.carriage.android.ui.activity.bean.PhotoBean;
 import com.escort.carriage.android.ui.view.ItemDecoration;
 import com.escort.carriage.android.ui.view.text.DrawableTextView;
 import com.escort.carriage.android.utils.ChineseNumUtill;
+import com.escort.carriage.android.utils.ImageLoader;
 import com.escort.carriage.android.utils.OpenFileUtils;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
+import com.previewlibrary.GPreviewBuilder;
+import com.previewlibrary.ZoomMediaLoader;
+import com.previewlibrary.enitity.ThumbViewInfo;
 import com.tripartitelib.android.amap.AmapUtils;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -159,6 +167,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     private double latitude;//纬度
     private PhotoListAdapter mAdapter;
     List<PhotoBean> list;
+    ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +176,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         setContentView(R.layout.activity_oder_info);
         ButterKnife.bind(this);
         setTitleBar();
+        ZoomMediaLoader.getInstance().init(new ImageLoader());
         Intent intent = getIntent();
         orderID = intent.getStringExtra("id");
         openType = intent.getIntExtra("openType", 1);
@@ -178,18 +188,24 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 getInfo(orderID);
             }
         }
-        list  = new ArrayList<>();
-        photoView.setLayoutManager(new GridLayoutManager(this,3));
-        photoView.addItemDecoration(new GridSpacingItemDecoration(3,25,false));
+        list = new ArrayList<>();
+        photoView.setLayoutManager(new GridLayoutManager(this, 4));
+        photoView.addItemDecoration(new GridSpacingItemDecoration(4, 25, false));
         mAdapter = new PhotoListAdapter(OrderInfoActivity.this, R.layout.photo_recycler_layout, list);
         photoView.setAdapter(mAdapter);
+
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, int i) {
-//                Intent intent = new Intent();
-//                intent.putExtra("order",list.get(i));
-//                intent.setClass(OrderBiddingActivity.this, OrderBiddingDetalActivity.class);
-//                startActivity(intent);
+                GPreviewBuilder.from(OrderInfoActivity.this)
+                        //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
+                        .to(ImageLookActivity.class)
+                        .setData(mThumbViewInfoList)
+                        .setCurrentIndex(i)
+                        .setSingleFling(true)
+                        .setType(GPreviewBuilder.IndicatorType.Number)
+                        // 小圆点
+                        .start();//启动
             }
 
             @Override
@@ -252,7 +268,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         }
         data.put("orderNumber", id);
         requestEntity.setData(data);
-
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderInfoEntity>() {
             @Override
@@ -325,17 +340,26 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         //备注信息
         tvRemarkInfo.setText(infoEntity.remark);
 
-        if(!TextUtils.isEmpty(infoEntity.imgUrl1)){
-            if(list.size()>0){
+        if (!TextUtils.isEmpty(infoEntity.imgUrl1)) {
+            if (list.size() > 0) {
                 list.clear();
             }
-            String str[]  = infoEntity.imgUrl1.split(",");
-            for(String url: str){
-                PhotoBean photoBean  = new PhotoBean();
+            String str[] = infoEntity.imgUrl1.split(",");
+            for (String url : str) {
+                PhotoBean photoBean = new PhotoBean();
                 photoBean.setUrl(url);
                 list.add(photoBean);
             }
             mAdapter.notifyDataSetChanged();
+
+            for (int i = 0; i < list.size(); i++) {
+                Rect bounds = new Rect();
+                //new ThumbViewInfo(图片地址);
+                ThumbViewInfo item = new ThumbViewInfo(list.get(i).getUrl());
+                item.setBounds(bounds);
+                mThumbViewInfoList.add(item);
+            }
+
         }
 
         //设置图片
@@ -526,7 +550,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
 //            String startStr = start_name + " " + start_num;
             String endStr = end_name + " " + end_num;
-            setTruckLoadingAndUnloadView(1, x, inflate, addrStr,endStr);
+            setTruckLoadingAndUnloadView(1, x, inflate, addrStr, endStr);
         }
     }
 
@@ -543,7 +567,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
 //            String end_num = TextUtils.isEmpty(addrBean.getEndTelephone()) ? "****" : addrBean.getEndTelephone();
 //            String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
             String startStr = start_name + "  " + start_num;
- //           String endStr = end_name + "  " + end_num;
+            //           String endStr = end_name + "  " + end_num;
             setTruckLoadingAndUnloadView(0, x, inflate, addrStr, startStr);
         }
     }

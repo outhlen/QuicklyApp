@@ -8,14 +8,16 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 
@@ -27,21 +29,23 @@ import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.okhttp3.entity.ResponceBean;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
+import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.Fileprovider;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
+import com.escort.carriage.android.LocationService;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectDataConfig;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.home.AmapCacheEntity;
 import com.escort.carriage.android.entity.bean.home.VersionEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
+import com.escort.carriage.android.entity.response.home.DeviceInfoEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.view.dialog.AdvertisingImageDialog;
-import com.escort.carriage.android.ui.view.dialog.AuthSuccessDialog;
 import com.escort.carriage.android.ui.view.dialog.VersionDialog;
 import com.escort.carriage.android.ui.view.holder.HomeLeftHolder;
 import com.escort.carriage.android.ui.view.holder.HomeMainHolder;
@@ -66,6 +70,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import okhttp3.Call;
 
 public class HomeActivity extends ProjectBaseActivity {
+
     private DrawerLayout drawerLayout;
     private FrameLayout homeFrameLayout;
     private FrameLayout leftFrameLayout;
@@ -95,6 +100,8 @@ public class HomeActivity extends ProjectBaseActivity {
 
     private static final String CHANNEL_ID_SERVICE_RUNNING = "CHANNEL_ID_SERVICE_RUNNING";
     private AdvertisingImageDialog advertisingImageDialog;
+    AlarmReceiver alarmReceiver;
+    String sid,deviceId,tid;
 
     public static void startHomeActivity(Activity activity) {
         activity.startActivity(new Intent(activity, HomeActivity.class));
@@ -116,8 +123,12 @@ public class HomeActivity extends ProjectBaseActivity {
         getVersion();
         //开启轨迹
         if (ProjectDataConfig.isOpenAmap) {
-            AmapUtils.getAmapUtils().initTrace(this);
+            getDeviceInfo();
         }
+        alarmReceiver = new AlarmReceiver();
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(alarmReceiver, intentFilter);
+
         ThreadUtils.openSonThread(new Runnable() {
             @Override
             public void run() {
@@ -126,12 +137,70 @@ public class HomeActivity extends ProjectBaseActivity {
                     @Override
                     public void run() {
                         String url = "http://xeryb.oss-cn-qingdao.aliyuncs.com/jiaozheng/orderInfo/33.png";
-//                        String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585449481161&di=986f50d8be7bca44aeb3004fc525721f&imgtype=0&src=http%3A%2F%2Fbbs.jooyoo.net%2Fattachment%2FMon_0905%2F24_65548_2835f8eaa933ff6.jpg";
                         showPageImageDialog(url);
                     }
                 });
             }
         });
+    }
+
+  // 定时广播启动服务
+    public class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                Log.e("AlarmReceiver", "开始锁屏"+ Intent.ACTION_SCREEN_OFF);
+                Intent locationIntent = new Intent(context, LocationService.class);
+                locationIntent.putExtra("sid",sid);
+                locationIntent.putExtra("deviceId",deviceId);
+                locationIntent.putExtra("tid",tid);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(locationIntent);
+                } else {
+                    startService(locationIntent);
+                }
+            }
+
+        }
+    }
+
+    private void getDeviceInfo() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "加载中...");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, String> data = new HashMap<>();
+        data.put("orderNumber", "");
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.GETDEVICEINFO, jsonString).execute(new MyStringCallback<DeviceInfoEntity>() {
+            @Override
+            public void onResponse(DeviceInfoEntity resp) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (resp != null) {
+                    if (resp.success) {
+                         sid = resp.data.getSid(); //服务ID
+                         tid = resp.data.getTrid();//轨迹ID
+                         deviceId = resp.data.getTid(); //终端ID
+                        Intent locationIntent = new Intent(HomeActivity.this, LocationService.class);
+                        locationIntent.putExtra("sid",sid);
+                        locationIntent.putExtra("deviceId",deviceId);
+                        locationIntent.putExtra("tid",tid);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            startForegroundService(locationIntent);
+                        } else {
+                            startService(locationIntent);
+                        }
+                    } else {
+                        ToastUtil.showToastString(resp.message);
+                    }
+                }
+            }
+
+            @Override
+            public Class<DeviceInfoEntity> getClazz() {
+                return DeviceInfoEntity.class;
+            }
+        });
+
     }
 
     @Override
@@ -188,8 +257,6 @@ public class HomeActivity extends ProjectBaseActivity {
         if (userInfoEntity != null) {
             updataUserInfo(userInfoEntity);
         }
-
-//        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         requestEntity.setData(new Object());
         String jsonString = JsonManager.createJsonString(requestEntity);
@@ -231,12 +298,8 @@ public class HomeActivity extends ProjectBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ProjectDataConfig.isOpenAmap) {
-            getAmapInfo();
-            //获取  ORDER_GETGOLDFALCON
-//
-        }
     }
+
 
     //--------- 轨迹 使用 配置参数
 
@@ -300,7 +363,6 @@ public class HomeActivity extends ProjectBaseActivity {
     }
 
     private void getVersion() {
-
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("terminalId", "1");
@@ -315,8 +377,8 @@ public class HomeActivity extends ProjectBaseActivity {
                         VersionEntity jsonBean = JsonManager.getJsonBean(s.data, VersionEntity.class);
                         String versionName = ApplicationContext.getInstance().versionName;
                         int versionCode = ApplicationContext.getInstance().versionCode;
-                        if(jsonBean.terminalId == 1 && jsonBean.groupId == 1 && versionCode < jsonBean.versionCode){
-                            if(advertisingImageDialog != null){
+                        if (jsonBean.terminalId == 1 && jsonBean.groupId == 1 && versionCode < jsonBean.versionCode) {
+                            if (advertisingImageDialog != null) {
                                 advertisingImageDialog.dismiss();
                             }
                             showVersionDialog(jsonBean);
@@ -470,7 +532,7 @@ public class HomeActivity extends ProjectBaseActivity {
             Uri uri = fileprovider.getUri(this, mApkFile, intent);
             intent.setDataAndType(uri, type);
             startActivity(intent);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -527,9 +589,13 @@ public class HomeActivity extends ProjectBaseActivity {
         if (homeMainHoler != null) {
             homeMainHoler.clear();
         }
-
+        if(alarmReceiver!=null){
+            unregisterReceiver(alarmReceiver);
+        }
         if (homeLeftHoler != null) {
             homeLeftHoler.clear();
         }
+
+
     }
 }

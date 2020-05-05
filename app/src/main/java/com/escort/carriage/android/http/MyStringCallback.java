@@ -44,6 +44,7 @@ public abstract class MyStringCallback<T extends ResponceJsonEntity> extends Str
             if (interceptor == -1) {
                 onResponse(jsonBean);
             }else {
+
                 ToastUtil.showToastString("账号在其他手机登录，请重新登录");
             }
 

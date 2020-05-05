@@ -7,7 +7,6 @@
     <permission
         android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
     <!-- Required  一些系统要求的权限，如访问网络等-->
     <uses-permission android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 联网权限 -->
@@ -76,7 +75,6 @@
         <!--android:theme="@style/SplashTheme">-->
         <!--<intent-filter>-->
         <!--<action android:name="android.intent.action.MAIN" />-->
-
         <!--<category android:name="android.intent.category.LAUNCHER" />-->
         <!--</intent-filter>-->
         <!--<meta-data-->
@@ -119,7 +117,6 @@
         <activity
             android:name=".ui.activity.login.RegisterSetPwdActivity"
             android:screenOrientation="portrait" />
-
 
         <!-- 登录页面 -->
         <activity
@@ -164,6 +161,9 @@
         <activity
             android:name=".ui.activity.my.ChangePhoneActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.ImagePreviewActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 修改手机号  设置短信验证码页面 -->
         <activity
@@ -269,6 +269,9 @@
             android:screenOrientation="portrait" />
 
 
+        <activity android:name=".ui.ImageLookActivity"
+            android:screenOrientation="portrait"/>
+
         <!-- 微信 开始-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -335,6 +338,10 @@
             </intent-filter>
         </service>
 
+        <service android:name=".LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":amap_service"/>
 
         <!--&lt;!&ndash; Since JCore2.0.0 Required SDK核心功能 &ndash;&gt;-->
         <!--&lt;!&ndash; 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false &ndash;&gt;-->

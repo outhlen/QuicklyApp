@@ -1,6 +1,8 @@
 package com.escort.carriage.android.ui.fragment.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -51,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -139,7 +142,7 @@ public class HomePushInfoFragment extends BaseFragment {
             tvSelectProvince.setText(provinceName);
         }
 
-        if(TextUtils.isEmpty(cityName)){
+        if (TextUtils.isEmpty(cityName)) {
             tvSelectCity.setText("请选择配送市级地区");
         } else {
             tvSelectCity.setText(cityName);
@@ -212,7 +215,6 @@ public class HomePushInfoFragment extends BaseFragment {
                 HomeActivity activity = (HomeActivity) getActivity();
                 View view1 = activity.getHomeMainHoler().findView(R.id.statusBarView);
                 addCircuitPopupWindow.showAsDropDown(view1);
-
                 break;
             case R.id.tvSelectProvince: //选择省份
             case R.id.tvSelectCity:
@@ -229,7 +231,6 @@ public class HomePushInfoFragment extends BaseFragment {
                         .setShowBottom(true)
                         .show(getActivity().getSupportFragmentManager());
                 break;
-
         }
     }
 
@@ -377,13 +378,23 @@ public class HomePushInfoFragment extends BaseFragment {
                     addCircuitPopupWindow.showAsDropDown(view1);
                 }
             });
-           //删除
+            //删除
             holder.delBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mList.remove(position);
-                    setList(mList);
-                    ToastUtil.showToastString("删除成功");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("提示:");
+                    builder.setMessage("确实要删除该条线路?");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteAddress(circuitItemEntity);
+                        }
+                    });
+                    builder.setNegativeButton("取消", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }
             });
 
@@ -422,10 +433,39 @@ public class HomePushInfoFragment extends BaseFragment {
                 tvItemEdit = view.findViewById(R.id.tvItemEdit);
                 flowLayout = view.findViewById(R.id.flowLayout);
                 ivPush = view.findViewById(R.id.ivPush);
-                editBtn  = view.findViewById(R.id.edit_layout);
-                delBtn  = view.findViewById(R.id.del_layout);
+                editBtn = view.findViewById(R.id.edit_layout);
+                delBtn = view.findViewById(R.id.del_layout);
             }
         }
+    }
+
+    private void deleteAddress( CircuitListEntity.CircuitItemEntity entity) {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "提交数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, String> data = new HashMap<>();
+        data.put("id", entity.getId());
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.DELETE_DRIVER_LIN, jsonString).execute(new MyStringCallback<ResponceBean>() {
+            @Override
+            public void onResponse(ResponceBean entity) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (entity != null) {
+                    if (entity.success) {
+                        getPageData();
+                        ToastUtil.showToastString("删除成功");
+                    } else {
+                        ToastUtil.showToastString(entity.message);
+                    }
+                }
+            }
+
+            @Override
+            public Class<ResponceBean> getClazz() {
+                return ResponceBean.class;
+            }
+        });
+
     }
 
     public void setListItemNotifi(String id, String ststus) {
@@ -466,8 +506,8 @@ public class HomePushInfoFragment extends BaseFragment {
         data.put("provinceName", proName);
         data.put("cityCode", cityCode);
         data.put("cityName", cityName);
-        if(homeMainHolder.cuitListEntity != null){
-            data.put("id",  homeMainHolder.cuitListEntity.id);
+        if (homeMainHolder.cuitListEntity != null) {
+            data.put("id", homeMainHolder.cuitListEntity.id);
         }
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
@@ -478,7 +518,7 @@ public class HomePushInfoFragment extends BaseFragment {
                 if (entity != null) {
                     if (entity.success) {
                         setCity(proName, cityName);
-                        if(homeMainHolder.cuitListEntity == null || TextUtils.isEmpty(homeMainHolder.cuitListEntity.id)){
+                        if (homeMainHolder.cuitListEntity == null || TextUtils.isEmpty(homeMainHolder.cuitListEntity.id)) {
                             getPageData();
                         }
                     } else {

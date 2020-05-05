@@ -14,6 +14,7 @@ import com.escort.carriage.android.entity.bean.push.PushEntity;
 import com.escort.carriage.android.ui.activity.HomeActivity;
 import com.escort.carriage.android.ui.activity.mes.MyOrderListActivity;
 import com.escort.carriage.android.ui.activity.my.MyBidActivity;
+import com.escort.carriage.android.ui.activity.play.WalletMenuActivity;
 import com.tripartitelib.android.iflytek.IflytekUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -115,6 +116,10 @@ public class MyReceiver extends BroadcastReceiver {
                 case 1003://中标列表车主app
                     intent_into_message.setClass(context, MyBidActivity.class);
                     context.startActivity(intent_into_message);
+                    break;
+                case 1005://分润
+                    context.startActivity(new Intent(context, WalletMenuActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     break;
                 case 1007://评论列表车主app
                     break;

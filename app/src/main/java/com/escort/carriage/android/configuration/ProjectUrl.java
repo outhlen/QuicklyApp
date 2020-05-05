@@ -113,6 +113,10 @@ public class ProjectUrl {
     public static String ORDER_GETORDERDETAIL = baseUrl + "undertake/order/getOrderDetail";
 
     /**
+     * 司机端设备获取
+     */
+    public static String GETDEVICEINFO = baseUrl + "undertake/order/getGoldFalcon";
+    /**
      * 竞标
      */
     public static String ORDERVEHICLE_ADD_VEHICLE = baseUrl + "undertake/orderVehicle/add/vehicle";
@@ -135,6 +139,12 @@ public class ProjectUrl {
      * 保存城市配送信息
      */
     public static String VEHICLE_INFO_SAVECITYDISTRIBUTE = baseUrl + "undertake/vehicle/info/saveCityDistribute";
+
+    /**
+     *  删除专线
+     */
+    public static String DELETE_DRIVER_LIN = baseUrl + "undertake/driveline/delete";
+
 
     /**
      * 新增线路

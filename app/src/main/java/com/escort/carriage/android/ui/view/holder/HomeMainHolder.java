@@ -3,6 +3,9 @@ package com.escort.carriage.android.ui.view.holder;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -143,7 +146,16 @@ public class HomeMainHolder {
     }
 
     public void updataUserInfo(UserInfoEntity entity) {
+        ScaleAnimation scaleAnim = new ScaleAnimation(1.0f, 0.9f, 1.0f, 0.9f,
+                Animation.RELATIVE_TO_SELF, 0.9f, Animation.RELATIVE_TO_SELF,
+                0.9f);
+        scaleAnim.setRepeatCount(-1);
+        scaleAnim.setDuration(1200);
+        scaleAnim.setInterpolator(new LinearInterpolator());
+        scaleAnim.setFillAfter(true);
         GlideManager.getGlideManager().loadImageRoundFitCrop(entity.getHeadPictureUrl(), ivHeadImg, 100, R.mipmap.img_user_head_img_default);
+        ivHeadImg.startAnimation(scaleAnim);
+
     }
 
     //
@@ -264,6 +276,7 @@ public class HomeMainHolder {
         hashMap.put("page", RequestEntityUtils.getPageBeanOrders(1, 100));
         requestEntity.setData(hashMap);
         String jsonString = JsonManager.createJsonString(requestEntity);
+
         OkgoUtils.post(ProjectUrl.DRIVELINE_GETLIST, jsonString).execute(new MyStringCallback<ResponseCircuitListEntity>() {
             @Override
             public void onResponse(ResponseCircuitListEntity entity) {
