@@ -95,6 +95,78 @@
         />
 </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+               android:layout_centerVertical="true"
+                android:textColor="@color/color_000000"
+                android:text="是否要求货主支付押金"/>
+
+            <Switch
+                android:id="@+id/switch_btn"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_alignParentRight="true"
+                />
+
+
+<!--            <androidx.appcompat.widget.SwitchCompat-->
+<!--                android:id="@+id/switch_btn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:checked="true"-->
+<!--                android:layout_alignParentRight="true"/>-->
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_10"
+            android:layout_marginLeft="@dimen/space_30"
+            android:layout_marginRight="@dimen/space_30"
+            android:layout_marginBottom="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@drawable/bg_bx_c3c3c3_bj_3dp"
+            >
+
+            <EditText
+                android:id="@+id/money_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="请输入自定义押金价格"
+                android:textSize="@dimen/text_size_12"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_000000"
+                android:inputType="numberDecimal"
+                android:text=""
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_000000"
+                android:text="元"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llEndSiteGroup"
             android:layout_width="match_parent"

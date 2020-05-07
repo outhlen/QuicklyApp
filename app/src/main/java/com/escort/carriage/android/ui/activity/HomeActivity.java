@@ -186,7 +186,6 @@ public class HomeActivity extends ProjectBaseActivity {
 //                        startService(locationIntent);
 //                    }
                     setScreenLight();
-
                 }
             }
 

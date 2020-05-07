@@ -9,11 +9,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
@@ -57,13 +61,17 @@ public class BiddingActivity extends Activity {
     TextView btnNext;
     @BindView(R.id.tvPageShowText)
     AutofitTextView tvPageShowText;
+    @BindView(R.id.switch_btn)
+    Switch switchBtn;
+    @BindView(R.id.money_et)
+    EditText moneyEt;
 
     private Unbinder bind;
-
     public Date date;
     private String orderNumber;
     private String intention;
 
+    boolean isPay = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +82,20 @@ public class BiddingActivity extends Activity {
         orderNumber = getIntent().getStringExtra("orderNumber");
         intention = getIntent().getStringExtra("intention");
         tvPageShowText.setText("投标提示:货主意向" + intention + "优先");
+
+        switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    isPay = true;
+                    moneyEt.setEnabled(true);
+                } else {
+                    isPay = true;
+                    moneyEt.setEnabled(false);
+                    ToastUtil.showToastString("已选不需要支付押金");
+                }
+            }
+        });
     }
 
     @OnClick({R.id.ivClose, R.id.tvEndSite, R.id.btnNext})
@@ -86,24 +108,31 @@ public class BiddingActivity extends Activity {
                 initTimePicker();
                 break;
             case R.id.btnNext:
-
+                double money = 0;
+                double price = 0;
                 String inputStr = inputText.getText().toString();
-                if(date == null){
-                    ToastUtil.showToastString("请现在送达时间");
-                } else if(TextUtils.isEmpty(inputStr)){
-                    ToastUtil.showToastString("请填写金额");
-                } else {
-                    double money = 0;
-                    try {
-                        money = Double.valueOf(inputStr);
-                    }catch (Exception e){
+                String priceStr = moneyEt.getText().toString();
 
+                if (date == null) {
+                    ToastUtil.showToastString("请选择送达时间");
+                    return;
+                }
+                if (TextUtils.isEmpty(inputStr)) {
+                    ToastUtil.showToastString("请填写金额");
+                    return;
+                }
+                if (isPay) {
+                    if (TextUtils.isEmpty(priceStr)) {
+                        ToastUtil.showToastString("请填写押金金额");
+                        return;
                     }
-                    if(money > 0){
-                        toService(money);
-                    } else {
-                        ToastUtil.showToastString("请填写正确金额");
-                    }
+                }
+                try {
+                    money = Double.valueOf(inputStr);
+                    price = Double.valueOf(priceStr);
+                    toService(money, price);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 break;
@@ -119,7 +148,7 @@ public class BiddingActivity extends Activity {
                 Date currentDate = ProjectDateUtils.getCurrentDate();
 
                 //将日期换算成秒
-                if(currentDate.getTime() > date.getTime()){
+                if (currentDate.getTime() > date.getTime()) {
                     ToastUtil.showToastString("选择日期不得早于当前时间");
                 } else {
                     BiddingActivity.this.date = date;
@@ -134,12 +163,13 @@ public class BiddingActivity extends Activity {
     }
 
 
-    private void toService(double money) {
+    private void toService(double money, double price) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "提交数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, Object> data = new HashMap<>();
         data.put("orderNumber", orderNumber);
         data.put("money", money);
+        data.put("deposit", price);
         data.put("toTime", date.getTime());
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
@@ -147,12 +177,12 @@ public class BiddingActivity extends Activity {
             @Override
             public void onResponse(ResponseUserEntity s) {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                if(s != null ){
-                    if(s.success){
+                if (s != null) {
+                    if (s.success) {
                         ToastUtil.showToastString("竞价投出");
                         setResult(666);
                         finish();
-                    }else {
+                    } else {
                         ToastUtil.showToastString(s.message);
                     }
                 }
@@ -205,6 +235,7 @@ public class BiddingActivity extends Activity {
 
     /**
      * 获取InputMethodManager，隐藏软键盘
+     *
      * @param token
      */
     private void hideKeyboard(IBinder token) {
