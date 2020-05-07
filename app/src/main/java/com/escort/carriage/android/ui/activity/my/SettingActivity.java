@@ -41,6 +41,7 @@ import butterknife.Unbinder;
 public class SettingActivity extends ProjectBaseSingleClickActivity{
 
     private Switch aSwitch;
+    private TextView loudTv;
     private Unbinder bind;
 
     @Override
@@ -49,16 +50,18 @@ public class SettingActivity extends ProjectBaseSingleClickActivity{
         StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.activity_setting);
         bind = ButterKnife.bind(this);
-        CacheDBMolder.getInstance().setNotificationSpeak("1");
+       // CacheDBMolder.getInstance().setNotificationSpeak("1");
         //实例化
         aSwitch = (Switch) findViewById(R.id.ivSpeakSwitch);
+        loudTv  = findViewById(R.id.switch_tv);
+        loudTv.setText("语音播报已开启");
         String speakCheck = CacheDBMolder.getInstance().isNotificationSpeak(); //默认开启语言
-        aSwitch.setChecked(true);
+       // aSwitch.setChecked(true);
         // 初始化设置语音开关
         if(speakCheck == null || speakCheck.equals("") || speakCheck.equals("0")){
-            aSwitch.setChecked(false);
-        }else {
             aSwitch.setChecked(true);
+        }else {
+            aSwitch.setChecked(false);
         }
 
         //设置Switch事件监听
@@ -67,9 +70,11 @@ public class SettingActivity extends ProjectBaseSingleClickActivity{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    CacheDBMolder.getInstance().setNotificationSpeak("1");
-                }else {
                     CacheDBMolder.getInstance().setNotificationSpeak("0");
+                    loudTv.setText("语音播报已开启");
+                }else {
+                    CacheDBMolder.getInstance().setNotificationSpeak("1");
+                    loudTv.setText("语音播报已关闭");
                 }
             }
         });

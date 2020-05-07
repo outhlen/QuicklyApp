@@ -120,7 +120,6 @@ public class HistoryOrderListFragment extends BaseFragment implements BGARefresh
 
     private void initDatas() {
         isHandleData = true;
-
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         if (historyOrderListRequestEnity == null) {

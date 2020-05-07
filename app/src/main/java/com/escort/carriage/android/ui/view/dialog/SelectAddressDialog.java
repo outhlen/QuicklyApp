@@ -32,7 +32,6 @@ public class SelectAddressDialog extends BaseDialogFragment {
     private List<ShengListBean.DataBean> mProvinceList = new ArrayList<>();
     private List<ShiListBean.DataBean> mCityList = new ArrayList<>();
     private List<QuListBean.DataBean> mAreaList = new ArrayList<>();
-
     private List<TextView> mProvinceTvList = new ArrayList<>();
     private List<TextView> mCityTvList = new ArrayList<>();
     private List<TextView> mAreaTvList = new ArrayList<>();
@@ -74,7 +73,6 @@ public class SelectAddressDialog extends BaseDialogFragment {
                 dismiss();
             }
         });
-
         getProvince();
     }
 
@@ -180,9 +178,7 @@ public class SelectAddressDialog extends BaseDialogFragment {
      * 获取省
      */
     private void getProvince() {
-
         //调用接口获取数据
-//        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         requestEntity.setData(new Object());
         String jsonString = JsonManager.createJsonString(requestEntity);
@@ -210,10 +206,7 @@ public class SelectAddressDialog extends BaseDialogFragment {
      * 获取市
      */
     private void getCity(String provinceCode) {
-
-
         //调用接口获取数据
-//        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
         data.put("provinceCode", provinceCode);
@@ -222,7 +215,6 @@ public class SelectAddressDialog extends BaseDialogFragment {
         OkgoUtils.post(ProjectUrl.REGION_GETCITY, jsonString).execute(new MyStringCallback<ShiListBean>() {
             @Override
             public void onResponse(ShiListBean resp) {
-//                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (resp.isSuccess()){
                     setCityList(resp.getData());
                     setCityCallback(position -> {

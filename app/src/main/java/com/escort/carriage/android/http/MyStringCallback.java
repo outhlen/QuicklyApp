@@ -41,10 +41,9 @@ public abstract class MyStringCallback<T extends ResponceJsonEntity> extends Str
             String body = response.body();
             T jsonBean = (T) JsonManager.getJsonBean(body, getClazz());
             final int interceptor = AppResponseInterceptor.interceptor(jsonBean);
-            if (interceptor == -1) {
+            if (interceptor == -1) { //请求成功
                 onResponse(jsonBean);
-            }else {
-
+            }else { //token 失效
                 ToastUtil.showToastString("账号在其他手机登录，请重新登录");
             }
 

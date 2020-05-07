@@ -256,7 +256,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
      * 查询订单详情
      */
     public void getInfo(String id) {
-
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
@@ -385,10 +384,8 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         } else {
             tvDistances.setVisibility(View.GONE);
             tvDistancesLabel.setVisibility(View.GONE);
-            setLocation();
         }
-
-
+        setLocation();
         //运费金额
         if (infoEntity.orderStatus == 0) {
             tvCarriageMoney.setText("未竞价");
@@ -531,24 +528,23 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             //设置多条卸车数据
             setUnloadNum(unloadNum);
         }
-
     }
 
     private void setUnloadNum(int unloadNum) {
         if (unloadNum > infoEntity.addr.size()) {
             unloadNum = infoEntity.addr.size();
         }
-
-
         for (int x = 0; x < unloadNum; x++) {
             View inflate = View.inflate(this, R.layout.item_order_loading_unload_list_layout, null);
             AddrBean addrBean = infoEntity.addr.get(x);
-            String addrStr = addrBean.endProvinceName + addrBean.endCityName + addrBean.endAreaName + addrBean.endAddr;
-//            String start_num = TextUtils.isEmpty(addrBean.getStartCellphone()) ? "****" : addrBean.getStartCellphone();
-//            String start_name = TextUtils.isEmpty(addrBean.getStartLinkman()) ? "****" : addrBean.getStartLinkman();
+            String addrStr = null;
+            if(openType == 1){//竞价
+                addrStr = addrBean.endProvinceName + addrBean.endCityName + addrBean.endAreaName ;
+            }else{
+                addrStr = addrBean.endProvinceName + addrBean.endCityName + addrBean.endAreaName + addrBean.endAddr;
+            }
             String end_num = TextUtils.isEmpty(addrBean.getEndCellphone()) ? "****" : addrBean.getEndCellphone();
             String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
-//            String startStr = start_name + " " + start_num;
             String endStr = end_name + " " + end_num;
             setTruckLoadingAndUnloadView(1, x, inflate, addrStr, endStr);
         }
@@ -561,7 +557,12 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         for (int x = 0; x < truckLoadingNum; x++) {
             View inflate = View.inflate(this, R.layout.item_order_loading_unload_list_layout, null);
             AddrBean addrBean = infoEntity.addr.get(x);
-            String addrStr = addrBean.startProvinceName + addrBean.startCityName + addrBean.startAreaName + addrBean.startAddr;
+            String addrStr  = null;
+            if(openType == 1){ //竞价
+                addrStr = addrBean.startProvinceName + addrBean.startCityName + addrBean.startAreaName;
+            }else{
+                addrStr = addrBean.startProvinceName + addrBean.startCityName + addrBean.startAreaName + addrBean.startAddr;
+            }
             String start_num = TextUtils.isEmpty(addrBean.getStartCellphone()) ? "****" : addrBean.getStartCellphone();
             String start_name = TextUtils.isEmpty(addrBean.getStartLinkman()) ? "****" : addrBean.getStartLinkman();
 //            String end_num = TextUtils.isEmpty(addrBean.getEndTelephone()) ? "****" : addrBean.getEndTelephone();

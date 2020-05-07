@@ -16,11 +16,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.FrameLayout;
-
 import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.cache.db.model.DataCacheKeyModel;
@@ -97,7 +97,7 @@ public class HomeActivity extends ProjectBaseActivity {
      * 当前是否下载完毕
      */
     private boolean mDownloadComplete;
-
+    PowerManager powerManager;
     private static final String CHANNEL_ID_SERVICE_RUNNING = "CHANNEL_ID_SERVICE_RUNNING";
     private AdvertisingImageDialog advertisingImageDialog;
     AlarmReceiver alarmReceiver;
@@ -105,7 +105,6 @@ public class HomeActivity extends ProjectBaseActivity {
 
     public static void startHomeActivity(Activity activity) {
         activity.startActivity(new Intent(activity, HomeActivity.class));
-
     }
 
     @Override
@@ -126,7 +125,11 @@ public class HomeActivity extends ProjectBaseActivity {
             getDeviceInfo();
         }
         alarmReceiver = new AlarmReceiver();
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_USER_PRESENT);
+        intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(alarmReceiver, intentFilter);
 
         ThreadUtils.openSonThread(new Runnable() {
@@ -148,6 +151,7 @@ public class HomeActivity extends ProjectBaseActivity {
     public class AlarmReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            //锁屏或者按下home键
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 Log.e("AlarmReceiver", "开始锁屏"+ Intent.ACTION_SCREEN_OFF);
                 Intent locationIntent = new Intent(context, LocationService.class);
@@ -159,9 +163,48 @@ public class HomeActivity extends ProjectBaseActivity {
                 } else {
                     startService(locationIntent);
                 }
+                if(getDeviceBrand().contains("OPPO")){
+                    setScreenLight();
+                }
+
+            }else if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
+                Log.e("AlarmReceiver", "开始亮屏"+ Intent.ACTION_SCREEN_ON);
+            }
+            else if(intent.getAction().equals(Intent.ACTION_USER_PRESENT)){
+                Log.e("AlarmReceiver", "开始解锁"+ Intent.ACTION_USER_PRESENT);
+            }else if(intent.getAction().equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)){
+                Log.e("AlarmReceiver", "home后台"+ Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+                if(getDeviceBrand().contains("OPPO")){
+                    Log.e("getDeviceBrand>>","OPPO手机");
+//                    Intent locationIntent = new Intent(context, LocationService.class);
+//                    locationIntent.putExtra("sid",sid);
+//                    locationIntent.putExtra("deviceId",deviceId);
+//                    locationIntent.putExtra("tid",tid);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                        startForegroundService(locationIntent);
+//                    } else {
+//                        startService(locationIntent);
+//                    }
+                    setScreenLight();
+
+                }
             }
 
         }
+    }
+
+    private void setScreenLight() {
+            powerManager = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+            PowerManager.WakeLock wl = powerManager
+                    .newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "xiaoer:bright");
+            wl.acquire();
+            //点亮屏幕
+            wl.release();
+            //释放
+    }
+
+    public  String getDeviceBrand() {
+        return android.os.Build.BRAND;
     }
 
     private void getDeviceInfo() {
@@ -437,7 +480,6 @@ public class HomeActivity extends ProjectBaseActivity {
                             }
                         }
                     }
-
                     @Override
                     public void noPermission(List<String> denied, boolean quick) {
                         if (quick) {

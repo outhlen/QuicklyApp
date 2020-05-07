@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,6 +18,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.MapView;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
@@ -30,21 +40,39 @@ import com.androidybp.basics.utils.verification.VerificationUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.configuration.VueUrl;
+import com.escort.carriage.android.entity.bean.CityListBean;
 import com.escort.carriage.android.entity.request.RequestEntity;
+import com.escort.carriage.android.entity.response.home.QuListBean;
+import com.escort.carriage.android.entity.response.home.ShengListBean;
+import com.escort.carriage.android.entity.response.home.ShiListBean;
 import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
+import com.escort.carriage.android.ui.view.dialog.SelectAddressDialog;
+import com.escort.carriage.android.utils.GaodeHttp;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tripartitelib.android.amap.AmapUtils;
+import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.net.HttpResponse;
 import cn.jpush.android.api.JPushInterface;
 
-public class RegisterPhoneActivity extends ProjectBaseEditActivity {
+public class RegisterPhoneActivity extends ProjectBaseEditActivity implements OnGeocodeSearchListener {
 
 
     @BindView(R.id.etUserName)
@@ -61,26 +89,34 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
     TextView tvUserAgreement;
     @BindView(R.id.tvPrivacyPolicy)
     TextView tvPrivacyPolicy;
+    @BindView(R.id.address_layout)
+    LinearLayout addressLayout;
+    @BindView(R.id.addr_et)
+    TextView addressTv;
+
     private Unbinder bind;
     private int openType;//0:注册 1：微信注册 需要将用户信息返回
-
     private double longitude;//经度
     private double latitude;//纬度
+    String areaStr, cityStr, provinceStr;
+    private MapView mapView;
+    List<CityListBean> cityListBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.activity_register_phone);
+        cityListBeanList = new ArrayList<>();
         bind = ButterKnife.bind(this);
         setPageActionBar();
         getLocation();
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             openType = intent.getIntExtra("openType", 0);
         }
-    }
 
+    }
 
     private void setPageActionBar() {
         //获取顶部状态栏的高度 给对应View设置高度
@@ -103,25 +139,61 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
         cbAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     tvNext.setAlpha(1f);
-                }else{
+                } else {
                     tvNext.setAlpha(0.5f);
                 }
             }
         });
     }
 
-    @OnClick({R.id.tvGetCheckCode, R.id.tvNext, R.id.tvLoginError, R.id.tvUserAgreement, R.id.tvPrivacyPolicy})
+    @OnClick({R.id.tvGetCheckCode, R.id.tvNext, R.id.tvLoginError, R.id.tvUserAgreement, R.id.tvPrivacyPolicy, R.id.addr_et})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvGetCheckCode:
                 getSmsCode();
                 break;
             case R.id.tvNext:
-               if(tvNext.getAlpha() == 1f){
+                if (tvNext.getAlpha() == 1f) {
                     next();
                 }
+                break;
+            case R.id.addr_et:
+                SelectAddressDialog.getInstance().setContext(this)
+                        .setFlag(addressTv)
+                        .setCallback(new SelectAddressDialog.Callback() {
+                            @Override
+                            public void onCallback(View flag, ShengListBean.DataBean provinceBean, ShiListBean.DataBean cityBean, QuListBean.DataBean areaBean) {
+                                ((TextView) flag).setText(provinceBean.getProvince() + cityBean.getCity() + areaBean.getArea());
+                                areaStr = areaBean.getAreaCode();
+                                cityStr = cityBean.getCityCode();
+                                provinceStr = provinceBean.getProvinceCode();
+                                new Thread(){
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        String json  =  GaodeHttp.getPosition(cityBean.getCity());
+                                        try {
+                                            String jsonArray  = new JSONObject(json).get("districts").toString();
+                                            List<CityListBean.CityBean> cityList = new Gson().fromJson(jsonArray, new TypeToken<List<CityListBean.CityBean>>(){}.getType());
+                                            if(cityList.size()>0){
+                                                ToastUtil.showToastString("当前位置："+cityList.get(0).getName());
+                                                String [] latlng  = cityList.get(0).getCenter().split(",");
+                                                longitude = Double.valueOf(latlng[0]);
+                                                latitude =  Double.valueOf(latlng[1]);
+                                                Log.e("SelectAddressDialog","精度："+longitude+"维度："+latitude);
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                }.start();
+                            }
+                        })
+                        .setShowBottom(true)
+                        .show(getSupportFragmentManager());
                 break;
             case R.id.tvUserAgreement://用户协议
                 Intent intentUserAgreement = new Intent(this, VueActivity.class);
@@ -169,22 +241,22 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
             Intent intent = getIntent();
             //是否是微信注册
             String wxUnionid = intent.getStringExtra("wxUnionid");
-            if (!TextUtils.isEmpty(wxUnionid)){
+            if (!TextUtils.isEmpty(wxUnionid)) {
                 data.put("wxUnionid", wxUnionid);
             }
             String headImgUrl = intent.getStringExtra("headImgUrl");
-            if (!TextUtils.isEmpty(headImgUrl)){
+            if (!TextUtils.isEmpty(headImgUrl)) {
                 data.put("headimgurl", headImgUrl);
             }
             String nickname = intent.getStringExtra("nickname");
-            if (!TextUtils.isEmpty(nickname)){
+            if (!TextUtils.isEmpty(nickname)) {
                 data.put("nickname", nickname);
             }
 
-            if(longitude != 0){
+            if (longitude != 0) {
                 data.put("longitudeRegister", longitude);
             }
-            if(latitude != 0){
+            if (latitude != 0) {
                 data.put("latitudeRegister", latitude);
             }
 
@@ -194,17 +266,17 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
                 @Override
                 public void onResponse(ResponseUserEntity s) {
                     UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                    if(s != null ){
-                        if(s.success){
+                    if (s != null) {
+                        if (s.success) {
                             CacheDBMolder.getInstance().setUserToken(s.data.getToken());
-                            if(openType == 1){
+                            if (openType == 1) {
                                 Intent intentResult = new Intent();
                                 intentResult.putExtra("json", JsonManager.createJsonString(s.data));
                                 setResult(666, intentResult);
                             }
                             Intent intent = new Intent(RegisterPhoneActivity.this, RegisterSetPwdActivity.class);
                             startActivityForResult(intent, 666);
-                        }else {
+                        } else {
                             ToastUtil.showToastString(s.message);
                         }
                     }
@@ -255,7 +327,6 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
         }
     }
 
-
     /**
      * 延时验证码
      */
@@ -265,18 +336,17 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
         long time = System.currentTimeMillis() / 1000;
         tvGetCheckCode.setText(time + "秒后重试");
         new CountDownTimer(60000, 1000) {
-
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
-                if(tvGetCheckCode != null){
+                if (tvGetCheckCode != null) {
                     tvGetCheckCode.setText(time + "秒后重试");
                 }
             }
 
             @Override
             public void onFinish() {
-                if(tvGetCheckCode != null){
+                if (tvGetCheckCode != null) {
                     tvGetCheckCode.setClickable(true);//把TV设置为可点击
                     tvGetCheckCode.setText("获取验证码");
                 }
@@ -290,7 +360,6 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
      */
     private void getLocation() {
         AmapUtils.getAmapUtils().getLocation(new AMapLocationListener() {
-
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
                 if (aMapLocation != null) {
@@ -298,7 +367,9 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
                         //可在其中解析amapLocation获取相应内容。
                         latitude = aMapLocation.getLatitude();
                         longitude = aMapLocation.getLongitude();
+                        addressLayout.setVisibility(View.GONE);
                     } else {
+                        addressLayout.setVisibility(View.VISIBLE);
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                         LogUtils.showI("MainActivity", "AmapError   location Error, ErrCode:"
                                 + aMapLocation.getErrorCode() + ", errInfo:"
@@ -316,6 +387,20 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity {
             bind.unbind();
             bind = null;
         }
+    }
+
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+        LatLonPoint latLonPoint = regeocodeResult.getRegeocodeQuery().getPoint();
+        longitude = latLonPoint.getLongitude();
+        latitude = latLonPoint.getLatitude();
+        Log.e("onRegeocodeSearched>>", "坐标" + latitude + "," + longitude);
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+        geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
     }
 
 
