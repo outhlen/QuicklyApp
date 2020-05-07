@@ -8,6 +8,7 @@
         android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
     <!-- Required  一些系统要求的权限，如访问网络等-->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 联网权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 多媒体相关 -->
@@ -40,7 +41,6 @@
     <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
 
     <application
         android:name=".ProjectApplication"
