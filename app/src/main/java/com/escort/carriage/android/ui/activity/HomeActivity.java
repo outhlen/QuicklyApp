@@ -163,9 +163,9 @@ public class HomeActivity extends ProjectBaseActivity {
                 } else {
                     startService(locationIntent);
                 }
-                if(getDeviceBrand().contains("OPPO")){
-                    setScreenLight();
-                }
+//                if(getDeviceBrand().contains("OPPO")){
+//                    setScreenLight();
+//                }
 
             }else if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
                 Log.e("AlarmReceiver", "开始亮屏"+ Intent.ACTION_SCREEN_ON);
@@ -174,19 +174,10 @@ public class HomeActivity extends ProjectBaseActivity {
                 Log.e("AlarmReceiver", "开始解锁"+ Intent.ACTION_USER_PRESENT);
             }else if(intent.getAction().equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)){
                 Log.e("AlarmReceiver", "home后台"+ Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-                if(getDeviceBrand().contains("OPPO")){
-                    Log.e("getDeviceBrand>>","OPPO手机");
-//                    Intent locationIntent = new Intent(context, LocationService.class);
-//                    locationIntent.putExtra("sid",sid);
-//                    locationIntent.putExtra("deviceId",deviceId);
-//                    locationIntent.putExtra("tid",tid);
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                        startForegroundService(locationIntent);
-//                    } else {
-//                        startService(locationIntent);
-//                    }
-                    setScreenLight();
-                }
+//                if(getDeviceBrand().contains("OPPO")){
+//                    Log.e("getDeviceBrand>>","OPPO手机");
+//                    setScreenLight();
+//                }
             }
 
         }

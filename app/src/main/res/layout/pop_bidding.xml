@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
 
-                android:text="新增接单线路"
+                android:text="竞价竞速"
                 android:textColor="@color/color_000000"
                 android:textSize="@dimen/text_size_16" />
             <com.escort.carriage.android.ui.view.text.AutofitTextView

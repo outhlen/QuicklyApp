@@ -71,7 +71,7 @@ public class BiddingActivity extends Activity {
     private String orderNumber;
     private String intention;
 
-    boolean isPay = true;
+    boolean isPay = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class BiddingActivity extends Activity {
                     isPay = true;
                     moneyEt.setEnabled(true);
                 } else {
-                    isPay = true;
+                    isPay = false;
                     moneyEt.setEnabled(false);
                     ToastUtil.showToastString("已选不需要支付押金");
                 }
