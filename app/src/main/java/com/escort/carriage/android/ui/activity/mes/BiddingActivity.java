@@ -128,8 +128,7 @@ public class BiddingActivity extends Activity {
                 }
                 try {
                     money = Double.valueOf(inputStr);
-                    price = Double.valueOf(priceStr);
-                    toService(money, price);
+                    toService(money, priceStr);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -162,13 +161,18 @@ public class BiddingActivity extends Activity {
     }
 
 
-    private void toService(double money, double price) {
+    private void toService(double money, String price) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "提交数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, Object> data = new HashMap<>();
         data.put("orderNumber", orderNumber);
         data.put("money", money);
-        data.put("deposit", price);
+        if (TextUtils.isEmpty(price)) {
+            data.put("deposit", null);
+        }else {
+            data.put("deposit", Double.valueOf(price));
+        }
+
         data.put("toTime", date.getTime());
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
