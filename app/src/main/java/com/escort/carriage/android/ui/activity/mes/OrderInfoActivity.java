@@ -413,7 +413,8 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             //保险服务
             tvInsuranceServices.setText(infoEntity.insuranceComName);
             //保险费用
-            tvInsuranceMoney.setText(TextUtils.isEmpty(infoEntity.insurancePay) ? "0元" : infoEntity.insurancePay + "元");
+            //tvInsuranceMoney.setText(TextUtils.isEmpty(infoEntity.insurancePay) ? "0元" : infoEntity.insurancePay + "元");
+            insuranceMoneyGroup.setVisibility(View.GONE);
         }
 
         //发票类型
