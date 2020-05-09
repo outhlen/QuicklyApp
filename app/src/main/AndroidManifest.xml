@@ -2,12 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.escort.carriage.android">
-
     <!-- Required -->
     <permission
         android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 联网权限 -->
@@ -31,8 +29,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <!--    <uses-permission android:name="android.permission.READ_CONTACTS" />--><!--读取联系人-->
+    <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
+    <!-- 读取联系人 -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> <!-- OPPO手机添加快捷方式的权限 -->
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
@@ -53,207 +51,144 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.activity.TraceDetailActivity"></activity>
         <activity
             android:name=".ui.activity.SplashTwoActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.notch_support"
                 android:value="true" />
-        </activity>
-
-        <!--<activity-->
-        <!--android:name=".ui.activity.SplashActivity"-->
-        <!--android:hardwareAccelerated="true"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/SplashTheme">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--<meta-data-->
-        <!--android:name="android.notch_support"-->
-        <!--android:value="true" />-->
-        <!--</activity>-->
-
-
+        </activity> <!-- <activity -->
+        <!-- android:name=".ui.activity.SplashActivity" -->
+        <!-- android:hardwareAccelerated="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/SplashTheme"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.notch_support" -->
+        <!-- android:value="true" /> -->
+        <!-- </activity> -->
         <!-- 登录页面 -->
         <activity
             android:name=".ui.activity.login.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <!-- 首页 -->
+            android:screenOrientation="portrait" /> <!-- 首页 -->
         <activity
             android:name=".ui.activity.HomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-        <!-- 短信 登录页面 -->
+            android:screenOrientation="portrait" /> <!-- 短信 登录页面 -->
         <activity
             android:name=".ui.activity.login.LoginPhoneActivity"
-            android:screenOrientation="portrait" />
-        <!-- 登陆 忘记密码 -->
+            android:screenOrientation="portrait" /> <!-- 登陆 忘记密码 -->
         <activity
             android:name=".ui.activity.login.ForgetPwdActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 登陆 忘记密码 设置密码页面-->
+            android:screenOrientation="portrait" /> <!-- 登陆 忘记密码 设置密码页面 -->
         <activity
             android:name=".ui.activity.login.ForgetSetPwdActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 注册设置手机号页面-->
+            android:screenOrientation="portrait" /> <!-- 注册设置手机号页面 -->
         <activity
             android:name=".ui.activity.login.RegisterPhoneActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 注册设置密码-->
+            android:screenOrientation="portrait" /> <!-- 注册设置密码 -->
         <activity
             android:name=".ui.activity.login.RegisterSetPwdActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 登录页面 -->
+            android:screenOrientation="portrait" /> <!-- 登录页面 -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 头条 列表页面 -->
+            android:screenOrientation="portrait" /> <!-- 头条 列表页面 -->
         <activity
             android:name=".ui.activity.mes.NewsListActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 头条 详情页面 -->
+            android:screenOrientation="portrait" /> <!-- 头条 详情页面 -->
         <activity
             android:name=".ui.activity.mes.NewsDetailsActivity"
-            android:screenOrientation="portrait" />
-        <!-- 首页 信息 详情页面 -->
+            android:screenOrientation="portrait" /> <!-- 首页 信息 详情页面 -->
         <activity
             android:name=".ui.activity.mes.OrderInfoActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 首页选择 数据页面 -->
+            android:screenOrientation="portrait" /> <!-- 首页选择 数据页面 -->
         <activity
             android:name=".ui.activity.mes.SelectOrderActivity"
-            android:theme="@style/transparent_activity" />
-        <!-- 首页选择 数据页面 -->
+            android:theme="@style/transparent_activity" /> <!-- 首页选择 数据页面 -->
         <activity
             android:name=".ui.activity.mes.BiddingActivity"
             android:theme="@style/transparent_activity"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- 设置页面 -->
+            android:windowSoftInputMode="adjustResize" /> <!-- 设置页面 -->
         <activity
             android:name=".ui.activity.my.SettingActivity"
-            android:screenOrientation="portrait" />
-        <!-- 修改密码 -->
+            android:screenOrientation="portrait" /> <!-- 修改密码 -->
         <activity
             android:name=".ui.activity.my.UpdataPwdActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 修改手机号 -->
+            android:screenOrientation="portrait" /> <!-- 修改手机号 -->
         <activity
             android:name=".ui.activity.my.ChangePhoneActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.activity.ImagePreviewActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- 修改手机号  设置短信验证码页面 -->
+        <activity
+            android:name=".ui.activity.ImagePreviewActivity"
+            android:screenOrientation="portrait" /> <!-- 修改手机号  设置短信验证码页面 -->
         <activity
             android:name=".ui.activity.my.ChangePhoneSetCodeActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 个人信息认证 -->
+            android:screenOrientation="portrait" /> <!-- 个人信息认证 -->
         <activity
             android:name=".ui.activity.my.PersonageAuthenticationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- 企业认证 -->
+            android:windowSoftInputMode="adjustResize" /> <!-- 企业认证 -->
         <activity
             android:name=".ui.activity.my.EnterpriseAuthenticationActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 用户详情 -->
+            android:screenOrientation="portrait" /> <!-- 用户详情 -->
         <activity
             android:name=".ui.activity.my.UserInfoActivity"
-            android:screenOrientation="portrait" />
-        <!-- 押镖认证 -->
+            android:screenOrientation="portrait" /> <!-- 押镖认证 -->
         <activity
             android:name=".ui.activity.my.EscortAuthenticationActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 行驶证信息认证 -->
+            android:screenOrientation="portrait" /> <!-- 行驶证信息认证 -->
         <activity
             android:name=".ui.activity.my.CarLicenseAuthentivationActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 驾驶证信息认证 -->
+            android:screenOrientation="portrait" /> <!-- 驾驶证信息认证 -->
         <activity
             android:name=".ui.activity.my.DriverAuthentivationActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 我的订单 -->
+            android:screenOrientation="portrait" /> <!-- 我的订单 -->
         <activity
             android:name=".ui.activity.mes.MyOrderListActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 我的投标 -->
+            android:screenOrientation="portrait" /> <!-- 我的投标 -->
         <activity
             android:name=".ui.activity.my.MyBidActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 信息缴费 -->
+            android:screenOrientation="portrait" /> <!-- 信息缴费 -->
         <activity
             android:name=".ui.activity.play.PlayMesFeesActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 装卸车 列表 页面 -->
+            android:screenOrientation="portrait" /> <!-- 装卸车 列表 页面 -->
         <activity
             android:name=".ui.activity.my.LoadingUnloadListActivity"
-            android:theme="@style/transparent_activity" />
-
-        <!-- 装卸车 列表 页面 -->
+            android:theme="@style/transparent_activity" /> <!-- 装卸车 列表 页面 -->
         <activity
             android:name=".ui.activity.my.RouteNavigationActivity"
-            android:theme="@style/transparent_activity" />
-
-
-        <!-- 历史订单 -->
+            android:theme="@style/transparent_activity" /> <!-- 历史订单 -->
         <activity
             android:name=".ui.activity.mes.HistoryOrderListActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 评价 -->
+            android:screenOrientation="portrait" /> <!-- 评价 -->
         <activity
             android:name=".ui.activity.my.MyOrderAppraiseActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- 申诉 -->
+            android:windowSoftInputMode="adjustResize" /> <!-- 申诉 -->
         <activity
             android:name=".ui.activity.my.AppealActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 转单 -->
+            android:screenOrientation="portrait" /> <!-- 转单 -->
         <activity
             android:name=".ui.activity.my.TransfeOrderActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- 我的钱包 -->
+            android:windowSoftInputMode="adjustResize" /> <!-- 我的钱包 -->
         <activity
             android:name=".ui.activity.play.WalletMenuActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 特惠充值 -->
+            android:screenOrientation="portrait" /> <!-- 特惠充值 -->
         <activity
             android:name=".ui.activity.play.ChargeMoneyActivity"
             android:screenOrientation="portrait" />
@@ -263,16 +198,12 @@
         <activity
             android:name=".ui.activity.web.VueActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.mes.ImageActivity"
             android:screenOrientation="portrait" />
-
-
-        <activity android:name=".ui.ImageLookActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- 微信 开始-->
+        <activity
+            android:name=".ui.ImageLookActivity"
+            android:screenOrientation="portrait" /> <!-- 微信 开始 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -280,17 +211,14 @@
             android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-
+        <activity
+            android:name=".ui.activity.OrderTraceActivty"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
-        <!-- 微信 结束-->
-
+            android:launchMode="singleTop" /> <!-- 微信 结束 -->
         <!-- 极光推送开始 -->
-
-
         <!-- Required since 3.0.7 -->
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
         <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
@@ -303,9 +231,7 @@
 
                 <category android:name="com.escort.carriage.android" />
             </intent-filter>
-        </receiver>
-
-        <!-- 极光推送自定义广播 /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        </receiver> <!-- 极光推送自定义广播 /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
         <receiver
             android:name=".receiver.MyReceiver"
             android:enabled="true"
@@ -337,63 +263,11 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
-
-        <service android:name=".LocationService"
+        <service
+            android:name=".LocationService"
             android:enabled="true"
             android:exported="false"
-            android:process=":amap_service"/>
-
-        <!--&lt;!&ndash; Since JCore2.0.0 Required SDK核心功能 &ndash;&gt;-->
-        <!--&lt;!&ndash; 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false &ndash;&gt;-->
-        <!--&lt;!&ndash; 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 &ndash;&gt;-->
-        <!--<receiver-->
-        <!--android:name=".jpush.PushMessageReceiver"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="false">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />-->
-
-        <!--<category android:name="com.jnluke.xiaoeryabiao" />-->
-        <!--</intent-filter>-->
-        <!--</receiver> &lt;!&ndash; Required since 3.0.7 &ndash;&gt;-->
-        <!--&lt;!&ndash; 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 &ndash;&gt;-->
-        <!--&lt;!&ndash; 3.3.0开始所有事件将通过该类回调 &ndash;&gt;-->
-        <!--&lt;!&ndash; 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter &ndash;&gt;-->
-        <!--<receiver-->
-        <!--android:name=".jpush.PushMsgReceive"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="false">-->
-        <!--<intent-filter>-->
-
-        <!--&lt;!&ndash; Required 用户注册SDK的intent &ndash;&gt;-->
-        <!--<action android:name="cn.jpush.android.intent.REGISTRATION" />-->
-        <!--&lt;!&ndash; Required 用户接收SDK消息的intent &ndash;&gt;-->
-        <!--<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />-->
-        <!--&lt;!&ndash; Required 用户接收SDK通知栏信息的intent &ndash;&gt;-->
-        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />-->
-        <!--&lt;!&ndash; Required 用户打开自定义通知栏的intent &ndash;&gt;-->
-        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />-->
-        <!--&lt;!&ndash; 接收网络变化 连接/断开 since 1.6.3 &ndash;&gt;-->
-        <!--<action android:name="cn.jpush.android.intent.CONNECTION" />-->
-
-        <!--<category android:name="com.jnluke.xiaoeryabiao" />-->
-        <!--</intent-filter>-->
-        <!--</receiver>-->
-        <!--<service-->
-        <!--android:name=".jpush.PushService"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="true"-->
-        <!--android:process=":pushcore">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="cn.jiguang.user.service.action" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
-
-
-        <!-- 结束 -->
-
-
+            android:process=":amap_service" />
     </application>
-
 
 </manifest>

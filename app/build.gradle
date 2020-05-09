@@ -59,6 +59,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'assets/location_map_gps_locked.png'
+    }
 }
 repositories {
     flatDir {
@@ -68,40 +72,54 @@ repositories {
 }
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+
     //basics 基本包
     implementation project(':basics')
     implementation project(':niceimageview')
     implementation project(':passlibrary')
     implementation project(path: ':tripartiteLib')
+
     //butterknife
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+
     //    //分包
     implementation rootProject.ext.dependencies["multidex"]
+
     //轮播 banner
     implementation rootProject.ext.dependencies["banner"]
     androidTestImplementation rootProject.ext.dependencies["test-runner"]
     androidTestImplementation rootProject.ext.dependencies["test-espresso"]
     testImplementation rootProject.ext.dependencies["junit"]
+
     //圆形头像
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     //自定义翻页效果
     implementation 'com.xenione.libs:tab-digit:1.0.2'
+
     //自定义 seekBar
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
+
     //bottom-navigation-bar
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+
     //
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+
     //地区选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
+
     //butterknife
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+
     //极光推送
     implementation 'cn.jiguang.sdk:jpush:3.4.0'
     implementation 'cn.jiguang.sdk:jcore:2.1.6'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.1'
+
     //    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     api 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
 
@@ -117,25 +135,25 @@ dependencies {
 
     // gson解析，可以自行替换
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-
     implementation 'com.squareup.okhttp3:okhttp:3.12.8'
     implementation 'com.squareup.okio:okio:1.12.0'
-    compile "androidx.core:core-ktx:+"
+    implementation 'androidx.core:core-ktx:+'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation 'com.zhy:base-rvadapter:3.0.3'
     implementation 'com.zhy:base-adapter:3.0.3'
     implementation 'com.lzy.widget:ninegridview:0.2.0'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
-//    implementation 'com.huawei.agconnect:agconnect-core:1.0.0.300' //华为市场
-//    implementation 'com.huawei.hms:push:4.0.3.301'
+    //    implementation 'com.huawei.agconnect:agconnect-core:1.0.0.300' //华为市场
 
+    //    implementation 'com.huawei.hms:push:4.0.3.301'
     implementation 'com.facebook.fresco:fresco:1.13.0'
     implementation 'com.githang:status-bar-compat:0.7'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'com.ycjiang:imgepreviewlibrary:1.1.3'
-   // compile project(path: ':LibMarsdaemon')
 
+    implementation 'com.amap.api:map2d:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
+    //implementation files('libs/AMapTrack_1.2.0_AMapLocation_4.8.0_20200108.jar')
 }
