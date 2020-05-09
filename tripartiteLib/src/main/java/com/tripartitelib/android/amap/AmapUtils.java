@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
 import com.amap.api.track.AMapTrackClient;
 import com.amap.api.track.ErrorCode;
 import com.amap.api.track.OnTrackLifecycleListener;
@@ -49,7 +51,7 @@ public class AmapUtils {
     public final static String GAODE_PKG = "com.autonavi.minimap";//高德地图的包名
     private static AmapUtils amapUtils;
     private TrackParam trackParam;
-
+    OnTrackLifecycleListener onTrackLifecycleListener;
     private AmapUtils() {
     }
 
@@ -102,6 +104,7 @@ public class AmapUtils {
 
     }
 
+
     /**
      * 获取最后一次定位位置
      * @return
@@ -112,7 +115,7 @@ public class AmapUtils {
     }
 
 
-    static class AMapLocationListenerIm implements AMapLocationListener {
+   public static class AMapLocationListenerIm implements AMapLocationListener {
 
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
@@ -137,7 +140,6 @@ public class AmapUtils {
             entity.errorCode = amapLocation.getErrorCode();
             entity.latitude = amapLocation.getLatitude();
             entity.longitude = amapLocation.getLongitude();
-
             entity.locationType = amapLocation.getLocationType();//定位类型
             entity.accuracy = amapLocation.getAccuracy();//精度
             entity.provider = amapLocation.getProvider();//提供者
@@ -225,6 +227,7 @@ public class AmapUtils {
     private static final String TAG = "AmapUtils";
     private boolean isServiceRunning;
     private boolean isGatherRunning;
+    Notification notification;
 
     private OnTrackLifecycleListener onTrackListener = new SimpleOnTrackLifecycleListener() {
         @Override
@@ -247,6 +250,7 @@ public class AmapUtils {
             } else {
                 LogUtils.showI("AmapUtils", "error onStartTrackCallback, status: " + status + ", msg: " + msg);
             }
+
         }
 
         @Override
@@ -272,6 +276,7 @@ public class AmapUtils {
             } else {
                 LogUtils.showI("AmapUtils", "error onStartGatherCallback, status: " + status + ", msg: " + msg);
             }
+
         }
 
         @Override
@@ -285,46 +290,51 @@ public class AmapUtils {
         }
     };
 
-    public void initTrace(Context context) {
+
+
+    public void initTrace(Context context, Long sid, Long tid, Long trid,Notification notification) {
         aMapTrackClient = new AMapTrackClient(context.getApplicationContext());
-        aMapTrackClient.setInterval(1, 10);//轨迹定位周期60s，上报周期200s
+        aMapTrackClient.setInterval(2, 10);//轨迹定位周期60s，上报周期200s
 //        猎鹰sdk会在无法正常上报轨迹点时将未成功上报的轨迹点缓存在本地，默认最多缓存50MB数据。
 //        可以使用下面的代码修改缓存大小为20MB：
         aMapTrackClient.setCacheSize(20);
+        startTrack(notification,sid,tid,trid); //开启通知栏
         //初始化定位
         mLocationClient = new AMapLocationClient(context.getApplicationContext());
         //设置定位回调监听
         mLocationClient.setLocationListener(new AMapLocationListenerIm());
         //初始化AMapLocationClientOption对象
         mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setInterval(15000);//15s
+        mLocationOption.setInterval(5000);
+        mLocationOption.setDeviceModeDistanceFilter(100);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
         mLocationClient.startLocation();
     }
+
     public void startTrack(Notification notification, long serviceId, long terminalId, long trackId) {
+        Log.e("startTrack","开启位置上报"+serviceId);
+        this.notification  = notification;
         if (!isGatherRunning || !isServiceRunning) {
             if(trackParam == null){
                 trackParam = new TrackParam(serviceId, terminalId);
                 trackParam.setTrackId(trackId);
             }
-
             if(trackParam.getTid() != terminalId || trackParam.getTrackId() != trackId){
                 stopTrack();
                 trackParam = new TrackParam(serviceId, terminalId);
                 trackParam.setTrackId(trackId);
             }
-
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 trackParam.setNotification(notification);
             }
-
             aMapTrackClient.startTrack(trackParam, onTrackListener);
         }
     }
 
     public void stopTrack(){
+        Log.e("stopTrack",">>token失效>>>");
         if(aMapTrackClient != null && trackParam != null){
             aMapTrackClient.stopTrack(trackParam, onTrackListener);
             trackParam = null;

@@ -4,27 +4,23 @@ ext {
             compileSdkVersion: 28,
             minSdkVersion    : 21,
             targetSdkVersion : 28,
-            versionCode      : 1,
-            versionName      : "1.0.1"
+            versionCode      : 2,
+            versionName      : "1.0.2"
     ]
 
     manifestPlaceholders = [
 
             authorities      : "com.escort.carriage.android.fileprovider",
             file_path        : "escort",
-
-
             //服务器地址  测试站  http://xiaoer.jinanluke.com:8182/api/  正式站 https://cy.xeyb56.com/a/api/
 
-//            serverHostKey :  "http://192.168.8.41:8182/api/",
-//            serverHostValue : "http://192.168.8.41:8182/api/",
+            //serverHostKey :  "http://xiaoer.jinanluke.com:8182/api/",
+            //serverHostValue : "http://xiaoer.jinanluke.com:8182/api/",
             serverHostKey    : "https://cy.xeyb56.com/a/api/",
             serverHostValue  : "https://cy.xeyb56.com/a/api/",
-
-
 //            serverHostValue  : "http://xiaoer.jinanluke.com:8182/api/",
-
-
+//            serverHostKey :  "http://192.168.8.43:8182/api/",
+//            serverHostValue : "http://192.168.8.43:8182/api/",
             //分享地址  分为key 和 value   一般value为密文
             webHostKey       : "",
             webHostValue     : "",
