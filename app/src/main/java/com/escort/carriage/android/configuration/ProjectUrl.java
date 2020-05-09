@@ -123,7 +123,7 @@ public class ProjectUrl {
      *  司机历史轨迹查询
      */
 
-    public static String DRIVER_HISTORY_INFO = baseUrl + "shipper/order/getHistoryTrace";
+    public static String DRIVER_HISTORY_INFO = baseUrl + "undertake/order/getHistoryTrace";
 
 
     /**

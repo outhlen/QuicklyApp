@@ -117,6 +117,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
     private List<Double> latList = new ArrayList<>();
     private List<Double> lonList = new ArrayList<>();
     private List<OrderAddressBean> orderAddressBeans = new ArrayList<>();
+    private List<OrderDirectionBean> orderDirectionBeans = new ArrayList<>();
     private List<AddressListBean> zhuangList = new ArrayList<>();
     private List<AddressListBean> xieList = new ArrayList<>();
     private List<AddressListBean> zhuangXieList = new ArrayList<>();
@@ -506,17 +507,18 @@ public class TraceDetailActivity extends ProjectBaseActivity {
         OkgoUtils.post(ProjectUrl.DRIVER_HISTORY_INFO, jsonString).execute(new MyStringCallback<HistoryInfoEntity>() {
             @Override
             public void onResponse(HistoryInfoEntity resp) {
+                Log.e("","resp=="+resp);
                 if (resp.isSuccess()) {
                     if (zhuangXieList.size() > 0) {
                         addMarkersToMap(zhuangXieList);
                     }
                     List<HistoryPoint.TimeBean> dateBeans = null;
                     List<HistoryPoint.NodeBean> nodeBeans = null;
-                    if (resp.getData().getData() != null) {
-                        dateBeans = resp.getData().getData().getTimeSlice().times;
+                    if (resp.getData() != null) {
+                        dateBeans = resp.getData().getTimeSlice().times;
                     }
-                    if (resp.getData().getData().getNodeDate() != null) {
-                        nodeBeans = resp.getData().getData().getNodeDate().turn;
+                    if (resp.getData().getNodeDate() != null) {
+                        nodeBeans = resp.getData().getNodeDate().turn;
                     }
                     String workSid = resp.getData().getSid();
                     String workTid = resp.getData().getTid();
@@ -603,7 +605,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
 
             @Override
             public Class<HistoryInfoEntity> getClazz() {
-                return null;
+                return HistoryInfoEntity.class;
             }
 
         });

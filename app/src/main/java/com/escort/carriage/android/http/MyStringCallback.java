@@ -49,7 +49,6 @@ public abstract class MyStringCallback<T extends ResponceJsonEntity> extends Str
 
         }catch (Exception e){
             UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-//            ToastUtil.showToastString("数据解析异常");
         }
 
     }

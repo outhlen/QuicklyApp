@@ -5,7 +5,6 @@ import java.util.List;
 
 public class HistoryPoint  {
 
-   private   PointData data;
     private  String sid;
     private  String tid;
     private  String trid;
@@ -35,20 +34,11 @@ public class HistoryPoint  {
         this.trid = trid;
     }
 
-    public PointData getData() {
-        return data;
-    }
 
-    public void setData(PointData data) {
-        this.data = data;
-    }
 
-    public class PointData{
      TimeData timeSlice;
      NodeData nodeDate;
-     private String sid;
-     private String tid;
-     private String trid;
+
 
        public TimeData getTimeSlice() {
            return timeSlice;
@@ -65,31 +55,6 @@ public class HistoryPoint  {
        public void setNodeDate(NodeData nodeDate) {
            this.nodeDate = nodeDate;
        }
-
-        public String getSid() {
-            return sid;
-        }
-
-        public void setSid(String sid) {
-            this.sid = sid;
-        }
-
-       public String getTid() {
-            return tid;
-        }
-
-       public void setTid(String tid) {
-            this.tid = tid;
-        }
-
-       public String getTrid() {
-            return trid;
-        }
-
-       public void setTrid(String trid) {
-            this.trid = trid;
-        }
-   }
 
 
 
