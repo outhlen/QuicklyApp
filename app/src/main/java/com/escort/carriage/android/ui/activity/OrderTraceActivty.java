@@ -57,7 +57,7 @@ public class OrderTraceActivty extends ProjectBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_my_order_list);
+        setContentView(R.layout.activity_trace_layout);
         ButterKnife.bind(this);
         headTitleTv.setText("转单追踪");
         initDatas();
