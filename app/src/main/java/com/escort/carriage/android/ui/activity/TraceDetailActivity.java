@@ -117,7 +117,6 @@ public class TraceDetailActivity extends ProjectBaseActivity {
     private List<Double> latList = new ArrayList<>();
     private List<Double> lonList = new ArrayList<>();
     private List<OrderAddressBean> orderAddressBeans = new ArrayList<>();
-    private List<OrderDirectionBean> orderDirectionBeans = new ArrayList<>();
     private List<AddressListBean> zhuangList = new ArrayList<>();
     private List<AddressListBean> xieList = new ArrayList<>();
     private List<AddressListBean> zhuangXieList = new ArrayList<>();
