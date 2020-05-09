@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.androidybp.basics.fastjson.JsonManager;
@@ -43,6 +45,9 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
     private Context context;
     public Date date;
     private String orderNumber;
+    private Switch mSwitch;
+    boolean isChecked;
+    EditText inputTv;
 
     public BiddingPopupWindow(Activity context, String orderNumber) {
         super(context);
@@ -89,11 +94,26 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
 //                return true;
 //            }
 //        });
+
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    isChecked = true;
+                    inputTv.setEnabled(true);
+                } else {
+                    isChecked = false;
+                    inputTv.setEnabled(false);
+                }
+            }
+        });
         setView();
 
     }
 
     private void setView() {
+        mSwitch = mMenuView.findViewById(R.id.switch_btn);
+        inputTv = mMenuView.findViewById(R.id.money_et);
         mMenuView.findViewById(R.id.ivClose).setOnClickListener(this);
         mMenuView.findViewById(R.id.tvEndSite).setOnClickListener(this);
         mMenuView.findViewById(R.id.btnNext).setOnClickListener(this);
@@ -109,8 +129,6 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
                 TextView tvTime = mMenuView.findViewById(R.id.tvEndSite);
                 tvTime.setText(ProjectDateUtils.transformationDate(date, "yyyy/MM/dd"));
             }
-
-
         }).build();
         pvTime.show();
     }
@@ -118,44 +136,45 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ivClose:
                 dismiss();
                 break;
-             case R.id.tvEndSite:
-                 initTimePicker();
+            case R.id.tvEndSite:
+                initTimePicker();
                 break;
-              case R.id.btnNext:
-                  EditText edtView = mMenuView.findViewById(R.id.inputText);
-                  String inputStr = edtView.getText().toString();
-                  if(date == null){
-                    ToastUtil.showToastString("请现在送达时间");
-                } else if(TextUtils.isEmpty(inputStr)){
-                      ToastUtil.showToastString("请填写金额");
-                  } else {
-                      double money = 0;
-                      try {
-                          money = Double.valueOf(inputStr);
-                      }catch (Exception e){
+            case R.id.btnNext:
+                EditText edtView = mMenuView.findViewById(R.id.inputText);
+                String inputStr = edtView.getText().toString();
+                String priceStr = inputTv.getText().toString();
 
-                      }
-                      if(money > 0){
-                          toService(money);
-                      } else {
-                          ToastUtil.showToastString("请填写正确金额");
-                      }
-                  }
+                if (TextUtils.isEmpty(inputStr)) {
+                    ToastUtil.showToastString("请填写金额");
+                    return;
+                }
+                if (isChecked == true) {
+                    if (TextUtils.isEmpty(priceStr)) {
+                        ToastUtil.showToastString("请填写正确押金金额");
+                        return;
+                    }
+                }
+                if (date == null) {
+                    ToastUtil.showToastString("请选择送达时间");
+                    return;
+                }
+                toService(inputStr, priceStr);
                 break;
 
         }
     }
 
-    private void toService(double money) {
+    private void toService(String money,String price) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(context, "提交数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, Object> data = new HashMap<>();
         data.put("orderNumber", orderNumber);
         data.put("money", money);
+        data.put("deposit", price);
         data.put("toTime", date.getTime());
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
@@ -163,12 +182,12 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
             @Override
             public void onResponse(ResponseUserEntity s) {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                if(s != null ){
-                    if(s.success){
+                if (s != null) {
+                    if (s.success) {
                         ToastUtil.showToastString("竞价成功");
                         OrderInfoActivity context = (OrderInfoActivity) BiddingPopupWindow.this.context;
                         context.biddingFinishpage();
-                    }else {
+                    } else {
                         ToastUtil.showToastString(s.message);
                     }
                 }

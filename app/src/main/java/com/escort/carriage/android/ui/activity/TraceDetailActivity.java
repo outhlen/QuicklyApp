@@ -110,7 +110,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
     private LatLonPoint carPoint;// = new LatLonPoint(39.995576, 116.481288);//终点，116.481288,39.995576
     // 是否规划路径
     private int isStart = 0;
-    private boolean mHistoryFlag = true;
+    private boolean mHistoryFlag = false;
     /**
      * 在地图上添加marker
      */
@@ -211,10 +211,6 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                 getDeviceInfo();
             }
         });
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(TraceDetailActivity.this));
-//        mRecyclerView.addItemDecoration(new ItemDecoration(10));
-//        orderTrackingDetailAdapter = new OrderTrackingDetailAdapter(TraceDetailActivity.this, R.layout.item_order_track_detail, zhuangXieList);
-//        mRecyclerView.setAdapter(orderTrackingDetailAdapter);
         getData(orderNumber);
         // 首次进入查看轨迹
         getDeviceInfo(); //定位并获取设备信息
@@ -314,6 +310,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
         aMap.clear();
         if (mHistoryFlag) {
             setCarPointToMarker();
+            isStart = 0;
             // 查询历史轨迹
             getGaodeHistoryPoint(); //历史轨迹
         } else {
@@ -519,7 +516,6 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                     if (resp.getData().getData() != null) {
                         dateBeans = resp.getData().getData().getTimeSlice().times;
                     }
-
                     if (resp.getData().getData().getNodeDate() != null) {
                         nodeBeans = resp.getData().getData().getNodeDate().turn;
                     }
@@ -540,7 +536,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                     5000,   // 距离补偿阈值，只有超过5km的点才启用距离补偿
                                     0,  // 由旧到新排序
                                     1,  // 返回第1页数据
-                                    100,    // 一页不超过100条
+                                    900,    // 一页不超过100条
                                     ""  // 暂未实现，该参数无意义，请留空
                             );
                             aMapTrackClient.queryHistoryTrack(historyTrackRequest, new SimpleOnTrackListener() {
@@ -581,7 +577,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                     5000,   // 距离补偿阈值，只有超过5km的点才启用距离补偿
                                     0,  // 由旧到新排序
                                     1,  // 返回第1页数据
-                                    100,    // 一页不超过100条
+                                    900,    // 一页不超过100条
                                     ""  // 暂未实现，该参数无意义，请留空
                             );
                             aMapTrackClient.queryHistoryTrack(historyTrackRequest, new SimpleOnTrackListener() {

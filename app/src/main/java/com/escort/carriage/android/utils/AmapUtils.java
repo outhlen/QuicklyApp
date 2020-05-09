@@ -76,7 +76,6 @@ public class AmapUtils {
         //获取一次定位结果：
         //该方法默认为false。
         mLocationOption.setOnceLocation(true);
-
         //获取最近3s内精度最高的一次定位结果：
         //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
         mLocationOption.setOnceLocationLatest(true);
@@ -277,7 +276,7 @@ public class AmapUtils {
 
     public void initTrace(Context context, Long sid, Long tid, Long trid,Notification notification) {
         aMapTrackClient = new AMapTrackClient(context.getApplicationContext());
-        aMapTrackClient.setInterval(2, 10);//轨迹定位周期60s，上报周期200s
+        aMapTrackClient.setInterval(2, 60);//轨迹定位周期60s，上报周期200s
 //        猎鹰sdk会在无法正常上报轨迹点时将未成功上报的轨迹点缓存在本地，默认最多缓存50MB数据。
 //        可以使用下面的代码修改缓存大小为20MB：
         aMapTrackClient.setCacheSize(20);
@@ -289,6 +288,7 @@ public class AmapUtils {
         //初始化AMapLocationClientOption对象
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setInterval(5000);
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setDeviceModeDistanceFilter(100);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
