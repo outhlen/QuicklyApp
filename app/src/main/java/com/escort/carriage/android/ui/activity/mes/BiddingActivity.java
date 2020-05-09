@@ -76,7 +76,6 @@ public class BiddingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.pop_bidding);
         bind = ButterKnife.bind(this);
         orderNumber = getIntent().getStringExtra("orderNumber");

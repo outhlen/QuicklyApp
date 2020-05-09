@@ -23,6 +23,7 @@ import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.ResponseIntegerBean;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.activity.HomeActivity;
+import com.escort.carriage.android.ui.activity.OrderTraceActivty;
 import com.escort.carriage.android.ui.activity.mes.HistoryOrderListActivity;
 import com.escort.carriage.android.ui.activity.mes.MyOrderListActivity;
 import com.escort.carriage.android.ui.activity.my.EnterpriseAuthenticationActivity;
@@ -69,6 +70,8 @@ public class HomeLeftHolder implements View.OnClickListener {
     LinearLayout llPersonageAuthentication;
     @BindView(R.id.llEnterpriseAuthentication)
     LinearLayout llEnterpriseAuthentication;
+    @BindView(R.id.ll_my_trice_order)
+    LinearLayout traceLayout;
     private View viewGroup;
     private HomeActivity activity;
     private Unbinder bind;
@@ -97,6 +100,7 @@ public class HomeLeftHolder implements View.OnClickListener {
         viewGroup.findViewById(R.id.ll_dl_manager).setOnClickListener(this);
         viewGroup.findViewById(R.id.ll_yq_hy).setOnClickListener(this);
         viewGroup.findViewById(R.id.ll_fp_manager).setOnClickListener(this);
+        viewGroup.findViewById(R.id.ll_my_trice_order).setOnClickListener(this);
     }
 
     public void updataUserInfo(UserInfoEntity userInfoEntity) {
@@ -164,7 +168,10 @@ public class HomeLeftHolder implements View.OnClickListener {
                 intentFpgl.putExtra("url", VueUrl.invoiceManagement);
                 activity.startActivity(intentFpgl);
                 break;
-
+            case R.id.ll_my_trice_order://订单追踪
+                Intent intentOrder = new Intent(activity, OrderTraceActivty.class);
+                activity.startActivity(intentOrder);
+                break;
 
         }
     }

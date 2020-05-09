@@ -39,16 +39,16 @@ import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.home.AddrBean;
 import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
+import com.escort.carriage.android.entity.response.ResponseOrderBeanEntity;
 import com.escort.carriage.android.entity.response.home.HuoYunDanBean;
-import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.download.DownLoadManager;
 import com.escort.carriage.android.http.download.DownloadListener;
 import com.escort.carriage.android.ui.ImageLookActivity;
 import com.escort.carriage.android.ui.activity.adapter.PhotoListAdapter;
 import com.escort.carriage.android.ui.activity.bean.PhotoBean;
-import com.escort.carriage.android.ui.view.ItemDecoration;
 import com.escort.carriage.android.ui.view.text.DrawableTextView;
+import com.escort.carriage.android.utils.AmapUtils;
 import com.escort.carriage.android.utils.ChineseNumUtill;
 import com.escort.carriage.android.utils.ImageLoader;
 import com.escort.carriage.android.utils.OpenFileUtils;
@@ -57,7 +57,6 @@ import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.previewlibrary.GPreviewBuilder;
 import com.previewlibrary.ZoomMediaLoader;
 import com.previewlibrary.enitity.ThumbViewInfo;
-import com.tripartitelib.android.amap.AmapUtils;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.io.File;
@@ -268,9 +267,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         data.put("orderNumber", id);
         requestEntity.setData(data);
         String jsonString = JsonManager.createJsonString(requestEntity);
-        OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderInfoEntity>() {
+        OkgoUtils.post(ProjectUrl.ORDER_GETORDERDETAIL, jsonString).execute(new MyStringCallback<ResponseOrderBeanEntity>() {
             @Override
-            public void onResponse(ResponseOrderInfoEntity resp) {
+            public void onResponse(ResponseOrderBeanEntity resp) {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (resp != null) {
                     if (resp.success) {
@@ -283,8 +282,8 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             }
 
             @Override
-            public Class<ResponseOrderInfoEntity> getClazz() {
-                return ResponseOrderInfoEntity.class;
+            public Class<ResponseOrderBeanEntity> getClazz() {
+                return ResponseOrderBeanEntity.class;
             }
         });
 
@@ -565,10 +564,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             }
             String start_num = TextUtils.isEmpty(addrBean.getStartCellphone()) ? "****" : addrBean.getStartCellphone();
             String start_name = TextUtils.isEmpty(addrBean.getStartLinkman()) ? "****" : addrBean.getStartLinkman();
-//            String end_num = TextUtils.isEmpty(addrBean.getEndTelephone()) ? "****" : addrBean.getEndTelephone();
-//            String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
             String startStr = start_name + "  " + start_num;
-            //           String endStr = end_name + "  " + end_num;
             setTruckLoadingAndUnloadView(0, x, inflate, addrStr, startStr);
         }
     }

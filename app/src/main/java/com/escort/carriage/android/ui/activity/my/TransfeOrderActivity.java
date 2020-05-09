@@ -25,9 +25,8 @@ import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.http.MyStringCallback;
-import com.escort.carriage.android.ui.view.text.CheckSmsCodeView;
 import com.escort.carriage.android.ui.view.text.CheckSmsFourCodeView;
-import com.tripartitelib.android.amap.AmapUtils;
+import com.escort.carriage.android.utils.AmapUtils;
 
 import java.util.HashMap;
 

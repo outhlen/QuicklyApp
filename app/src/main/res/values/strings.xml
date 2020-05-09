@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">小二押镖</string>
 
-    <item type="id" name="tg_json"/>
+    <item name="tg_json" type="id" />
 
     <string name="http_loading">加载中&#8230;</string>
 

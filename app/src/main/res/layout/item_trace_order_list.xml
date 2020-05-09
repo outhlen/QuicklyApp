@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:paddingTop="@dimen/space_10">
+
+
+    <RelativeLayout
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/order_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_10"
+            android:layout_marginLeft="10dp"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            tools:text="订单号：213123" />
+
+
+        <TextView
+            android:id="@+id/order_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_10"
+            android:maxLines="1"
+            android:layout_alignParentRight="true"
+            android:textSize="11sp"
+            tools:text="订单号：213123" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topView">
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/space_60"
+        android:layout_height="@dimen/space_60"
+        android:layout_marginLeft="@dimen/space_10"
+        android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivImage"
+            android:layout_marginLeft="15dp"
+            android:textSize="12sp"
+            android:padding="3dp"
+            android:textColor="#1251FF"
+            android:text="快速货运"/>
+
+    <TextView
+        android:id="@+id/tvStartLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivImage"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        tools:text="测试数据" />
+
+    <ImageView
+        android:id="@+id/ivLocationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_toRightOf="@+id/tvStartLocation"
+        android:src="@mipmap/long_right_ic" />
+
+    <TextView
+        android:id="@+id/tvEndtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivLocationImage"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        tools:text="测试数据" />
+
+    <RelativeLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStartLocation">
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_10"
+            android:maxLines="1"
+            android:textSize="10sp"
+            tools:text="测试数据" />
+
+
+        <TextView
+            android:id="@+id/zhuxie_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_10"
+            android:maxLines="1"
+            android:textColor="@color/red"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"
+            tools:text="前往装货" />
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/contentGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout"
+        android:layout_alignLeft="@+id/linearlayout"
+        android:layout_marginTop="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_toRightOf="@+id/ivImage"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/space_3">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="货物名称"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvCargoName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="货物" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/space_3">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="货物数量"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/cargoCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="货物数量" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/space_3">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="重量/体积"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvCargoWeightVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="重量/体积" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="几装几卸"
+                android:textSize="@dimen/text_size_8"
+                app:minTextSize="@dimen/text_size_4" />
+
+            <com.escort.carriage.android.ui.view.text.AutofitTextView
+                android:id="@+id/tvPackingManner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/text_size_10"
+                app:minTextSize="@dimen/text_size_10"
+                tools:text="重量/体积" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contentGroup"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/trace_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:paddingTop="@dimen/dp_3"
+            android:paddingBottom="@dimen/dp_3"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            android:background="@drawable/bg_b_67c337_bj_3dp"
+            android:text="转单追踪" />
+
+        <TextView
+            android:id="@+id/tel_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="@dimen/dp_3"
+            android:paddingBottom="@dimen/dp_3"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/text_size_12"
+            android:layout_toLeftOf="@id/trace_tv"
+            android:background="@drawable/bg_b_3e9fff_bj_3dp"
+            android:text="联系司机" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10"
+        android:layout_below="@+id/buttonGroup"
+        android:background="@color/color_f7f7f7" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/item_head_bar" />
+
+
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/rl_refresh"
         android:layout_width="match_parent"

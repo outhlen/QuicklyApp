@@ -10,7 +10,7 @@ import com.androidybp.basics.configuration.ResponseInterceptorInterface;
 import com.androidybp.basics.okhttp3.entity.ResponceJsonEntity;
 import com.androidybp.basics.ui.manager.activity.ProjectActivityManager;
 import com.escort.carriage.android.ui.activity.login.LoginActivity;
-import com.tripartitelib.android.amap.AmapUtils;
+import com.escort.carriage.android.utils.AmapUtils;
 
 public class ResponseInterceptorInterfaceIm implements ResponseInterceptorInterface {
     @Override

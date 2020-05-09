@@ -18,13 +18,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
+
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
-import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.fastjson.JsonManager;
@@ -49,18 +45,15 @@ import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
 import com.escort.carriage.android.ui.view.dialog.SelectAddressDialog;
+import com.escort.carriage.android.utils.AmapUtils;
 import com.escort.carriage.android.utils.GaodeHttp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tripartitelib.android.amap.AmapUtils;
 import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +62,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.jiguang.net.HttpResponse;
 import cn.jpush.android.api.JPushInterface;
 
 public class RegisterPhoneActivity extends ProjectBaseEditActivity implements OnGeocodeSearchListener {
@@ -99,7 +91,6 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity implements On
     private double longitude;//经度
     private double latitude;//纬度
     String areaStr, cityStr, provinceStr;
-    private MapView mapView;
     List<CityListBean> cityListBeanList;
 
     @Override

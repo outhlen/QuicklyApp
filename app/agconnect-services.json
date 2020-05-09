@@ -1,0 +1,27 @@
+{
+	"agcgw":{
+		"backurl":"connect-drcn.dbankcloud.cn",
+		"url":"connect-drcn.hispace.hicloud.com"
+	},
+	"client":{
+		"cp_id":"890086000300105785",
+		"product_id":"9105385871708327414",
+		"client_id":"254733713131177088",
+		"client_secret":"CAAEB8BB2DBF82DBC0B01286402E8C55F3372079251252C500B4459B4041F97A",
+		"app_id":"102073119",
+		"package_name":"com.escort.carriage.android",
+		"api_key":"CV7QqORbSzTfWyw72LAyNzOWUXbdhLdL6TjVecjkFRcop8+dsdAQg8xg583F7KQRkAGFxfzonwRIg4tR4KLWLe1a0b+/"
+	},
+	"service":{
+		"analytics":{
+			"collector_url":"datacollector-drcn.dt.hicloud.com,datacollector-drcn.dt.dbankcloud.cn",
+			"resource_id":"p1",
+			"channel_id":""
+		},
+		"ml":{
+			"mlservice_url":"ml-api-drcn.ai.dbankcloud.com,ml-api-drcn.ai.dbankcloud.cn"
+		}
+	},
+	"region":"CN",
+	"configuration_version":"1.0"
+}

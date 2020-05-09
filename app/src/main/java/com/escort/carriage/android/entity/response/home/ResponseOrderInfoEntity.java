@@ -1,6 +1,7 @@
 package com.escort.carriage.android.entity.response.home;
 
 import com.androidybp.basics.okhttp3.entity.ResponceJsonEntity;
+import com.escort.carriage.android.entity.bean.OrderListBean;
 import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
 
 /**
@@ -8,5 +9,5 @@ import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
  * @description:
  * @date :2020-03-20 16:53
  */
-public class ResponseOrderInfoEntity extends ResponceJsonEntity<OrderInfoEntity> {
+public class ResponseOrderInfoEntity extends ResponceJsonEntity<OrderListBean> {
 }

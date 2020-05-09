@@ -20,8 +20,8 @@ import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.entity.bean.home.AddrBean;
 import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
+import com.escort.carriage.android.utils.AmapUtils;
 import com.escort.carriage.android.utils.ChineseNumUtill;
-import com.tripartitelib.android.amap.AmapUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +42,6 @@ public class RouteNavigationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        StatusBarCompatManager.fullScreen(this);
         setContentView(R.layout.activity_route_navigation);
         ButterKnife.bind(this);
         scaleAnim = new ScaleAnimation(1.0f, 0.9f, 1.0f, 0.9f,
@@ -81,8 +80,6 @@ public class RouteNavigationActivity extends Activity {
         if (unloadNum > infoEntity.addr.size()) {
             unloadNum = infoEntity.addr.size();
         }
-
-
         for (int x = 0; x < unloadNum; x++) {
             View inflate = View.inflate(this, R.layout.item_order_route_navigation_layout, null);
             AddrBean addrBean = infoEntity.addr.get(x);

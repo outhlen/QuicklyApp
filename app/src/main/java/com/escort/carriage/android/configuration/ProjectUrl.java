@@ -112,10 +112,20 @@ public class ProjectUrl {
      */
     public static String ORDER_GETORDERDETAIL = baseUrl + "undertake/order/getOrderDetail";
 
+
+
     /**
      * 司机端设备获取
      */
     public static String GETDEVICEINFO = baseUrl + "undertake/order/getGoldFalcon";
+
+    /**
+     *  司机历史轨迹查询
+     */
+
+    public static String DRIVER_HISTORY_INFO = baseUrl + "shipper/order/getHistoryTrace";
+
+
     /**
      * 竞标
      */
@@ -274,6 +284,11 @@ public class ProjectUrl {
      * 订单列表
      */
     public static String ORDER_GETORDERLIST = baseUrl + "undertake/orderVehicle/getOrderList";
+
+    /**
+     *  追踪列表
+     */
+    public static String ORDER_TARCE_LIST = baseUrl + "undertake/orderVehicle/getTurnLocationList";
 
     /**
      * 我的投标

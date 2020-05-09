@@ -44,7 +44,6 @@ import butterknife.ButterKnife;
 public class SplashTwoActivity extends ProjectBaseActivity {
 
     private PermissionUtil permissionUtil;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

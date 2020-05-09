@@ -49,6 +49,7 @@ import com.escort.carriage.android.ui.view.dialog.AdvertisingImageDialog;
 import com.escort.carriage.android.ui.view.dialog.VersionDialog;
 import com.escort.carriage.android.ui.view.holder.HomeLeftHolder;
 import com.escort.carriage.android.ui.view.holder.HomeMainHolder;
+import com.escort.carriage.android.utils.AmapUtils;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.OnDownloadListener;
 import com.hjq.http.model.DownloadInfo;
@@ -56,7 +57,6 @@ import com.hjq.http.model.HttpMethod;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
-import com.tripartitelib.android.amap.AmapUtils;
 import com.tripartitelib.android.iflytek.IflytekUtils;
 
 import java.io.File;

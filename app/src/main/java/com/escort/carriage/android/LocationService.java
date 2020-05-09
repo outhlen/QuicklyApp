@@ -1,9 +1,7 @@
 package com.escort.carriage.android;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
-import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
-import com.tripartitelib.android.amap.AmapUtils;
+import com.escort.carriage.android.utils.AmapUtils;
 
 public class LocationService extends Service {
 

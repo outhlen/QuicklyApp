@@ -12,7 +12,6 @@ public class ResponceJsonEntity<T> {
     public long timestamp;  // 接口调用消耗时间（毫秒）
     public T data;
 
-
     public ResponceJsonEntity() {
     }
 

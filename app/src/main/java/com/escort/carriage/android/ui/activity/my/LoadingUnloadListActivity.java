@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,9 +29,8 @@ import com.escort.carriage.android.entity.response.home.ResponseLoadingUnloadIte
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.dialog.AutoBottomUIDialog;
-import com.escort.carriage.android.ui.dialog.AutoHideBottomUIDialog;
 import com.escort.carriage.android.ui.view.list.FillListView;
-import com.tripartitelib.android.amap.AmapUtils;
+import com.escort.carriage.android.utils.AmapUtils;
 
 import java.util.HashMap;
 
