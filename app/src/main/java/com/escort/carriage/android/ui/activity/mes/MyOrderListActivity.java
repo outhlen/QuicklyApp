@@ -52,7 +52,7 @@ public class MyOrderListActivity extends ProjectBaseActivity {
     @BindView(R.id.ll_content)
     LinearLayout llContent;
 
-    private String[] titles = {"待提货", "装货中", "运输中", "待结算", "待评价"};
+    private String[] titles = {"待提货", "装货中", "运输中", "待结算", "待评价","已撤单"};
     private int positioin;
 
     @Override
@@ -125,6 +125,9 @@ public class MyOrderListActivity extends ProjectBaseActivity {
                 break;
              case 4:
                 bundle.putInt("type", 8);
+                break;
+            case 5:
+                bundle.putInt("type", -1);
                 break;
 
         }

@@ -91,6 +91,7 @@ public class BiddingActivity extends Activity {
                 } else {
                     isPay = false;
                     moneyEt.setEnabled(false);
+                    moneyEt.setText("");
                     ToastUtil.showToastString("已选不需要支付押金");
                 }
             }

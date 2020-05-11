@@ -2,6 +2,9 @@ package com.escort.carriage.android.ui.activity.mes;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -158,6 +161,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     TextView showReceipt;
     @BindView(R.id.order_num_tv)
     TextView orderTv;
+    @BindView(R.id.copy_btn)
+    TextView copyBtn;
+
     OrderInfoEntity infoEntity;
 
     private int openType = 1;//打开类型  默认是1   1：货源大厅   2：我的订单 3:历史订单
@@ -192,7 +198,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         photoView.addItemDecoration(new GridSpacingItemDecoration(4, 25, false));
         mAdapter = new PhotoListAdapter(OrderInfoActivity.this, R.layout.photo_recycler_layout, list);
         photoView.setAdapter(mAdapter);
-
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, int i) {
@@ -650,11 +655,17 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         }
     }
 
-    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding, R.id.showReceipt})
+    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding, R.id.showReceipt,R.id.copy_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.item_head_bar_iv_back:
                 finish();
+                break;
+            case R.id.copy_btn:
+                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("copy text", infoEntity.getOrderNumber());
+                clipboard.setPrimaryClip(clip);
+                ToastUtil.showToastString("已复制到剪贴板");
                 break;
             case R.id.item_head_bar_iv_right:
                 MesNumUtils.getMesNumUtils().openMesAct(this);
