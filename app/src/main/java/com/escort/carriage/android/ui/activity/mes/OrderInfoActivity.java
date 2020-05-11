@@ -605,7 +605,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                     ToastUtil.showToastString("联系人手机号为空");
                 }else{
                     ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("copy text", infoEntity.getOrderNumber());
+                    ClipData clip = ClipData.newPlainText("copy text", phone);
                     clipboard.setPrimaryClip(clip);
                     ToastUtil.showToastString("手机号已复制");
                 }
