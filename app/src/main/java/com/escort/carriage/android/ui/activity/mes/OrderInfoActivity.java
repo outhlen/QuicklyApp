@@ -551,7 +551,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             String end_num = TextUtils.isEmpty(addrBean.getEndCellphone()) ? "****" : addrBean.getEndCellphone();
             String end_name = TextUtils.isEmpty(addrBean.getEndLinkman()) ? "****" : addrBean.getEndLinkman();
             String endStr = end_name + " " + end_num;
-            setTruckLoadingAndUnloadView(1, x, inflate, addrStr, endStr);
+            setTruckLoadingAndUnloadView(1, x, inflate, addrStr, endStr,addrBean.getEndCellphone());
         }
     }
 
@@ -571,14 +571,15 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             String start_num = TextUtils.isEmpty(addrBean.getStartCellphone()) ? "****" : addrBean.getStartCellphone();
             String start_name = TextUtils.isEmpty(addrBean.getStartLinkman()) ? "****" : addrBean.getStartLinkman();
             String startStr = start_name + "  " + start_num;
-            setTruckLoadingAndUnloadView(0, x, inflate, addrStr, startStr);
+            setTruckLoadingAndUnloadView(0, x, inflate, addrStr, startStr,addrBean.getStartCellphone());
         }
     }
 
-    private void setTruckLoadingAndUnloadView(int type, int position, View viewGroup, String addrStr, String startStr) {
+    private void setTruckLoadingAndUnloadView(int type, int position, View viewGroup, String addrStr, String startStr,String phone) {
         ImageView iv = viewGroup.findViewById(R.id.ivItem);
         TextView tv = viewGroup.findViewById(R.id.tvItem);
         TextView textTv = viewGroup.findViewById(R.id.tvName);
+        TextView  copyBtn = viewGroup.findViewById(R.id.copy_btn);
         String str;
         if (type == 0) {
             textTv.setText(startStr);
@@ -597,6 +598,19 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 iv.setImageResource(R.drawable.bg_b_3699ff_circular_size);
             }
         }
+        copyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TextUtils.isEmpty(phone)){
+                    ToastUtil.showToastString("联系人手机号为空");
+                }else{
+                    ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("copy text", infoEntity.getOrderNumber());
+                    clipboard.setPrimaryClip(clip);
+                    ToastUtil.showToastString("手机号已复制");
+                }
+            }
+        });
         SpannableString spannableString = new SpannableString(addrStr + str);
         //设置字体前景色
         spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), addrStr.length(), spannableString.toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红色
