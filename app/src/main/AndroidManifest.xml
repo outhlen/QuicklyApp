@@ -39,6 +39,7 @@
     <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> //电量优化选项
 
     <application
         android:name=".ProjectApplication"
@@ -51,6 +52,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+
         <activity android:name=".ui.activity.TraceDetailActivity"></activity>
         <activity
             android:name=".ui.activity.SplashTwoActivity"
