@@ -621,7 +621,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
      * @return
      */
     private int getUnloadNum() {
-
         int num = 1;
         try {
             String substring = infoEntity.loadNumAndDischargeNum.substring(2, 3);

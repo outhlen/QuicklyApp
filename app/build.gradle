@@ -62,7 +62,13 @@ android {
 
     packagingOptions {
         exclude 'assets/location_map_gps_locked.png'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
+
 }
 repositories {
     flatDir {
@@ -72,7 +78,6 @@ repositories {
 }
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-
     //basics 基本包
     implementation project(':basics')
     implementation project(':niceimageview')
@@ -152,8 +157,14 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'com.ycjiang:imgepreviewlibrary:1.1.3'
-
     implementation 'com.amap.api:map2d:latest.integration'
     implementation 'com.amap.api:search:latest.integration'
+
     //implementation files('libs/AMapTrack_1.2.0_AMapLocation_4.8.0_20200108.jar')
+    implementation files('libs/UPPayAssistEx.jar')
+    implementation files('libs/UPPayPluginExPro.jar')
+
+    //implementation(name: 'qmf-ppplugin-android-3.0.7', ext: 'aar')
+    implementation files('libs/commons-logging-1.2.jar')
+    implementation files('libs/httpcore-4.4.1.jar')
 }

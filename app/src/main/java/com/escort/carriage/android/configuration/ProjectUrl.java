@@ -368,6 +368,12 @@ public class ProjectUrl {
      */
     public static String PAYRECORD_RECHARGE = baseUrl + "undertake/payRecord/recharge";
 
+
+    /**
+     *  银联商户发起支付
+     */
+    public static String CHINAUNION_PAY_URL = baseUrl + "undertake/pay/unionPay";
+
     /**
      * 轨迹标识
      */

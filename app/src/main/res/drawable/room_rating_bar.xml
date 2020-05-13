@@ -4,11 +4,11 @@
 		This is the rating bar drawable that is used to show a room num.
 	-->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+android:id/background"
+	<item android:id="@android:id/progress"
 	android:drawable="@mipmap/nomal_xing"/>
-	<item android:id="@+android:id/secondaryProgress"
+	<item android:id="@android:id/secondaryProgress"
 	android:drawable="@mipmap/nomal_xing"/>
-	<item android:id="@+android:id/progress"
+	<item android:id="@android:id/progress"
 	android:drawable="@mipmap/select_xing"/>
 </layer-list>
 

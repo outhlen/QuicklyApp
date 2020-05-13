@@ -13,6 +13,8 @@ import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
+import com.chinaums.pppay.unify.UnifyPayListener;
+import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.configuration.VueUrl;
@@ -34,7 +36,7 @@ import java.math.BigDecimal;
  * @description:
  * @date :2020-03-26 16:38
  */
-public class WalletMenuActivity extends ProjectBaseActivity {
+public class WalletMenuActivity extends ProjectBaseActivity  {
 
     @BindView(R.id.tvMoney)
     TextView tvMoney;
@@ -46,6 +48,7 @@ public class WalletMenuActivity extends ProjectBaseActivity {
         ButterKnife.bind(this);
         setPageActionBar();
         getUserMoney();
+
     }
 
     private void setPageActionBar() {
@@ -160,4 +163,5 @@ public class WalletMenuActivity extends ProjectBaseActivity {
             getUserMoney();
         }
     }
+
 }

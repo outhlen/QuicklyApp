@@ -43,15 +43,16 @@
     <application
         android:name=".ProjectApplication"
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:allowBackup">
-        <activity android:name=".ui.activity.TraceDetailActivity"></activity>
+        tools:replace="android:allowBackup, android:theme, android:label"
+        tools:ignore="GoogleAppIndexingWarning">
+
+
+
         <activity
             android:name=".ui.activity.SplashTwoActivity"
             android:hardwareAccelerated="true"
@@ -59,7 +60,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -80,6 +80,34 @@
         <!-- android:value="true" /> -->
         <!-- </activity> -->
         <!-- 登录页面 -->
+
+        <meta-data
+            android:name="CurrentEnvironment"
+            android:value="PROD" ><!--PROD or TEST-->
+        </meta-data>
+
+        <meta-data
+            android:name="PPPaySDK"
+            android:value="true" />
+
+        <uses-library
+            android:name="org.simalliance.openmobileapi"
+            android:required="false"/>
+
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog"
+            android:configChanges="orientation|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.unionpay.UPPayWapActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".ui.activity.login.LoginActivity"
             android:launchMode="singleTask"
@@ -201,6 +229,10 @@
         <activity
             android:name=".ui.activity.mes.ImageActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.TraceDetailActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ui.ImageLookActivity"
             android:screenOrientation="portrait" /> <!-- 微信 开始 -->
@@ -211,9 +243,11 @@
             android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".ui.activity.OrderTraceActivty"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -228,7 +262,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-
                 <category android:name="com.escort.carriage.android" />
             </intent-filter>
         </receiver> <!-- 极光推送自定义广播 /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->

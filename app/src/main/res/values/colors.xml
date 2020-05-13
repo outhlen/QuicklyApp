@@ -8,4 +8,15 @@
     <color name="order_orange">#FFDD29</color>
     <color name="order_green">#1cc43f</color>
     <color name="order_red">#D81B60</color>
+
+    <color name="white_gray">#EEEEEE</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- 支付成功 -->
+    <color name="oreder_success">#85B200</color>
+    <color name="black">#000000</color>
+    <!--添加修改左边-->
+    <color name="item_left_color">#999999</color>
+    <color name="color_3">#98988F</color>
+    <color name="input_text">#c6c6c6</color>
+    <color name="mpos_gray_line">#cccccc</color>
 </resources>

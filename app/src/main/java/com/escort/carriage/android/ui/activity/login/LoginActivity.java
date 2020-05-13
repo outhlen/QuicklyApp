@@ -278,7 +278,6 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
                 hideLoading();
                 if (resp.isSuccess()) {
                     EventBus.getDefault().post(resp.data);
-
                 } else {
                     if ("11006".equals(resp.code)) {
                         //未绑定,跳注册
@@ -289,7 +288,6 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
                         intent.putExtra("nickname", nickname);
                         intent.putExtra("openType", 1);
                         startActivityForResult(intent, 666);
-
                     } else {
                         ToastUtil.showToastString(resp.message);
                     }

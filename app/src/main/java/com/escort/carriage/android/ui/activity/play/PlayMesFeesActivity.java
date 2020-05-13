@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.okhttp3.entity.ResponceBean;
@@ -30,6 +31,7 @@ import com.escort.carriage.android.ui.adapter.home.MyOrderListAdapter;
 import com.escort.carriage.android.ui.adapter.play.PlaySelectTypeItemAdapter;
 import com.escort.carriage.android.ui.view.list.FillListView;
 import com.escort.carriage.android.utils.Sh256;
+import com.escort.carriage.android.utils.UnionPayUtil;
 import com.lzj.pass.dialog.PayPassDialog;
 import com.lzj.pass.dialog.PayPassView;
 import com.tripartitelib.android.alipay.AlipayUtils;
@@ -158,7 +160,6 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
     private void setList() {
         try {
             PlaySelectTypeItemAdapter playSelectTypeItemAdapter = new PlaySelectTypeItemAdapter(this);
-
             playSelectTypeItemAdapter.mList = getListData();
             //默认设置微信支付
             filllist.setTag(0);
@@ -181,7 +182,6 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
 
         item001.setTextNormal(R.color.color_cfcfcf);
         item001.setTextSelect(R.color.color_00bffe);
-
         item001.setImageResNormal(R.mipmap.img_login_wx);
         item001.setImageResSelect(R.mipmap.img_login_wx);
 
@@ -190,7 +190,6 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
 
         item001.setNormalTypeImageRes(R.drawable.not_selected);
         item001.setSelectTypeImageRes(R.drawable.pitch_on);
-
         item002.setTitle("支付宝支付");
 
         item002.setTextNormal(R.color.color_cfcfcf);
@@ -219,13 +218,9 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
         item003.setNormalTypeImageRes(R.drawable.not_selected);
         item003.setSelectTypeImageRes(R.drawable.pitch_on);
 
-
-
-
         arr.add(item001);
         arr.add(item002);
         arr.add(item003);
-
 
         return arr;
     }
@@ -302,36 +297,81 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
                         if(type == balanceType){
                             finishPage();
                         } else if(type == wechatType){
-                            PlayMesFeesEntity jsonBean = JsonManager.getJsonBean(s.data, PlayMesFeesEntity.class);
-                            //微信支付
-                            WXResponseMembers bean = new WXResponseMembers();
-                            bean.appid = jsonBean.appId;
-                            bean.noncestr = jsonBean.nonceStr;
-                            bean.packages = jsonBean.packageValue;
-                            bean.partnerid = jsonBean.partnerId;
-                            bean.prepayid = jsonBean.prepayId;
-                            bean.sign = jsonBean.sign;
-                            bean.timestamp = jsonBean.timeStamp;
-                            LogUtils.showE("支付页面", "微信支付开始  json = " + JsonManager.createJsonString(bean));
-                            WechatUtils.wxPlay(PlayMesFeesActivity.this, bean, new WechatUtils.WechatOpenPlayCallback() {
-                                @Override
-                                public void playSeccess() {
-                                    finishPage();
-                                }
-                            });
+                            getPayService(10,orderNumber);
+//                            PlayMesFeesEntity jsonBean = JsonManager.getJsonBean(s.data, PlayMesFeesEntity.class);
+//                            //微信支付
+//                            WXResponseMembers bean = new WXResponseMembers();
+//                            bean.appid = jsonBean.appId;
+//                            bean.noncestr = jsonBean.nonceStr;
+//                            bean.packages = jsonBean.packageValue;
+//                            bean.partnerid = jsonBean.partnerId;
+//                            bean.prepayid = jsonBean.prepayId;
+//                            bean.sign = jsonBean.sign;
+//                            bean.timestamp = jsonBean.timeStamp;
+//                            LogUtils.showE("支付页面", "微信支付开始  json = " + JsonManager.createJsonString(bean));
+//                            WechatUtils.wxPlay(PlayMesFeesActivity.this, bean, new WechatUtils.WechatOpenPlayCallback() {
+//                                @Override
+//                                public void playSeccess() {
+//                                    finishPage();
+//                                }
+//                            });
                         } else if(type == aliplayType){
                             //支付宝支付
-                            new AlipayUtils().aliPlay(s.data, PlayMesFeesActivity.this, new AlipayUtils.AliplayOpenPlayCallback(){
+                            getPayService(11,orderNumber);
+//                            new AlipayUtils().aliPlay(s.data, PlayMesFeesActivity.this, new AlipayUtils.AliplayOpenPlayCallback(){
+//
+//                                @Override
+//                                public void playSeccess(boolean flag) {
+//                                    if(flag){
+//                                        finishPage();
+//                                    } else {
+//                                        ToastUtil.showToastString("支付失败");
+//                                    }
+//                                }
+//                            });
+                        }
 
-                                @Override
-                                public void playSeccess(boolean flag) {
-                                    if(flag){
-                                        finishPage();
-                                    } else {
-                                        ToastUtil.showToastString("支付失败");
-                                    }
-                                }
-                            });
+                    } else {
+                        ToastUtil.showToastString(s.message);
+                    }
+                }
+            }
+
+            @Override
+            public Class<ResponceBean> getClazz() {
+                return ResponceBean.class;
+            }
+        });
+    }
+
+    private void getPayService(int type,String orderId) {
+        String userId  = CacheDBMolder.getInstance().getUserInfoEntity(null).getUserLoginId();
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userUUID", userId);
+        hashMap.put("orderNo", orderId);
+        hashMap.put("lkAppId", "5edcea89a67931192cffb3dc0c66c9e7");
+        hashMap.put("lkAppSecret", "38520db5a00b30013f909a5a906860b208e0ec88");
+        hashMap.put("payType", type);
+        hashMap.put("bizType", "2");
+        // hashMap.put("attachParam", "");
+        requestEntity.setData(hashMap);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.CHINAUNION_PAY_URL, jsonString).execute(new MyStringCallback<ResponceBean>() {
+            @Override
+            public void onResponse(ResponceBean s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    if (s.success) {
+                        String json  = s.data.toString();
+                        UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(PlayMesFeesActivity.this);
+                        if(type==10){ //微信
+                            payUtil.payWX(json);
+                        }else if(type==11){ //支付宝
+                            payUtil.payAliPay(json);
+                        }else if(type == 13){
+                            payUtil.payCloudQuickPay(json);
                         }
 
                     } else {

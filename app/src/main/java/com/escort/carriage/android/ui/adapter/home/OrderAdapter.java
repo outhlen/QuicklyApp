@@ -36,7 +36,15 @@ public class OrderAdapter extends BaseQuickAdapter<GoodsBean, OrderAdapter.Order
 
     @Override
     protected void convert(OrderHolder helper, GoodsBean item) {
-        GlideManager.getGlideManager().loadImage(item.imgUrl1, helper.ivImage, R.drawable.live_placeholder);
+        if(!TextUtils.isEmpty(item.imgUrl1)){
+            if(item.imgUrl1.contains(",")){
+                String [] array  = item.imgUrl1.split(",");
+                GlideManager.getGlideManager().loadImage(array[0], helper.ivImage, R.drawable.live_placeholder);
+            }else{
+                GlideManager.getGlideManager().loadImage(item.imgUrl1, helper.ivImage, R.drawable.live_placeholder);
+            }
+        }
+
         helper.tvStartLocation.setText(item.startCityName);
         helper.tvEndtLocation.setText(item.endCityName);
         helper.tvTime.setText(item.duration);

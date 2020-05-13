@@ -13,4 +13,6 @@ import com.tripartitelib.android.wechat.activity.WXEntryBaseActivity;
 /**
  * 微信客户端回调activity示例
  */
-public class WXEntryActivity extends WXEntryBaseActivity {}
+public class WXEntryActivity extends WXEntryBaseActivity {
+
+}
