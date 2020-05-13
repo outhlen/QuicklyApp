@@ -18,8 +18,8 @@ ext {
 //            serverHostKey    : "https://cy.xeyb56.com/a/api/",
 //            serverHostValue  : "https://cy.xeyb56.com/a/api/",
 //            serverHostValue  : "http://xiaoer.jinanluke.com:8182/api/",
-//            serverHostKey :  "http://192.168.8.43:8182/api/",
-//            serverHostValue : "http://192.168.8.43:8182/api/",
+//            serverHostKey :  "http://192.168.8.47:8182/api/",
+//            serverHostValue : "http://192.168.8.47:8182/api/",
             //分享地址  分为key 和 value   一般value为密文
             webHostKey       : "",
             webHostValue     : "",
@@ -69,8 +69,6 @@ ext {
             "Luban"                : 'top.zibin:Luban:1.1.8',
             //扫描
             "zxing"                : 'com.google.zxing:core:3.3.3',
-
-
 
             "okgo"                 : 'com.lzy.net:okgo:3.0.4',//OkGo 是对okHttp的封装
             "okserver"             : 'com.lzy.net:okserver:2.0.5',//OkGo上传下载扩展库
