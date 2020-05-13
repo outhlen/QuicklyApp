@@ -119,7 +119,6 @@ public class MyBidListFragment extends BaseFragment implements BGARefreshLayout.
 
     private void initDatas() {
         isHandleData = true;
-
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(getActivity(), "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -273,7 +272,6 @@ public class MyBidListFragment extends BaseFragment implements BGARefreshLayout.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         page = 1;
         newsItemList = new ArrayList<>();
         initDatas();
