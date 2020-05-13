@@ -31,7 +31,6 @@ public class OrderAdapter extends BaseQuickAdapter<GoodsBean, OrderAdapter.Order
 
     public OrderAdapter(@Nullable List<GoodsBean> data) {
         super(R.layout.item_order, data);
-
     }
 
     @Override

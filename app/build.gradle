@@ -163,8 +163,6 @@ dependencies {
     //implementation files('libs/AMapTrack_1.2.0_AMapLocation_4.8.0_20200108.jar')
     implementation files('libs/UPPayAssistEx.jar')
     implementation files('libs/UPPayPluginExPro.jar')
-
-    //implementation(name: 'qmf-ppplugin-android-3.0.7', ext: 'aar')
     implementation files('libs/commons-logging-1.2.jar')
     implementation files('libs/httpcore-4.4.1.jar')
 }

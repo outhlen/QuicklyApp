@@ -370,7 +370,7 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
                             payUtil.payWX(json);
                         }else if(type==11){ //支付宝
                             payUtil.payAliPay(json);
-                        }else if(type == 13){
+                        }else if(type == 13){ //云闪付
                             payUtil.payCloudQuickPay(json);
                         }
 
