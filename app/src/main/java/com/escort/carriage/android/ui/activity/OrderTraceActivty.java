@@ -24,14 +24,19 @@ import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.activity.adapter.MyTraceOrderAdapter;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
-public class OrderTraceActivty extends ProjectBaseActivity {
+public class OrderTraceActivty extends ProjectBaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -59,6 +64,7 @@ public class OrderTraceActivty extends ProjectBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trace_layout);
         ButterKnife.bind(this);
+        initRefreshLayout();
         headTitleTv.setText("转单追踪");
         initDatas();
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +73,15 @@ public class OrderTraceActivty extends ProjectBaseActivity {
                 finish();
             }
         });
+    }
+
+    private void initRefreshLayout() {
+        rlRefresh.setDelegate(this);
+        // 设置下拉刷新和上拉加载更多的风格
+        //    rl_refresh.setRefreshViewHolder(meiTuanRefreshViewHolder);
+        rlRefresh.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
+        // 设置正在加载更多时不显示加载更多控件
+        rlRefresh.setIsShowLoadingMoreView(true);
     }
 
     private void initDatas() {
@@ -167,5 +182,30 @@ public class OrderTraceActivty extends ProjectBaseActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.tv_empty_refresh)
+    public void onViewClicked() {
+        page = 1;
+        initDatas();
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        page = 1;
+        myTraceOrderAdapter.getData().clear();
+        initDatas();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        if (allPage <= page) {
+            return false;
+        } else {
+            page++;
+            initDatas();
+        }
+        rlRefresh.endLoadingMore();
+        return true;
     }
 }

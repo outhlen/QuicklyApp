@@ -269,6 +269,21 @@ public abstract class BaseWebViewActivity extends ProjectBaseActivity {
                 }
             }
         });
+
+        webView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    //按返回键操作并且能回退网页
+                    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+                        //后退
+                        webView.goBack();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 //        mWebView.addJavascriptInterface(new JSCallBack(), "android");
     }
 

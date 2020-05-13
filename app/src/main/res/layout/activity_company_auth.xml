@@ -218,13 +218,18 @@
                 android:orientation="vertical"
                 android:paddingBottom="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="14dp"
-                    android:text="上传营业执照 (上传照片可自动识别企业信息)"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="14dp"
+                        android:text="上传营业执照"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

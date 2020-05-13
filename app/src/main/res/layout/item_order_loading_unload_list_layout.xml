@@ -20,18 +20,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/color_000000"
+            tools:text="2321321 " />
 
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/copy_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/color_000000"
-                tools:text="2321321 " />
-
+                android:layout_toRightOf="@id/order_num_tv"
+                android:textColor="@color/white"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="10sp"
+                android:background="@drawable/blue_shape_button"
+                android:text="复制"/>
 
         </LinearLayout>
 

@@ -59,6 +59,7 @@ import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.listener.SimpleOnTrackListener;
 import com.escort.carriage.android.utils.AMapUtil;
+import com.lzy.okgo.model.Response;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -207,6 +208,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                 positionLayout.setBackgroundResource(R.drawable.blue_button_shape);
                 positionTv.setTextColor(getResources().getColor(R.color.white));
                 positionIv.setImageResource(R.mipmap.local_uncheck_ic);
+                isStart = 0;
                 mHistoryFlag = false;
                 getDeviceInfo();
             }
@@ -393,14 +395,14 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                 lonList.add(bean.getLongitude());
             }
         }
-        if (latList.size() != 0 && lonList.size() != 0) {
-            LatLng northeast = new LatLng(Collections.max(latList), Collections.max(lonList));//经纬度最大值
-            LatLng southwest = new LatLng(Collections.min(latList), Collections.min(lonList));//经纬度最小值
-            LatLngBounds bounds = new LatLngBounds.Builder().include(northeast)
-                    .include(southwest).build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 100);
-            aMap.animateCamera(cameraUpdate, 100L, (AMap.CancelableCallback) null);
-        }
+//        if (latList.size() != 0 && lonList.size() != 0) {
+//            LatLng northeast = new LatLng(Collections.max(latList), Collections.max(lonList));//经纬度最大值
+//            LatLng southwest = new LatLng(Collections.min(latList), Collections.min(lonList));//经纬度最小值
+//            LatLngBounds bounds = new LatLngBounds.Builder().include(northeast)
+//                    .include(southwest).build();
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 100);
+//            aMap.animateCamera(cameraUpdate, 100L, (AMap.CancelableCallback) null);
+//        }
     }
 
     private ImageView imageFlag;
@@ -546,7 +548,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                     if (historyTrackResponse.isSuccess()) {
                                         HistoryTrack historyTrack = historyTrackResponse.getHistoryTrack();
                                         if (historyTrack == null || historyTrack.getCount() == 0) {
-                                            ToastUtil.showToastString("未获取到轨迹");
+                                            ToastUtil.showToastString("司机未上报轨迹");
                                             return;
                                         }
                                         List<Point> points = historyTrack.getPoints();
@@ -557,7 +559,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                             setMapPointView("start", points.get(0).getLat(), points.get(0).getLng());
                                         }
                                     } else {
-                                        ToastUtil.showToastString("未获取到轨迹");
+                                        ToastUtil.showToastString("司机未上报轨迹");
                                     }
                                 }
                             });
@@ -587,20 +589,31 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                     if (historyTrackResponse.isSuccess()) {
                                         HistoryTrack historyTrack = historyTrackResponse.getHistoryTrack();
                                         if (historyTrack == null || historyTrack.getCount() == 0) {
-                                            ToastUtil.showToastString("未获取到轨迹点");
+                                            ToastUtil.showToastString("司机未上报轨迹");
                                             return;
                                         }
                                         List<Point> points = historyTrack.getPoints();
                                         Log.e("onHistoryTrackCallback", "历史轨迹==" + points.size());
                                         drawTrackOnMap(points, historyTrack.getStartPoint(), historyTrack.getEndPoint());
                                     } else {
-                                        ToastUtil.showToastString("查询历史轨迹点失败");
+                                        ToastUtil.showToastString("司机未上报轨迹");
                                     }
                                 }
                             });
                         }
                     }
+                }else{
+                    if (zhuangXieList.size() > 0) {
+                        addMarkersToMap(zhuangXieList);
+                    }
+                    ToastUtil.showToastString("司机未开始运输");
                 }
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                ToastUtil.showToastString("司机未开始运输");
             }
 
             @Override

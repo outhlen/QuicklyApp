@@ -64,7 +64,6 @@ public class ProjectApplication extends MultiDexApplication {
         } else {
             server = new ReleaseServer();
         }
-
         EasyConfig.with(new OkHttpClient())
                 // 是否打印日志
                 .setLogEnabled(AppConfig.isDebug())

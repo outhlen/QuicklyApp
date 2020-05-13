@@ -120,7 +120,24 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         } else if (pageType == 8) {
             //待评价
             setAwaitEvaluate(helper, item);
+        }else if (pageType == -1) {
+            //已撤单
+            setCancleView(helper, item);
         }
+    }
+
+    private void setCancleView(OrderHolder helper, OrderInfoEntity item) {
+
+        helper.btnThree.setBackgroundResource(R.drawable.bg_b_e7a339_bj_3dp);
+        helper.btnThree.setText("查看详情");
+        helper.btnThree.setTag(see_order_details);
+        helper.btnThree.setTag(R.id.tg_json, item);
+        helper.btnThree.setOnClickListener(this);
+        helper.btnTwo.setVisibility(View.INVISIBLE);
+        helper.btnOne.setVisibility(View.INVISIBLE);
+        helper.btnFour.setVisibility(View.GONE);
+        helper.btnFive.setVisibility(View.GONE);
+
     }
 
     /**
@@ -384,7 +401,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         OrderInfoEntity item = (OrderInfoEntity) entity;
         if (tag != null && entity != null) {
             int tag1 = (int) tag;
-
             if (tag1 == repeal_order) {
                 //撤单
                 new AlertDialog.Builder(fragment.getContext()).setMessage("您是否要进行撤单操作？")

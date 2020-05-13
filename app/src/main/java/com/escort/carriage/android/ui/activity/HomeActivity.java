@@ -12,12 +12,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.FrameLayout;
@@ -31,6 +35,7 @@ import com.androidybp.basics.okhttp3.entity.ResponceBean;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
+import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.Fileprovider;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
@@ -76,7 +81,6 @@ public class HomeActivity extends ProjectBaseActivity {
     private FrameLayout leftFrameLayout;
     private HomeLeftHolder homeLeftHoler;
     private HomeMainHolder homeMainHoler;
-
     /**
      * Apk 文件
      */
@@ -124,6 +128,11 @@ public class HomeActivity extends ProjectBaseActivity {
         if (ProjectDataConfig.isOpenAmap) {
             getDeviceInfo();
         }
+        String manufacturer = Build.MANUFACTURER;
+        String phoneName = manufacturer.toUpperCase();
+        if(!TextUtils.isEmpty(phoneName) && phoneName.contains("OPPO") || phoneName.contains("VIVO")){
+            addWhite(this);
+        }
         alarmReceiver = new AlarmReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -147,13 +156,13 @@ public class HomeActivity extends ProjectBaseActivity {
         });
     }
 
-  // 定时广播启动服务
+    // 定时广播启动服务
     public class AlarmReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             //锁屏或者按下home键
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                Log.e("AlarmReceiver", "开始锁屏"+ Intent.ACTION_SCREEN_OFF);
+                LogUtils.showI("AlarmReceiver", "开始锁屏"+ Intent.ACTION_SCREEN_OFF);
                 Intent locationIntent = new Intent(context, LocationService.class);
                 locationIntent.putExtra("sid",sid);
                 locationIntent.putExtra("deviceId",deviceId);
@@ -161,7 +170,7 @@ public class HomeActivity extends ProjectBaseActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     startForegroundService(locationIntent);
                 } else {
-                    startService(locationIntent);
+                    HomeActivity.this.startService(locationIntent);
                 }
 //                if(getDeviceBrand().contains("OPPO")){
 //                    setScreenLight();
@@ -184,13 +193,13 @@ public class HomeActivity extends ProjectBaseActivity {
     }
 
     private void setScreenLight() {
-            powerManager = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wl = powerManager
-                    .newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "xiaoer:bright");
-            wl.acquire();
-            //点亮屏幕
-            wl.release();
-            //释放
+        powerManager = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = powerManager
+                .newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "xiaoer:bright");
+        wl.acquire();
+        //点亮屏幕
+        wl.release();
+        //释放
     }
 
     public  String getDeviceBrand() {
@@ -210,18 +219,26 @@ public class HomeActivity extends ProjectBaseActivity {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (resp != null) {
                     if (resp.success) {
-                         sid = resp.data.getSid(); //服务ID
-                         tid = resp.data.getTrid();//轨迹ID
-                         deviceId = resp.data.getTid(); //终端ID
-                        Intent locationIntent = new Intent(HomeActivity.this, LocationService.class);
-                        locationIntent.putExtra("sid",sid);
-                        locationIntent.putExtra("deviceId",deviceId);
-                        locationIntent.putExtra("tid",tid);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            startForegroundService(locationIntent);
+                        sid = resp.data.getSid(); //服务ID
+                        tid = resp.data.getTrid();//轨迹ID
+                        deviceId = resp.data.getTid(); //终端ID
+                        String manufacturer = Build.MANUFACTURER;
+                        String phoneName = manufacturer.toUpperCase();
+                        if(!TextUtils.isEmpty(phoneName) && phoneName.contains("OPPO") || phoneName.contains("VIVO")){
+                            AmapUtils.getAmapUtils().initTrace(getApplicationContext(), Long.valueOf(sid), Long.valueOf(deviceId),
+                                    Long.valueOf(tid), createNotification(getApplicationContext()));
                         } else {
-                            startService(locationIntent);
+                            Intent locationIntent = new Intent(HomeActivity.this, LocationService.class);
+                            locationIntent.putExtra("sid",sid);
+                            locationIntent.putExtra("deviceId",deviceId);
+                            locationIntent.putExtra("tid",tid);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                startForegroundService(locationIntent);
+                            } else {
+                                startService(locationIntent);
+                            }
                         }
+
                     } else {
                         ToastUtil.showToastString(resp.message);
                     }
@@ -355,9 +372,14 @@ public class HomeActivity extends ProjectBaseActivity {
         nfIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         builder.setContentIntent(PendingIntent.getActivity(ApplicationContext.getInstance().context, 0, nfIntent, 0))
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon( BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher, null))
                 .setContentTitle(ResourcesTransformUtil.getString(R.string.app_name) + "运行中")
                 .setContentText(ResourcesTransformUtil.getString(R.string.app_name) + " 点击查看详情");
+
         Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONGOING_EVENT;
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(1234567, notification);
         return notification;
     }
 
@@ -613,6 +635,22 @@ public class HomeActivity extends ProjectBaseActivity {
 //                });
 
 
+    }
+
+    public void addWhite(Activity activity){
+        PowerManager packageManager = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
+        //应用是否在 白名单中
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!packageManager.isIgnoringBatteryOptimizations(activity.getPackageName())){
+                //方法1、启动一个  ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS Intent
+//                Intent intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+//                activity.startActivity(intent);
+                //方法2、触发系统对话框
+                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:"+activity.getPackageName()));
+                activity.startActivity(intent);
+            }
+        }
     }
 
     @Override

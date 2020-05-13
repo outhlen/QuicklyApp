@@ -103,6 +103,7 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
                     inputTv.setEnabled(true);
                 } else {
                     isChecked = false;
+                    inputTv.setText("");
                     inputTv.setEnabled(false);
                 }
             }
@@ -147,7 +148,6 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
                 EditText edtView = mMenuView.findViewById(R.id.inputText);
                 String inputStr = edtView.getText().toString();
                 String priceStr = inputTv.getText().toString();
-
                 if (TextUtils.isEmpty(inputStr)) {
                     ToastUtil.showToastString("请填写金额");
                     return;

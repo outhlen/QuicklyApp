@@ -71,6 +71,7 @@
             android:orientation="horizontal"
             android:background="@color/color_ffffff"
             android:padding="@dimen/space_10"
+        android:visibility="gone"
             android:layout_marginTop="@dimen/space_10"
             android:gravity="center_vertical"
     >
