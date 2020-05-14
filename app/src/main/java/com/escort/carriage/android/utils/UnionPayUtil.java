@@ -69,15 +69,6 @@ public class UnionPayUtil {
         return unionPayUtil;
     }
 
-    private static void initListener() {
-        UnifyPayPlugin.getInstance(context).setListener(new UnifyPayListener() {
-            @Override
-            public void onResult(String s, String s1) {
-                ToastUtil.showToastString("支付结果："+s1);
-            }
-        });
-    }
-
     public void initUnionPay(int payType,String param){
         this.typetag  = payType;
         this.param = param;

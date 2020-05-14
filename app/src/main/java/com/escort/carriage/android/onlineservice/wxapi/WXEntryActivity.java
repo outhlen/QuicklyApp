@@ -29,7 +29,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         setContentView(R.layout.activity_wxpay_entry);
         button = (Button) findViewById(R.id.button);
         api = WXAPIFactory.createWXAPI(this,UnifyPayPlugin.getInstance(this).getAppId());
-
         api.handleIntent(getIntent(), this);
 
     }
@@ -57,7 +56,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     + baseResp.transaction + " --- openId：" + baseResp.openId + " --- extMsg：" + launchMiniProResp.extMsg;
             Log.d(TAG,msg);
             button.setText(msg);
-
             UnifyPayPlugin.getInstance(this).getWXListener().onResponse(this, baseResp);
         }
     }

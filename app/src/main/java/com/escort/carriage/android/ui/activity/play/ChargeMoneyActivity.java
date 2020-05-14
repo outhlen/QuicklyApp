@@ -1,5 +1,6 @@
 package com.escort.carriage.android.ui.activity.play;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -57,7 +58,7 @@ import butterknife.OnClick;
 /**
  * 充值特惠
  */
-public class ChargeMoneyActivity extends ProjectBaseEditActivity implements AdapterView.OnItemClickListener {
+public class ChargeMoneyActivity extends ProjectBaseEditActivity implements AdapterView.OnItemClickListener ,UnifyPayListener{
 
     @BindView(R.id.list)
     FillListView filllist;
@@ -70,9 +71,10 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
     private ChargeMoneyEntity chargeMoneyEntity;//当前选择的类型
     private String defaultStr;//当前选择的类型 的名称
 
-    private final int aliplayType = 8;//支付支付
-    private final int wechatType = 2;//微信支付
-
+    private final int aliplayType = 11;//支付宝支付
+    private final int wechatType = 10;//微信支付
+    private final int quickType = 12;//云支付
+    private  int payType = 0;//支付类型
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,17 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         setPageActionBar();
         setList();
         getServiceList();
+        UnifyPayPlugin.getInstance(this).setListener(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(payType==11){ //支付宝回调查询支付结果
+
+        }
+    }
+
     private void setPageActionBar() {
         StatusBarCompatManager.setStatusBar(Color.parseColor("#FFFFFF"), this);
         //获取顶部状态栏的高度 给对应View设置高度
@@ -157,8 +169,9 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         List<PlaySelectTypeItemEntity> arr = new ArrayList<PlaySelectTypeItemEntity>();
         PlaySelectTypeItemEntity item001 = new PlaySelectTypeItemEntity();
         PlaySelectTypeItemEntity item002 = new PlaySelectTypeItemEntity();
-        item001.setTitle("微信支付");
+        PlaySelectTypeItemEntity item003 = new PlaySelectTypeItemEntity();
 
+        item001.setTitle("微信支付");
         item001.setTextNormal(R.color.color_cfcfcf);
         item001.setTextSelect(R.color.color_00bffe);
         item001.setImageResNormal(R.mipmap.img_login_wx);
@@ -167,21 +180,30 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         item001.setBgSelect(R.drawable.bg_bx_00bffe_bj_10dp);
         item001.setNormalTypeImageRes(R.drawable.not_selected);
         item001.setSelectTypeImageRes(R.drawable.pitch_on);
-        item002.setTitle("支付宝支付");
 
+        item002.setTitle("支付宝支付");
         item002.setTextNormal(R.color.color_cfcfcf);
         item002.setTextSelect(R.color.color_00bffe);
-
         item002.setImageResNormal(R.mipmap.zhifubao);
         item002.setImageResSelect(R.mipmap.zhifubao);
-
         item002.setBgNormal(R.drawable.bg_bx_cfcfcf_bj_10dp);
         item002.setBgSelect(R.drawable.bg_bx_00bffe_bj_10dp);
-
         item002.setNormalTypeImageRes(R.drawable.not_selected);
         item002.setSelectTypeImageRes(R.drawable.pitch_on);
+
+        item003.setTitle("云闪付支付");
+        item003.setTextNormal(R.color.color_cfcfcf);
+        item003.setTextSelect(R.color.color_00bffe);
+        item003.setImageResNormal(R.mipmap.quick_pay_ic);
+        item003.setImageResSelect(R.mipmap.quick_pay_ic);
+        item003.setBgNormal(R.drawable.bg_bx_cfcfcf_bj_10dp);
+        item003.setBgSelect(R.drawable.bg_bx_00bffe_bj_10dp);
+        item003.setNormalTypeImageRes(R.drawable.not_selected);
+        item003.setSelectTypeImageRes(R.drawable.pitch_on);
+
         arr.add(item001);
         arr.add(item002);
+        arr.add(item003);
         return arr;
     }
 
@@ -193,6 +215,7 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
             case 0://ORDER_ADD_EARNEST
                 //微信
                 double inputNum = isInputNum();
+                payType  = wechatType;
                 if(inputNum > 0){
                     toService(wechatType, inputNum);
                 }
@@ -200,11 +223,19 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
             case 1:
                 //支付宝
                 double inputNumAli = isInputNum();
+                payType  = aliplayType;
                 if(inputNumAli > 0){
                     toService(aliplayType, inputNumAli);
                 }
                 break;
-
+            case 2:
+                //云闪付
+                double inputQuick = isInputNum();
+                payType  = quickType;
+                if(inputQuick > 0){
+                    toService(quickType, inputQuick);
+                }
+                break;
         }
     }
 
@@ -219,7 +250,7 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         hashMap.put("lkAppSecret", "38520db5a00b30013f909a5a906860b208e0ec88");
         hashMap.put("payType", type);
         hashMap.put("bizType", "0");
-       // hashMap.put("attachParam", "");
+
         requestEntity.setData(hashMap);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.CHINAUNION_PAY_URL, jsonString).execute(new MyStringCallback<ResponceBean>() {
@@ -228,13 +259,13 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        String json  = s.data.toString();
+                        String json  = s.data;
                         UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(ChargeMoneyActivity.this);
                         if(type==10){ //微信
                             payUtil.payWX(json);
                         }else if(type==11){ //支付宝
                             payUtil.payAliPay(json);
-                        }else if(type == 13){
+                        }else if(type == 12){
                             payUtil.payCloudQuickPay(json);
                         }
 
@@ -348,40 +379,51 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        if(type == wechatType){
-                           // PlayMesFeesEntity jsonBean = JsonManager.getJsonBean(s.data.payParam, PlayMesFeesEntity.class);
-                            //微信支付
-                            getPayService(10,s.data.orderNo);
-//                            WXResponseMembers bean = new WXResponseMembers();
-//                            bean.appid = jsonBean.appId;
-//                            bean.noncestr = jsonBean.nonceStr;
-//                            bean.packages = jsonBean.packageValue;
-//                            bean.partnerid = jsonBean.partnerId;
-//                            bean.prepayid = jsonBean.prepayId;
-//                            bean.sign = jsonBean.sign;
-//                            bean.timestamp = jsonBean.timeStamp;
-//                            LogUtils.showE("支付页面", "微信支付开始  json = " + JsonManager.createJsonString(bean));
-//                            WechatUtils.wxPlay(ChargeMoneyActivity.this, bean, new WechatUtils.WechatOpenPlayCallback() {
-//                                @Override
-//                                public void playSeccess() {
-//                                    finishPage();
-//                                }
-//                            });
-                        } else if(type == aliplayType){
-                            //支付宝支付
-                            getPayService(11,s.data.orderNo);
-//                            new AlipayUtils().aliPlay(s.data.payParam, ChargeMoneyActivity.this, new AlipayUtils.AliplayOpenPlayCallback(){
-//
-//                                @Override
-//                                public void playSeccess(boolean flag) {
-//                                    if(flag){
-//                                        finishPage();
-//                                    } else {
-//                                        ToastUtil.showToastString("支付失败");
-//                                    }
-//                                }
-//                            });
+                        UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(ChargeMoneyActivity.this);
+                        if(type==10){ //微信
+                            payUtil.payWX(s.data.payParam);
+                        }else if(type==11){ //支付宝
+                            payUtil.payAliPay(s.data.payParam);
+                        }else if(type == 12){
+                            payUtil.payCloudQuickPay(s.data.payParam);
                         }
+//                        if(type == wechatType){
+//
+//                           // PlayMesFeesEntity jsonBean = JsonManager.getJsonBean(s.data.payParam, PlayMesFeesEntity.class);
+//                            //微信支付
+// //                           getPayService(10,s.data.orderNo);
+////                            WXResponseMembers bean = new WXResponseMembers();
+////                            bean.appid = jsonBean.appId;
+////                            bean.noncestr = jsonBean.nonceStr;
+////                            bean.packages = jsonBean.packageValue;
+////                            bean.partnerid = jsonBean.partnerId;
+////                            bean.prepayid = jsonBean.prepayId;
+////                            bean.sign = jsonBean.sign;
+////                            bean.timestamp = jsonBean.timeStamp;
+////                            LogUtils.showE("支付页面", "微信支付开始  json = " + JsonManager.createJsonString(bean));
+////                            WechatUtils.wxPlay(ChargeMoneyActivity.this, bean, new WechatUtils.WechatOpenPlayCallback() {
+////                                @Override
+////                                public void playSeccess() {
+////                                    finishPage();
+////                                }
+////                            });
+//                        } else if(type == aliplayType){
+//                            //支付宝支付
+//                            getPayService(11,s.data.orderNo);
+////                            new AlipayUtils().aliPlay(s.data.payParam, ChargeMoneyActivity.this, new AlipayUtils.AliplayOpenPlayCallback(){
+////
+////                                @Override
+////                                public void playSeccess(boolean flag) {
+////                                    if(flag){
+////                                        finishPage();
+////                                    } else {
+////                                        ToastUtil.showToastString("支付失败");
+////                                    }
+////                                }
+////                            });
+//                        }else if(type == quickType){
+//                            getPayService(12,s.data.orderNo);
+//                        }
                     } else {
                         ToastUtil.showToastString(s.message);
                     }
@@ -400,4 +442,43 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("ddebug","---onActivityResult---");
+        /**
+         * 处理银联云闪付手机支付控件返回的支付结果
+         */
+        if (data == null) {
+            return;
+        }
+        String msg = "";
+        /*
+         * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+         */
+        String str = data.getExtras().getString("pay_result");
+        if (str.equalsIgnoreCase("success")) {
+            //如果想对结果数据校验确认，直接去商户后台查询交易结果，
+            //校验支付结果需要用到的参数有sign、data、mode(测试或生产)，sign和data可以在result_data获取到
+            /**
+             * result_data参数说明：
+             * sign —— 签名后做Base64的数据
+             * data —— 用于签名的原始数据
+             *      data中原始数据结构：
+             *      pay_result —— 支付结果success，fail，cancel
+             *      tn —— 订单号
+             */
+            msg = "云闪付支付成功";
+        } else if (str.equalsIgnoreCase("fail")) {
+            msg = "云闪付支付失败！";
+        } else if (str.equalsIgnoreCase("cancel")) {
+            msg = "用户取消了云闪付支付";
+        }
+        ToastUtil.showToastString(msg);
+    }
+
+    @Override
+    public void onResult(String s, String s1) {
+        ToastUtil.showToastString("支付结果"+s1);
+    }
 }
