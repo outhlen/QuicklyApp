@@ -37,6 +37,116 @@
                 android:textColor="#ffff9606"
                 android:textSize="12sp" />
 
+
+            <!--上传营业执照-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@color/colorFF"
+                android:orientation="vertical"
+                android:paddingBottom="14dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="14dp"
+                        android:layout_centerHorizontal="true"
+                        android:text="上传营业执照自动识别企业信息确认无误提交审核"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="注:  "
+                        android:textColor="#ffff9606"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请上传【营业执照】或【企业机构代码证】,并保证清晰无涂改"
+                        android:textColor="#999999"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/imageGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/shape_ren_zheng_bg"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/img_ren_zheng_update" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center_horizontal|bottom"
+                            android:text="点击上传"
+                            android:textColor="#ff333333"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                    <com.escort.carriage.android.ui.view.imgview.RoundedImagView
+                        android:id="@+id/ivImageView"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/imageGroup"
+                        android:layout_alignRight="@+id/imageGroup"
+                        android:layout_alignTop="@+id/imageGroup"
+                        android:layout_alignBottom="@+id/imageGroup"
+                        android:scaleType="centerCrop"
+                        />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="1.企业名称与营业执照名称一致\n2.需承诺上传与填写内容绝对真实有效\n3.上传格式为JPEG、JPG、png格式"
+                    android:textColor="#ff333333"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
             <!--企业类型-->
             <LinearLayout
                 android:visibility="gone"
@@ -209,122 +319,6 @@
                 android:layout_height="wrap_content"/>
 
 
-            <!--上传营业执照-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:background="@color/colorFF"
-                android:orientation="vertical"
-                android:paddingBottom="14dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="14dp"
-                    android:text="上传营业执照 (上传照片可自动识别企业信息)"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp"
-                    android:orientation="horizontal"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="14dp"
-                        android:text="上传营业执照"
-                        android:textColor="#ff333333"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:text="(上传企业营业执照可自动识别)"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="注:  "
-                        android:textColor="#ffff9606"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="请上传【营业执照】或【企业机构代码证】,并保证清晰无涂改"
-                        android:textColor="#999999"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="14dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                   >
-
-                    <LinearLayout
-                        android:id="@+id/imageGroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/shape_ren_zheng_bg"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/ivImg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/img_ren_zheng_update" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="12dp"
-                            android:gravity="center_horizontal|bottom"
-                            android:text="点击上传"
-                            android:textColor="#ff333333"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-                    <com.escort.carriage.android.ui.view.imgview.RoundedImagView
-                        android:id="@+id/ivImageView"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/imageGroup"
-                        android:layout_alignRight="@+id/imageGroup"
-                        android:layout_alignTop="@+id/imageGroup"
-                        android:layout_alignBottom="@+id/imageGroup"
-                        android:scaleType="centerCrop"
-                        />
-
-                </RelativeLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
-                    android:text="1.企业名称与营业执照名称一致\n2.需承诺上传与填写内容绝对真实有效\n3.上传格式为JPEG、JPG、png格式"
-                    android:textColor="#ff333333"
-                    android:textSize="12sp" />
 
 
             <!--提交审核-->
@@ -349,8 +343,7 @@
 
             </LinearLayout>
 
-            </LinearLayout>
-
+        </LinearLayout>
 
     </ScrollView>
 
