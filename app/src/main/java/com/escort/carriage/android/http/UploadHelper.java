@@ -23,7 +23,7 @@ import java.util.Date;
 public class UploadHelper {
 
     //与个人的存储区域有关
-    private String ENDPOINT = "http://oss-cn-qingdao.aliyuncs.com";
+    private String ENDPOINT = "https://oss-cn-qingdao.aliyuncs.com";
     private String token = "CAIS8wF1q6Ft5B2yfSjIr5aEMfbEi+t39LOhc2L/00FtZuVN24/+sTz2IHBNfnBpAuAdtfU0lWtW6P0clqUqEcQcHxedN5AptM8PI5djgXKH6aKP9rUhpMCPOwr6UmzWvqL7Z+H+U6muGJOEYEzFkSle2KbzcS7YMXWuLZyOj+wMDL1VJH7aCwBLH9BLPABvhdYHPH/KT5aXPwXtn3DbATgD2GM+qxsms/TknZDDukuG0QalmrdKnemrfMj4NfsLFYxkTtK40NZxcqf8yyNK43BIjvwm1fYdoGyX5YrMWAgKvUvdbfC0+9FqLQl+fbMqvFSALDJmXpcagAFjzHEgNyrKjKBC4gABQPZgO1BfD16jxLkDZGwICp5GZL4O+VO12NwUAGuwsUw8XTGlSaBz2UAVFJPM/t09bnUnOAZ+L7T1uwKV/dG3Mb4jRae9b/wawA8LqgBET5dvJC5iyHAlcKtrZdAI82WuWZRTbdCHmqx+EO0vjXKxRb0gkg==";
     private String accessKeyID = "STS.NU1zLpf4VCqJqDN7A8jja4JUS";//"LTAIbsGio1aJI2Rp";
     private String accessKeySecret = "DkJnAvQp5m2PCNmmWpueuy9DaFW5W5acBp2416MBESxy";
