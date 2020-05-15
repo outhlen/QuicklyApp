@@ -8,7 +8,6 @@
 
 package com.escort.carriage.android.wxapi;
 
-import com.tripartitelib.android.wechat.activity.WXEntryBaseActivity;
 
 /**
  * 微信客户端回调activity示例

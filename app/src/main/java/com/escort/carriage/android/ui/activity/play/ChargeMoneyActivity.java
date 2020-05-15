@@ -26,6 +26,9 @@ import com.chinaums.pppay.unify.UnifyPayListener;
 import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.OrderListBean;
+import com.escort.carriage.android.entity.bean.ResponcePayStatusBean;
+import com.escort.carriage.android.entity.bean.UnionPayEntity;
 import com.escort.carriage.android.entity.bean.play.ChargeMoneyEntity;
 import com.escort.carriage.android.entity.bean.play.PlayMesFeesEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
@@ -51,6 +54,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,11 +77,12 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
     private List<ChargeMoneyEntity> arrList;//特惠充值 选择使用类型
     private ChargeMoneyEntity chargeMoneyEntity;//当前选择的类型
     private String defaultStr;//当前选择的类型 的名称
-
     private final int aliplayType = 11;//支付宝支付
     private final int wechatType = 10;//微信支付
     private final int quickType = 12;//云支付
     private  int payType = 0;//支付类型
+    private String orderNumber = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +97,70 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
     @Override
     protected void onResume() {
         super.onResume();
-        if(payType==11){ //支付宝回调查询支付结果
-
+        if(payType==11||payType == 10){ //支付宝 微信回调查询支付结果
+            getPayStatus();
         }
+    }
+
+    private void getPayStatus() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        UnionPayEntity unionPayEntity  = new UnionPayEntity();
+        unionPayEntity.setOrderNo(orderNumber);
+        unionPayEntity.setBizType(0);
+        unionPayEntity.setPayType(payType);
+        requestEntity.setData(unionPayEntity);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.GETPAYSTATUS_URL, jsonString).execute(new MyStringCallback<ResponcePayStatusBean>() {
+            @Override
+            public void onResponse(ResponcePayStatusBean s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    int status = s.data.getPayStatus();
+                    if(status>0){ //支付成功
+                        if(payType==11){
+                            ToastUtil.showToastString("支付宝支付成功");
+                        }else if(payType == 10){
+                            ToastUtil.showToastString("微信支付成功");
+                        }
+                        finishPage();
+                    }else{ //支付失败 发起撤单
+                           deletePayOrder();
+                    }
+                    ToastUtil.showToastString(s.message);
+                }
+            }
+
+            @Override
+            public Class<ResponcePayStatusBean> getClazz() {
+                return ResponcePayStatusBean.class;
+            }
+        });
+    }
+
+    private void deletePayOrder() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        UnionPayEntity unionPayEntity    = new UnionPayEntity();
+        unionPayEntity.setOrderNo(orderNumber);
+        unionPayEntity.setBizType(0);
+        unionPayEntity.setPayType(payType);
+        requestEntity.setData(unionPayEntity);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.DELETEORDERPAY_URL, jsonString).execute(new MyStringCallback<ResponceBean>() {
+            @Override
+            public void onResponse(ResponceBean s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null && s.success) {
+                    ToastUtil.showToastString("支付已取消");
+                }
+            }
+            @Override
+            public Class<ResponceBean> getClazz() {
+                return ResponceBean.class;
+            }
+        });
+
     }
 
     private void setPageActionBar() {
@@ -200,10 +269,9 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         item003.setBgSelect(R.drawable.bg_bx_00bffe_bj_10dp);
         item003.setNormalTypeImageRes(R.drawable.not_selected);
         item003.setSelectTypeImageRes(R.drawable.pitch_on);
-
+        arr.add(item003);
         arr.add(item001);
         arr.add(item002);
-        arr.add(item003);
         return arr;
     }
 
@@ -213,22 +281,6 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         int selectPosition = adapter.selectPosition;
         switch (selectPosition) {
             case 0://ORDER_ADD_EARNEST
-                //微信
-                double inputNum = isInputNum();
-                payType  = wechatType;
-                if(inputNum > 0){
-                    toService(wechatType, inputNum);
-                }
-                break;
-            case 1:
-                //支付宝
-                double inputNumAli = isInputNum();
-                payType  = aliplayType;
-                if(inputNumAli > 0){
-                    toService(aliplayType, inputNumAli);
-                }
-                break;
-            case 2:
                 //云闪付
                 double inputQuick = isInputNum();
                 payType  = quickType;
@@ -236,50 +288,23 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
                     toService(quickType, inputQuick);
                 }
                 break;
-        }
-    }
-
-    private void getPayService(int type,String orderId) {
-        String userId  = CacheDBMolder.getInstance().getUserInfoEntity(null).getUserLoginId();
-        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
-        RequestEntity requestEntity = new RequestEntity(0);
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userUUID", userId);
-        hashMap.put("orderNo", orderId);
-        hashMap.put("lkAppId", "5edcea89a67931192cffb3dc0c66c9e7");
-        hashMap.put("lkAppSecret", "38520db5a00b30013f909a5a906860b208e0ec88");
-        hashMap.put("payType", type);
-        hashMap.put("bizType", "0");
-
-        requestEntity.setData(hashMap);
-        String jsonString = JsonManager.createJsonString(requestEntity);
-        OkgoUtils.post(ProjectUrl.CHINAUNION_PAY_URL, jsonString).execute(new MyStringCallback<ResponceBean>() {
-            @Override
-            public void onResponse(ResponceBean s) {
-                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                if (s != null) {
-                    if (s.success) {
-                        String json  = s.data;
-                        UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(ChargeMoneyActivity.this);
-                        if(type==10){ //微信
-                            payUtil.payWX(json);
-                        }else if(type==11){ //支付宝
-                            payUtil.payAliPay(json);
-                        }else if(type == 12){
-                            payUtil.payCloudQuickPay(json);
-                        }
-
-                    } else {
-                        ToastUtil.showToastString(s.message);
-                    }
+            case 1:
+                //微信
+                double inputNum = isInputNum();
+                payType  = wechatType;
+                if(inputNum > 0){
+                    toService(wechatType, inputNum);
                 }
-            }
-
-            @Override
-            public Class<ResponceBean> getClazz() {
-                return ResponceBean.class;
-            }
-        });
+                break;
+            case 2:
+                //支付宝
+                double inputNumAli = isInputNum();
+                payType  = aliplayType;
+                if(inputNumAli > 0){
+                    toService(aliplayType, inputNumAli);
+                }
+                break;
+        }
     }
 
     private double isInputNum() {
@@ -380,50 +405,25 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
                 if (s != null) {
                     if (s.success) {
                         UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(ChargeMoneyActivity.this);
-                        if(type==10){ //微信
-                            payUtil.payWX(s.data.payParam);
-                        }else if(type==11){ //支付宝
-                            payUtil.payAliPay(s.data.payParam);
-                        }else if(type == 12){
-                            payUtil.payCloudQuickPay(s.data.payParam);
+                        orderNumber  = s.data.orderNo;
+                        try {
+                            String json = new Gson().toJson(s.data);
+                            JSONObject object = new JSONObject(json);
+                            String tn_code  = object.getString("payParam");
+                            JSONObject object1 = new JSONObject(tn_code);
+                            JSONObject obj   = object1.getJSONObject("appPayRequest");
+                            if(type==10){ //微信
+                                payUtil.payWX(obj.toString());
+                            }else if(type==11){ //支付宝
+                                payUtil.payAliPay(obj.toString());
+                            }else if(type == 12){
+                                payUtil.payCloudQuickPay(obj.toString());
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-//                        if(type == wechatType){
-//
-//                           // PlayMesFeesEntity jsonBean = JsonManager.getJsonBean(s.data.payParam, PlayMesFeesEntity.class);
-//                            //微信支付
-// //                           getPayService(10,s.data.orderNo);
-////                            WXResponseMembers bean = new WXResponseMembers();
-////                            bean.appid = jsonBean.appId;
-////                            bean.noncestr = jsonBean.nonceStr;
-////                            bean.packages = jsonBean.packageValue;
-////                            bean.partnerid = jsonBean.partnerId;
-////                            bean.prepayid = jsonBean.prepayId;
-////                            bean.sign = jsonBean.sign;
-////                            bean.timestamp = jsonBean.timeStamp;
-////                            LogUtils.showE("支付页面", "微信支付开始  json = " + JsonManager.createJsonString(bean));
-////                            WechatUtils.wxPlay(ChargeMoneyActivity.this, bean, new WechatUtils.WechatOpenPlayCallback() {
-////                                @Override
-////                                public void playSeccess() {
-////                                    finishPage();
-////                                }
-////                            });
-//                        } else if(type == aliplayType){
-//                            //支付宝支付
-//                            getPayService(11,s.data.orderNo);
-////                            new AlipayUtils().aliPlay(s.data.payParam, ChargeMoneyActivity.this, new AlipayUtils.AliplayOpenPlayCallback(){
-////
-////                                @Override
-////                                public void playSeccess(boolean flag) {
-////                                    if(flag){
-////                                        finishPage();
-////                                    } else {
-////                                        ToastUtil.showToastString("支付失败");
-////                                    }
-////                                }
-////                            });
-//                        }else if(type == quickType){
-//                            getPayService(12,s.data.orderNo);
-//                        }
+
                     } else {
                         ToastUtil.showToastString(s.message);
                     }
@@ -438,6 +438,7 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
     }
 
     private void finishPage(){
+        UnifyPayPlugin.getInstance(this).clean();
         setResult(456);
         finish();
     }
@@ -460,25 +461,28 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         if (str.equalsIgnoreCase("success")) {
             //如果想对结果数据校验确认，直接去商户后台查询交易结果，
             //校验支付结果需要用到的参数有sign、data、mode(测试或生产)，sign和data可以在result_data获取到
-            /**
-             * result_data参数说明：
-             * sign —— 签名后做Base64的数据
-             * data —— 用于签名的原始数据
-             *      data中原始数据结构：
-             *      pay_result —— 支付结果success，fail，cancel
-             *      tn —— 订单号
-             */
             msg = "云闪付支付成功";
+            finishPage();
         } else if (str.equalsIgnoreCase("fail")) {
-            msg = "云闪付支付失败！";
+            deletePayOrder();
+            msg = "云闪付支付失败";
         } else if (str.equalsIgnoreCase("cancel")) {
-            msg = "用户取消了云闪付支付";
+            deletePayOrder();
+            msg = "取消云闪付支付";
         }
         ToastUtil.showToastString(msg);
     }
 
     @Override
     public void onResult(String s, String s1) {
-        ToastUtil.showToastString("支付结果"+s1);
+        try {
+            JSONObject json = new JSONObject(s1);
+            String result  = json.getString("resultMsg");
+            ToastUtil.showToastString(result);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

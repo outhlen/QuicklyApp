@@ -364,6 +364,17 @@ public class ProjectUrl {
     public static String PAYRECORD_PREFERENTIALLIST = baseUrl + "undertake/payRecord/preferentialList";
 
     /**
+     *  支付宝、微信支付状态获取
+     */
+
+    public static String GETPAYSTATUS_URL = baseUrl + "undertake/pay/unionPay/query";
+
+    /**
+     * 银联撤销订单
+     */
+    public static String DELETEORDERPAY_URL = baseUrl + "undertake/pay/unionPay/close";
+
+    /**
      * 充值-发起支付
      */
     public static String PAYRECORD_RECHARGE = baseUrl + "undertake/payRecord/recharge";

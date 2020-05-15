@@ -29,6 +29,8 @@ public class ChargeMoneyPlayEntity {
     public long creatTime;
     public String payParam;
 
+
+
     public String getId() {
         return id;
     }
@@ -124,4 +126,6 @@ public class ChargeMoneyPlayEntity {
     public void setPayParam(String payParam) {
         this.payParam = payParam;
     }
+
+
 }

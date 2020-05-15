@@ -261,7 +261,7 @@
 
                 <category android:name="com.escort.carriage.android" />
             </intent-filter>
-        </receiver> <!-- 极光推送自定义广播 /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        </receiver> <!-- 极光推送自定义广播 -->
         <receiver
             android:name=".receiver.MyReceiver"
             android:enabled="true"
@@ -293,6 +293,7 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
+
         <service
             android:name=".LocationService"
             android:enabled="true"
