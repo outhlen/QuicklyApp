@@ -70,7 +70,6 @@ public class PayPassView extends RelativeLayout {
      */
     private void initView() {
         mPassLayout = LayoutInflater.from(mContext).inflate( R.layout.view_paypass_layout, null);
-
         mImageViewClose  = (ImageView) mPassLayout.findViewById(R.id.iv_close);//关闭
         mTvForget   = (TextView) mPassLayout.findViewById(R.id.tv_forget);//忘记密码
         mTvHint     = (TextView) mPassLayout.findViewById(R.id.tv_passText);//提示文字

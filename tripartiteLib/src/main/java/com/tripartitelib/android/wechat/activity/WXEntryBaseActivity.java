@@ -16,8 +16,10 @@ import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.WXAppExtendObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -44,7 +46,6 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mContext = this;
         //这句没有写,是不能执行回调的方法的
         TripartiteLibInitUtils.getUtils().getWechat().handleIntent(getIntent(), this);
@@ -54,7 +55,6 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
     @Override
     public void onReq(BaseReq baseReq) {
     }
-
     // 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
     //app发送消息给微信，处理返回消息的回调
     @Override
@@ -102,7 +102,8 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
 
                     }
 
-                } else if (type == RETURN_MSG_TYPE_SHARE) {
+                }
+                else if (type == RETURN_MSG_TYPE_SHARE) {
                     ToastUtil.showToastString("微信分享成功");
                 }
                 break;

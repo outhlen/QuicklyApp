@@ -379,22 +379,25 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        try {
-                            UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(PlayMesFeesActivity.this);
-                            JSONObject  object = new JSONObject(s.data);
-                            JSONObject obj   = object.getJSONObject("appPayRequest");
-                            if(type==10){ //微信
-                                payUtil.payWX(obj.toString());
-                            }else if(type==11){ //支付宝
-                                payUtil.payAliPay(obj.toString());
-                            }else if(type == 12){ //云闪付
-                                payUtil.payCloudQuickPay(obj.toString());
-                            }else if(type == balanceType){
-                                finishPage();
+                        if(type == balanceType){
+                            finishPage();
+                        }else{
+                            try {
+                                UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(PlayMesFeesActivity.this);
+                                JSONObject  object = new JSONObject(s.data);
+                                JSONObject obj   = object.getJSONObject("appPayRequest");
+                                if(type==10){ //微信
+                                    payUtil.payWX(obj.toString());
+                                }else if(type==11){ //支付宝
+                                    payUtil.payAliPay(obj.toString());
+                                }else if(type == 12){ //云闪付
+                                    payUtil.payCloudQuickPay(obj.toString());
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+
 
                     } else {
                         ToastUtil.showToastString(s.message);
@@ -447,6 +450,12 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
 
     @Override
     public void onResult(String s, String s1) {
-         ToastUtil.showToastString(s1);
+        try {
+            JSONObject json = new JSONObject(s1);
+            String result  = json.getString("resultMsg");
+            ToastUtil.showToastString(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
