@@ -13,7 +13,7 @@ public class VerificationUtil {
 
     public static final String TIME_DATA_SECOND_NEW= "([0-9]{4})-([0-9]{2})-([0-9]{2})\\s([0-9]{2}):([0-9]{2}):([0-9]{2})";
     //手机号
-    public static final String MOBILE_NUM= "(\\+\\d+)?1[345789]\\d{9}$";
+    public static final String MOBILE_NUM= "(\\+\\d+)?1[3456789]\\d{9}$";
 
     /**
      *
