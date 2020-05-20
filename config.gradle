@@ -4,8 +4,8 @@ ext {
             compileSdkVersion: 28,
             minSdkVersion    : 21,
             targetSdkVersion : 28,
-            versionCode      : 6,
-            versionName      : "1.0.6"
+            versionCode      : 7,
+            versionName      : "1.0.7"
     ]
 
     manifestPlaceholders = [
@@ -69,6 +69,8 @@ ext {
             "Luban"                : 'top.zibin:Luban:1.1.8',
             //扫描
             "zxing"                : 'com.google.zxing:core:3.3.3',
+
+
 
             "okgo"                 : 'com.lzy.net:okgo:3.0.4',//OkGo 是对okHttp的封装
             "okserver"             : 'com.lzy.net:okserver:2.0.5',//OkGo上传下载扩展库
