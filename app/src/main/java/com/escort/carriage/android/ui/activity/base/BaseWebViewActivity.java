@@ -146,7 +146,9 @@ public abstract class BaseWebViewActivity extends ProjectBaseActivity {
         WebSettings webSetting = webView.getSettings();
         webSetting.setJavaScriptEnabled(true);
         webSetting.setDefaultTextEncodingName("utf-8");
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
 //        webSetting.setAllowContentAccess(true);
 //        webSetting.setAllowFileAccess(true);
 //        webSetting.setAllowFileAccessFromFileURLs(true);
@@ -420,9 +422,11 @@ public abstract class BaseWebViewActivity extends ProjectBaseActivity {
         //这是一个监听用的按键的方法，keyCode 监听用户的动作，如果是按了返回键，同时Webview要返回的话，WebView执行回退操作，因为mWebView
         // .canGoBack()返回的是一个Boolean类型，所以我们把它返回为true
         if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-            String params = "goBack";
-            String js = "javascript:goBack('" + params + "')";
-            mWebView.loadUrl(js);
+            // 直接使用webview自带返回方法返回，不再调用js回调
+//            String params = "goBack";
+//            String js = "javascript:goBack('" + params + "')";
+//            mWebView.loadUrl(js);
+            mWebView.goBack();
             return true;
         }
         LogUtils.showD("YCTest", "onKeyDown");
