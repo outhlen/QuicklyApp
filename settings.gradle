@@ -1,2 +1,2 @@
-include ':app', ':basics', ':niceimageview', ':tripartiteLib', ':passlibrary'
+include ':app', ':basics', ':niceimageview', ':tripartiteLib', ':passlibrary', ':kefu-easeui'
 rootProject.name='My Application'

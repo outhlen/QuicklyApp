@@ -479,7 +479,7 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
             JSONObject json = new JSONObject(s1);
             String result  = json.getString("resultMsg");
             ToastUtil.showToastString(result);
-
+            finishPage();
         } catch (JSONException e) {
             e.printStackTrace();
         }

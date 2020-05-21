@@ -254,4 +254,10 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        hideLoading();
+        super.onDestroy();
+    }
+
 }

@@ -18,8 +18,11 @@ import com.escort.carriage.android.config.AppConfig;
 import com.escort.carriage.android.network.RequestHandler;
 import com.escort.carriage.android.server.ReleaseServer;
 import com.escort.carriage.android.server.TestServer;
+import com.escort.carriage.android.utils.DemoHelper;
 import com.hjq.http.EasyConfig;
 import com.hjq.http.config.IRequestServer;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
@@ -41,6 +44,19 @@ public class ProjectApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         ApplicationContext.getInstance().setApplicationContext(this);
+        //环信初始化
+//        ChatClient.Options options = new ChatClient.Options();
+ //       options.setAppkey(AppConfig.HX_APPKEY);
+//        options.setTenantId(AppConfig.HX_TENANTID);
+//        if (!ChatClient.getInstance().init(this, options)) {
+//            return;
+//        }
+//        UIProvider.getInstance().init(this);
+//        // 设置为true后，将打印日志到logcat, 发布APP时应关闭该选项
+//        ChatClient.getInstance().setDebugMode(true);
+
+        DemoHelper.getInstance().init(this);
+
         ThreadUtils.openSonThread(new Runnable() {
             @Override
             public void run() {

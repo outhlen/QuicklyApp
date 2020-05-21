@@ -196,6 +196,12 @@ public class ProjectUrl {
      */
     public static String UNDERTAKE_USERAUTH_JUDGEAUTH = baseUrl + "undertake/userauth/judgeAuth";
 
+
+    /**
+     *  环信登录注册
+     */
+    public static String HUANXIN_REGISTER_URL = baseUrl + "undertake/login/addHuanXinUser";
+
     /**
      * 获取个人认证信息
      */

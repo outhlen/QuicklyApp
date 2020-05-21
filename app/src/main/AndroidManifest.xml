@@ -245,6 +245,9 @@
             android:name=".ui.activity.OrderTraceActivty"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.activity.ChatActivity"
+            android:screenOrientation="portrait"/>
+
 <!--        <activity-->
 <!--            android:name=".wxapi.WXPayEntryActivity"-->
 <!--            android:exported="true"-->

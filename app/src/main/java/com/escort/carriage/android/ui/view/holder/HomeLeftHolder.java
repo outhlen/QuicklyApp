@@ -1,27 +1,29 @@
 package com.escort.carriage.android.ui.view.holder;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.text.TextUtils;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.androidybp.basics.entity.UserInfoEntity;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.glide.GlideManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
-import com.bumptech.glide.Glide;
 import com.escort.carriage.android.R;
+import com.escort.carriage.android.config.AppConfig;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.configuration.VueUrl;
+import com.escort.carriage.android.entity.bean.ResponseHXEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.ResponseIntegerBean;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.ui.activity.ChatActivity;
 import com.escort.carriage.android.ui.activity.HomeActivity;
 import com.escort.carriage.android.ui.activity.OrderTraceActivty;
 import com.escort.carriage.android.ui.activity.mes.HistoryOrderListActivity;
@@ -35,7 +37,12 @@ import com.escort.carriage.android.ui.activity.my.UserInfoActivity;
 import com.escort.carriage.android.ui.activity.play.WalletMenuActivity;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
 import com.escort.carriage.android.ui.view.imgview.RoundImageView;
-
+import com.escort.carriage.android.utils.Constant;
+import com.escort.carriage.android.utils.DemoMessageHelper;
+import com.escort.carriage.android.utils.MessageHelper;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
+import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -76,6 +83,8 @@ public class HomeLeftHolder implements View.OnClickListener {
     private HomeActivity activity;
     private Unbinder bind;
 
+    private ProgressDialog progressDialog;
+
     public HomeLeftHolder(HomeActivity activity, FrameLayout leftFrameLayout) {
         this.activity = activity;
         viewGroup = View.inflate(activity, R.layout.view_slide_menu, null);
@@ -101,6 +110,8 @@ public class HomeLeftHolder implements View.OnClickListener {
         viewGroup.findViewById(R.id.ll_yq_hy).setOnClickListener(this);
         viewGroup.findViewById(R.id.ll_fp_manager).setOnClickListener(this);
         viewGroup.findViewById(R.id.ll_my_trice_order).setOnClickListener(this);
+        viewGroup.findViewById(R.id.ll_kefu).setOnClickListener(this);
+
     }
 
     public void updataUserInfo(UserInfoEntity userInfoEntity) {
@@ -172,8 +183,115 @@ public class HomeLeftHolder implements View.OnClickListener {
                 Intent intentOrder = new Intent(activity, OrderTraceActivty.class);
                 activity.startActivity(intentOrder);
                 break;
-
+            case R.id.ll_kefu://客服
+//                progressDialog = getProgressDialog();
+//                progressDialog.setMessage("正在连接服务");
+                if (ChatClient.getInstance().isLoggedInBefore()) {
+                    toChatActivity();
+                } else { //未登录
+                    //创建一个用户并登录环信服务器
+                    initHuanXinToken();
+                }
+                break;
         }
+    }
+
+    private void toChatActivity() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.INTENT_CODE_IMG_SELECTED_KEY, 0);
+        Intent intent = new IntentBuilder(activity)
+                .setTargetClass(ChatActivity.class)
+                .setVisitorInfo(DemoMessageHelper.createVisitorInfo())
+                .setServiceIMNumber(AppConfig.HX_IMNUMBER)
+                .setScheduleQueue(MessageHelper.createQueueIdentity("客服服务测试"))
+                .setShowUserNick(true)
+                .setBundle(bundle)
+                .build();
+        activity.startActivity(intent);
+    }
+
+//    private ProgressDialog getProgressDialog() {
+//        if (progressDialog == null) {
+//            progressDialog = new ProgressDialog(activity);
+//            progressDialog.setCanceledOnTouchOutside(false);
+//            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                @Override
+//                public void onCancel(DialogInterface dialog) {
+//                    progressShow = false;
+//                }
+//            });
+//        }
+//        return progressDialog;
+//    }
+
+//    public class MyConnectionListener implements ChatClient.ConnectionListener {
+//
+//        @Override
+//        public void onConnected() {
+//
+//        }
+//
+//        @Override
+//        public void onDisconnected(final int errorCode) {
+//            if (errorCode == Error.USER_NOT_FOUND || errorCode == Error.USER_LOGIN_ANOTHER_DEVICE
+//                    || errorCode == Error.USER_AUTHENTICATION_FAILED
+//                    || errorCode == Error.USER_REMOVED) {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //demo中为了演示当用户被删除或者修改密码后验证失败,跳出会话界面
+//                        //正常APP应该跳到登录界面或者其他操作
+//                        if (ChatActivity.instance != null) {
+//                            ChatActivity.instance.finish();
+//                        }
+//                        Intent intent  = new Intent(activity, LoginActivity.class);
+//                        activity.startActivity(intent);
+//                        ChatClient.getInstance().logout(false, null);
+//                    }
+//                });
+//            }
+//        }
+//
+//    }
+
+    private void initHuanXinToken() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(activity, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.HUANXIN_REGISTER_URL, jsonString).execute(new MyStringCallback<ResponseHXEntity>() {
+            @Override
+            public void onResponse(ResponseHXEntity s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s.isSuccess()) {
+                    Log.e("HuanXinData>>","responseData=="+s.getData().getHxUserName().toString());
+                    AppConfig.HXUSERNAME  = s.getData().getHxUserName();
+                    AppConfig.HXPASSWORD  = s.getData().getHxPassword();
+                    ChatClient.getInstance().login(AppConfig.HXUSERNAME, AppConfig.HXPASSWORD, new Callback() {
+                        @Override
+                        public void onSuccess() {
+//                            Intent intentService = new IntentBuilder(activity)
+//                                    .setServiceIMNumber(AppConfig.HX_IMNUMBER)
+//                                    .build();
+//                            activity.startActivity(intentService);
+                            toChatActivity();
+                        }
+                        @Override
+                        public void onError(int code, String error) {
+                            Log.e("initHuanXinToken>>","error==>>"+error);
+                        }
+                        @Override
+                        public void onProgress(int progress, String status) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public Class<ResponseHXEntity> getClazz() {
+                return ResponseHXEntity.class;
+            }
+        });
     }
 
     /**
