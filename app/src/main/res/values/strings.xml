@@ -23,5 +23,6 @@
     <string name="attach_call_video">Call Video</string>
     <string name="leave_title">Note</string>
     <string name="attach_evaluation">Evaluation</string>
+    <string name="leave_theme">Theme:</string>
 
 </resources>

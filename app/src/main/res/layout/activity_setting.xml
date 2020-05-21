@@ -285,7 +285,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="14dp"
-            android:text="隐私权限"
+            android:text="隐私政策"
             android:textColor="#333333"
             android:textSize="15sp" />
 

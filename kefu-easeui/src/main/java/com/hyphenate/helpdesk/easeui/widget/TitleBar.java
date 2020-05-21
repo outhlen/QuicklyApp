@@ -47,7 +47,6 @@ public class TitleBar extends RelativeLayout {
         rightImage = (ImageView) findViewById(R.id.right_image);
         titleView = (TextView) findViewById(R.id.title);
         titleLayout = (RelativeLayout) findViewById(R.id.root);
-
         parseStyle(context, attrs);
     }
 

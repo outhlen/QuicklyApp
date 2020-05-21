@@ -83,8 +83,6 @@ public class HomeLeftHolder implements View.OnClickListener {
     private HomeActivity activity;
     private Unbinder bind;
 
-    private ProgressDialog progressDialog;
-
     public HomeLeftHolder(HomeActivity activity, FrameLayout leftFrameLayout) {
         this.activity = activity;
         viewGroup = View.inflate(activity, R.layout.view_slide_menu, null);
@@ -111,7 +109,6 @@ public class HomeLeftHolder implements View.OnClickListener {
         viewGroup.findViewById(R.id.ll_fp_manager).setOnClickListener(this);
         viewGroup.findViewById(R.id.ll_my_trice_order).setOnClickListener(this);
         viewGroup.findViewById(R.id.ll_kefu).setOnClickListener(this);
-
     }
 
     public void updataUserInfo(UserInfoEntity userInfoEntity) {
@@ -153,7 +150,6 @@ public class HomeLeftHolder implements View.OnClickListener {
             case R.id.llEnterpriseAuthentication://企业认证
                 getPersonageAuthentication(2);
                 break;
-
             case R.id.ll_feedback://意见反馈
                 Intent intentFeedback = new Intent(activity, VueActivity.class);
                 intentFeedback.putExtra("url", VueUrl.feedback);
@@ -184,8 +180,6 @@ public class HomeLeftHolder implements View.OnClickListener {
                 activity.startActivity(intentOrder);
                 break;
             case R.id.ll_kefu://客服
-//                progressDialog = getProgressDialog();
-//                progressDialog.setMessage("正在连接服务");
                 if (ChatClient.getInstance().isLoggedInBefore()) {
                     toChatActivity();
                 } else { //未登录
@@ -203,7 +197,7 @@ public class HomeLeftHolder implements View.OnClickListener {
                 .setTargetClass(ChatActivity.class)
                 .setVisitorInfo(DemoMessageHelper.createVisitorInfo())
                 .setServiceIMNumber(AppConfig.HX_IMNUMBER)
-                .setScheduleQueue(MessageHelper.createQueueIdentity("客服服务测试"))
+                .setScheduleQueue(MessageHelper.createQueueIdentity("客服服务"))
                 .setShowUserNick(true)
                 .setBundle(bundle)
                 .build();

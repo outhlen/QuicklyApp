@@ -250,6 +250,11 @@
 
         <activity android:name=".ui.activity.TraceDetailActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activity.ContextMenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.SatisfactionActivity"
+            android:screenOrientation="portrait"/>
 <!--        <activity-->
 <!--            android:name=".wxapi.WXPayEntryActivity"-->
 <!--            android:exported="true"-->

@@ -23,7 +23,6 @@ public abstract class BaseFragment extends Fragment {
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (getView() != null)
             titleBar = (TitleBar) getView().findViewById(R.id.title_bar);
-
         initView();
         setUpView();
     }

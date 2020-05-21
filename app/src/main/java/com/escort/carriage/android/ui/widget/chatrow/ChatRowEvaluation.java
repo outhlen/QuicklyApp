@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.escort.carriage.android.R;
+import com.escort.carriage.android.ui.activity.SatisfactionActivity;
 import com.escort.carriage.android.ui.fragment.CustomChatFragment;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRow;
@@ -47,8 +48,8 @@ public class ChatRowEvaluation extends ChatRow {
 
                     @Override
                     public void onClick(View v) {
-//                        ((Activity)context).startActivityForResult(new Intent(context, SatisfactionActivity.class)
-//                                .putExtra("msgId", message.messageId()), CustomChatFragment.REQUEST_CODE_EVAL);
+                        ((Activity)context).startActivityForResult(new Intent(context, SatisfactionActivity.class)
+                                .putExtra("msgId", message.messageId()), CustomChatFragment.REQUEST_CODE_EVAL);
                     }
                 });
 

@@ -169,5 +169,6 @@ dependencies {
     implementation files('libs/httpcore-4.4.1.jar')
     implementation files('libs/BaiduLBS_Android.jar')
     implementation project(':kefu-easeui')
+    implementation 'com.jude:easyrecyclerview:4.0.6'
 
 }

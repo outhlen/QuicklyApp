@@ -96,7 +96,6 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
         setChatFragmentListener(this);
         super.setUpView();
         //可以在此处设置titleBar(标题栏)的属性
-//        titleBar.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
         titleBar.setLeftImageResource(R.drawable.hd_icon_title_back);
         titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +161,7 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
                             @Override
                             public void onSuccess(String value) {
                                 Log.e("TAG  value:",value + "  当返回value不为空时，则返回的当前会话的会话ID，也就是说会话正在咨询中，不需要发送欢迎语" );
-                                if (!TextUtils.isEmpty(value)){//
+                                if (TextUtils.isEmpty(value)){//
                                     saveMessage();
                                 }
                             }
