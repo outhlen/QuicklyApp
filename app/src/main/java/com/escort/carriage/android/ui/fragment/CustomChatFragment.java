@@ -60,7 +60,6 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
     private static final int REQUEST_CODE_SELECT_MAP = 11;
     private static final int REQUEST_CODE_SHORTCUT = 12;
     public static final int REQUEST_CODE_CONTEXT_MENU = 13;
-
     //message type 需要从1开始
     public static final int MESSAGE_TYPE_SENT_MAP = 1;
     public static final int MESSAGE_TYPE_RECV_MAP = 2;
@@ -167,7 +166,6 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
                                     saveMessage();
                                 }
                             }
-
                             @Override
                             public void onError(int error, String errorMsg) {
                                 Log.e("onError=","errorMsg=="+errorMsg);
