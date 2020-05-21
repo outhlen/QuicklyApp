@@ -12,7 +12,6 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.easeui.UIProvider;
@@ -68,12 +67,10 @@ public class ChatRowText extends ChatRow {
             }, start, end, flag);
             span.removeSpan(span1);
         }
-
         contentView.setLinksClickable(true);
         contentView.setMovementMethod(LinkMovementMethod.getInstance());
         // 设置内容
         contentView.setText(span, TextView.BufferType.SPANNABLE);
-
         handleTextMessage();
     }
 
@@ -97,7 +94,7 @@ public class ChatRowText extends ChatRow {
                     break;
                 case INPROGRESS: // 发送中
                     if (isShowProgress)
-                        progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     statusView.setVisibility(View.GONE);
                     break;
                 default:
@@ -119,7 +116,6 @@ public class ChatRowText extends ChatRow {
     @Override
     protected void onBubbleClick() {
         // TODO Auto-generated method stub
-
     }
 
 

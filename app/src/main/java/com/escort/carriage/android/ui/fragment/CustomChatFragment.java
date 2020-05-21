@@ -57,10 +57,8 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
     private static final int ITEM_LEAVE_MSG = 12;//ITEM_SHORTCUT = 12;
     private static final int ITEM_VIDEO = 13;
     private static final int ITEM_EVALUATION = 14;
-
     private static final int REQUEST_CODE_SELECT_MAP = 11;
     private static final int REQUEST_CODE_SHORTCUT = 12;
-
     public static final int REQUEST_CODE_CONTEXT_MENU = 13;
 
     //message type 需要从1开始
@@ -325,7 +323,6 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
 //                startActivity(intent);
 //                getActivity().finish();
                 break;
-
             case ITEM_VIDEO:
                 startVideoCall();
                 break;
@@ -346,7 +343,6 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
 
     private void startVideoCall(){
         inputMenu.hideExtendMenuContainer();
-
         Message message = Message.createVideoInviteSendMessage(getString(R.string.em_chat_invite_video_call), toChatUsername);
         ChatClient.getInstance().chatManager().sendMessage(message);
     }
@@ -363,10 +359,10 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
         //demo 这里不覆盖基类已经注册的item, item点击listener沿用基类的
         super.registerExtendMenuItem();
         //增加扩展的item
-        inputMenu.registerExtendMenuItem(R.string.attach_location, R.drawable.hd_chat_location_selector, ITEM_MAP, R.id.chat_menu_map, extendMenuItemClickListener);
-        inputMenu.registerExtendMenuItem(R.string.leave_title, R.drawable.em_chat_phrase_selector, ITEM_LEAVE_MSG, R.id.chat_menu_leave_msg, extendMenuItemClickListener);
-        inputMenu.registerExtendMenuItem(R.string.attach_call_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, R.id.chat_menu_video_call, extendMenuItemClickListener);
-        inputMenu.registerExtendMenuItem(R.string.attach_evaluation, R.drawable.em_chat_evaluation_selector, ITEM_EVALUATION, R.id.chat_menu_evaluation, extendMenuItemClickListener);
+//        inputMenu.registerExtendMenuItem(R.string.attach_location, R.drawable.hd_chat_location_selector, ITEM_MAP, R.id.chat_menu_map, extendMenuItemClickListener);
+//        inputMenu.registerExtendMenuItem(R.string.leave_title, R.drawable.em_chat_phrase_selector, ITEM_LEAVE_MSG, R.id.chat_menu_leave_msg, extendMenuItemClickListener);
+//        inputMenu.registerExtendMenuItem(R.string.attach_call_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, R.id.chat_menu_video_call, extendMenuItemClickListener);
+//        inputMenu.registerExtendMenuItem(R.string.attach_evaluation, R.drawable.em_chat_evaluation_selector, ITEM_EVALUATION, R.id.chat_menu_evaluation, extendMenuItemClickListener);
     }
 
     @Override
