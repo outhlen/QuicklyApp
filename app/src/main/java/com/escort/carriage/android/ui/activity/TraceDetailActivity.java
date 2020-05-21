@@ -525,6 +525,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                     String workSid = resp.getData().getSid();
                     String workTid = resp.getData().getTid();
                     String workTrid = resp.getData().getTrid();
+                    Log.e("getGaodeHistoryPoint>>>","workSid="+workSid +"workTid=="+workTid);
                     if (dateBeans != null && dateBeans.size() > 0) {
                         for (HistoryPoint.TimeBean data : dateBeans) {
                             long startDate = Long.valueOf(data.getStartDate());

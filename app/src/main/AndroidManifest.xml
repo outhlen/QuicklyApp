@@ -248,6 +248,8 @@
         <activity android:name=".ui.activity.ChatActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.TraceDetailActivity"
+            android:screenOrientation="portrait"/>
 <!--        <activity-->
 <!--            android:name=".wxapi.WXPayEntryActivity"-->
 <!--            android:exported="true"-->
