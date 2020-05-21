@@ -71,7 +71,7 @@ public class MyTraceOrderAdapter extends BaseQuickAdapter<OrderInfoEntity, MyTra
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + item.endCellphone);
+                Uri data = Uri.parse("tel:" + item.driverPhone);
                 intent.setData(data);
                 context.startActivity(intent);
             }

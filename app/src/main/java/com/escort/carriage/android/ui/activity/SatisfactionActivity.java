@@ -23,7 +23,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
-
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.ui.activity.adapter.TagAdapter;
 import com.escort.carriage.android.ui.view.flow.FlowTagLayout;
