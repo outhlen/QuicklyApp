@@ -50,7 +50,6 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
         //这句没有写,是不能执行回调的方法的
         TripartiteLibInitUtils.getUtils().getWechat().handleIntent(getIntent(), this);
     }
-
     // 微信发送请求到第三方应用时，会回调到该方法
     @Override
     public void onReq(BaseReq baseReq) {
@@ -110,13 +109,14 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
                             + baseResp.transaction + " --- openId：" + baseResp.openId + " --- extMsg：" + launchMiniProResp.extMsg;
                     Log.d(TAG, msg);
                     UnifyPayPlugin.getInstance(this).getWXListener().onResponse(this, baseResp);
+                    finish();
                 } else if (type == RETURN_MSG_TYPE_SHARE) {
                     ToastUtil.showToastString("微信分享成功");
                 }
                 break;
         }
-        //无论什么方式 都要将页面关闭
-        finish();
+//        //无论什么方式 都要将页面关闭
+//        finish();
     }
 
     /**
