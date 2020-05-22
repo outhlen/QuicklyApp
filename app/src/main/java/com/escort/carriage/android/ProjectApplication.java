@@ -27,6 +27,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tripartitelib.android.TripartiteLibInitUtils;
 import com.tripartitelib.android.iflytek.IflytekUtils;
 
@@ -56,6 +57,8 @@ public class ProjectApplication extends MultiDexApplication {
 //        ChatClient.getInstance().setDebugMode(true);
 
         DemoHelper.getInstance().init(this);
+
+        CrashReport.initCrashReport(getApplicationContext(), "0ac3175ca9", true); //日志上报
 
         ThreadUtils.openSonThread(new Runnable() {
             @Override

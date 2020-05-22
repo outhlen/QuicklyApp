@@ -548,6 +548,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                 public void onHistoryTrackCallback(HistoryTrackResponse historyTrackResponse) {
                                     if (historyTrackResponse.isSuccess()) {
                                         HistoryTrack historyTrack = historyTrackResponse.getHistoryTrack();
+                                        Log.e("","historyTrackResponse==>>"+historyTrack.getPoints().size());
                                         if (historyTrack == null || historyTrack.getCount() == 0) {
                                             ToastUtil.showToastString("司机未上报轨迹");
                                             return;

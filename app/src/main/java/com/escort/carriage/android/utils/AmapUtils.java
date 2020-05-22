@@ -276,7 +276,7 @@ public class AmapUtils {
 
     public void initTrace(Context context, Long sid, Long tid, Long trid,Notification notification) {
         aMapTrackClient = new AMapTrackClient(context.getApplicationContext());
-        aMapTrackClient.setInterval(2, 10);//轨迹定位周期60s，上报周期200s
+        aMapTrackClient.setInterval(2, 60);//轨迹定位周期60s，上报周期200s
 //        猎鹰sdk会在无法正常上报轨迹点时将未成功上报的轨迹点缓存在本地，默认最多缓存50MB数据。
 //        可以使用下面的代码修改缓存大小为20MB：
         aMapTrackClient.setCacheSize(20);

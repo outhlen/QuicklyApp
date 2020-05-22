@@ -161,6 +161,7 @@ public class HomeActivity extends ProjectBaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             //锁屏或者按下home键
+            LogUtils.showE("AlarmReceiver", "定时任务");
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 LogUtils.showI("AlarmReceiver", "开始锁屏"+ Intent.ACTION_SCREEN_OFF);
                 Intent locationIntent = new Intent(context, LocationService.class);
