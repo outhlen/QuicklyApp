@@ -2,6 +2,7 @@ package com.escort.carriage.android.ui.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,6 +10,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -225,14 +227,15 @@ public class HomeActivity extends ProjectBaseActivity {
                         deviceId = resp.data.getTid(); //终端ID
                         String manufacturer = Build.MANUFACTURER;
                         String phoneName = manufacturer.toUpperCase();
-                        if(!TextUtils.isEmpty(phoneName) && phoneName.contains("OPPO") || phoneName.contains("VIVO")){
+                        Intent locationIntent = new Intent(HomeActivity.this, LocationService.class);
+                        locationIntent.putExtra("sid",sid);
+                        locationIntent.putExtra("deviceId",deviceId);
+                        locationIntent.putExtra("tid",tid);
+                        Log.e("getDeviceInfo","sid=="+sid+"deviceId="+deviceId);
+                        if(isServiceExisted(HomeActivity.this,"com.escort.carriage.android.LocationService")){
                             AmapUtils.getAmapUtils().initTrace(getApplicationContext(), Long.valueOf(sid), Long.valueOf(deviceId),
                                     Long.valueOf(tid), createNotification(getApplicationContext()));
-                        } else {
-                            Intent locationIntent = new Intent(HomeActivity.this, LocationService.class);
-                            locationIntent.putExtra("sid",sid);
-                            locationIntent.putExtra("deviceId",deviceId);
-                            locationIntent.putExtra("tid",tid);
+                        }else{
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 startForegroundService(locationIntent);
                             } else {
@@ -274,6 +277,26 @@ public class HomeActivity extends ProjectBaseActivity {
 
             }
         }
+    }
+
+    public static boolean isServiceExisted(Context context, String className) {
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceList = activityManager
+                .getRunningServices(Integer.MAX_VALUE);
+
+        if (!(serviceList.size() > 0)) {
+            return false;
+        }
+        for (int i = 0; i < serviceList.size(); i++) {
+            ActivityManager.RunningServiceInfo serviceInfo = serviceList.get(i);
+            ComponentName serviceName = serviceInfo.service;
+
+            if (serviceName.getClassName().equals(className)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void showPageImageDialog(String url) {
@@ -351,7 +374,6 @@ public class HomeActivity extends ProjectBaseActivity {
         super.onResume();
     }
 
-
     //--------- 轨迹 使用 配置参数
 
     /**
@@ -374,13 +396,10 @@ public class HomeActivity extends ProjectBaseActivity {
         builder.setContentIntent(PendingIntent.getActivity(ApplicationContext.getInstance().context, 0, nfIntent, 0))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon( BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher, null))
-                .setContentTitle(ResourcesTransformUtil.getString(R.string.app_name) + "运行中")
-                .setContentText(ResourcesTransformUtil.getString(R.string.app_name) + " 点击查看详情");
+                .setContentTitle(ResourcesTransformUtil.getString(R.string.app_name) + "运行中");
+               // .setContentText(ResourcesTransformUtil.getString(R.string.app_name) + " 点击查看详情");
 
         Notification notification = builder.build();
-        notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONGOING_EVENT;
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(1234567, notification);
         return notification;
     }
 
