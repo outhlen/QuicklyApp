@@ -140,7 +140,6 @@ public class SettingActivity extends ProjectBaseSingleClickActivity{
 
     private void outLogin(){
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "提交数据");
-
         RequestEntity requestEntity = new RequestEntity(0);
         requestEntity.setData(new Object());
         String jsonString = JsonManager.createJsonString(requestEntity);
