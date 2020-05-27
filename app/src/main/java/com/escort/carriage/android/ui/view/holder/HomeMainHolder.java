@@ -29,6 +29,7 @@ import com.escort.carriage.android.entity.bean.BannerBean;
 import com.escort.carriage.android.entity.bean.home.CircuitListEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.request.home.NewsListReqBean;
+import com.escort.carriage.android.entity.response.home.BannerEntity;
 import com.escort.carriage.android.entity.response.home.NewsTitleListBean;
 import com.escort.carriage.android.entity.response.home.ResponseCircuitListEntity;
 import com.escort.carriage.android.entity.response.home.ShengListBean;
@@ -295,25 +296,25 @@ public class HomeMainHolder {
     }
 
     /**
-     * 获取省
+     * 获取banner
      */
     private void getBanner() {
         //调用接口获取数据
         RequestEntity requestEntity = new RequestEntity(0);
         requestEntity.setData(new Object());
         String jsonString = JsonManager.createJsonString(requestEntity);
-        OkgoUtils.post(ProjectUrl.GET_BANNER, jsonString).execute(new MyStringCallback<BannerBean>() {
+        OkgoUtils.post(ProjectUrl.GET_BANNER, jsonString).execute(new MyStringCallback<BannerEntity>() {
             @Override
-            public void onResponse(BannerBean resp) {
+            public void onResponse(BannerEntity resp) {
 //                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (resp.isSuccess()) {
-                    setBannerData(resp);
+                    setBannerData(resp.getData());
                 }
             }
 
             @Override
-            public Class<BannerBean> getClazz() {
-                return BannerBean.class;
+            public Class<BannerEntity> getClazz() {
+                return BannerEntity.class;
             }
         });
 
