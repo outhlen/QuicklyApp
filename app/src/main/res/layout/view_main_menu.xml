@@ -90,8 +90,10 @@
         <LinearLayout
             android:id="@+id/ll_news"
             android:gravity="center_vertical"
-            android:background="#ffffff"
+            android:background="@drawable/white_back_shape"
             android:layout_marginTop="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_below="@id/banner"
             android:padding="@dimen/space_5"
             android:orientation="horizontal"
