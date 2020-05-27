@@ -72,7 +72,6 @@ public class ChatRowText extends ChatRow{
         }
 
         contentView.setLinksClickable(true);
-        contentView.setMovementMethod(LinkMovementMethod.getInstance());
         // 设置内容
         contentView.setText(span, TextView.BufferType.SPANNABLE);
 

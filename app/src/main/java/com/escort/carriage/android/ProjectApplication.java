@@ -40,10 +40,11 @@ import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
 
 public class ProjectApplication extends MultiDexApplication {
-
+    private static Context mContext;
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         ApplicationContext.getInstance().setApplicationContext(this);
         //环信初始化
 //        ChatClient.Options options = new ChatClient.Options();
@@ -108,7 +109,9 @@ public class ProjectApplication extends MultiDexApplication {
     private void addService() {
 
     }
-
+    public static Context getContext() {
+        return mContext;
+    }
     private void initOkgo() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
         //log打印级别，决定了log显示的详细程度

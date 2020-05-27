@@ -19,6 +19,7 @@ import com.hyphenate.helpdesk.R;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
+import com.hyphenate.helpdesk.model.VisitorInfo;
 
 public class MessageList extends RelativeLayout {
     protected static final String TAG = MessageList.class.getSimpleName();
@@ -33,7 +34,7 @@ public class MessageList extends RelativeLayout {
     protected Drawable myBubbleBg;
     protected Drawable otherBuddleBg;
     public static long defaultDelay = 200;
-
+    private VisitorInfo visitorInfo;
     public MessageList(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
     }
@@ -49,6 +50,9 @@ public class MessageList extends RelativeLayout {
         init(context);
     }
 
+    public void setVisi(VisitorInfo visitorInfo){
+        this.visitorInfo = visitorInfo;
+    }
     private void init(Context context){
         this.context = context;
         LayoutInflater.from(context).inflate(R.layout.hd_chat_message_list, this);
@@ -65,7 +69,7 @@ public class MessageList extends RelativeLayout {
         this.toChatUsername = toChatUsername;
 
         conversation = ChatClient.getInstance().chatManager().getConversation(toChatUsername);
-        messageAdapter = new MessageAdapter(context, toChatUsername, listView);
+        messageAdapter = new MessageAdapter(context, toChatUsername, listView,visitorInfo);
         messageAdapter.setShowAvatar(showAvatar);
         messageAdapter.setShowUserNick(showUserNick);
         messageAdapter.setMyBubbleBg(myBubbleBg);

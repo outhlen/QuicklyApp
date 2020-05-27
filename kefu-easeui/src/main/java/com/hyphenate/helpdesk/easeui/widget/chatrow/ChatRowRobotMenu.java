@@ -14,6 +14,7 @@ import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.model.RobotMenuInfo;
+import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.hyphenate.util.DensityUtil;
 
 import java.util.Collection;
@@ -22,10 +23,11 @@ public class ChatRowRobotMenu extends ChatRow{
 
     TextView tvTitle;
     LinearLayout tvList;
+    private VisitorInfo visitorInfo;
 
-
-    public ChatRowRobotMenu(Context context, Message message, int position, BaseAdapter adapter) {
+    public ChatRowRobotMenu(Context context, Message message, int position, BaseAdapter adapter, VisitorInfo visitorInfo) {
         super(context, message, position, adapter);
+        this.visitorInfo=visitorInfo;
     }
 
     @Override
@@ -77,6 +79,9 @@ public class ChatRowRobotMenu extends ChatRow{
                     public void onClick(View v) {
                         Message sendMessage = Message.createTxtSendMessage(content, message.from());
                         //存在上下文的机器人菜单消息
+                        if (visitorInfo != null){
+                            sendMessage.addContent(visitorInfo);
+                        }
                         sendMessage.addContent(ContentFactory.createRobotMenuIdInfo(null).setMenuId(menuId));
                         ChatClient.getInstance().chatManager().sendMessage(sendMessage);
                     }

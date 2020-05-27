@@ -171,5 +171,5 @@ dependencies {
     implementation 'com.jude:easyrecyclerview:4.0.6'
     implementation 'com.tencent.bugly:crashreport:latest.release'
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
-
+    implementation 'com.youth.banner:banner:2.0.10'
 }

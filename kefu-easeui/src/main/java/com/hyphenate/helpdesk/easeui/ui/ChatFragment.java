@@ -206,6 +206,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         // 消息列表layout
         messageList = (MessageList) getView().findViewById(R.id.message_list);
         messageList.setShowUserNick(showUserNick);
+        messageList.setVisi(visitorInfo);
         listView = messageList.getListView();
         tvTipWaitCount = (TextView) getView().findViewById(R.id.tv_tip_waitcount);
         extendMenuItemClickListener = new MyMenuItemClickListener();
@@ -309,7 +310,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
             titleBar.setTitle(toChatUsername);
         }
 
-        titleBar.setRightImageResource(R.drawable.hd_mm_title_remove);
+        titleBar.setRightImageResource(R.drawable.ic_clear);
 
         onConversationInit();
         onMessageListInit();

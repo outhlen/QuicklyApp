@@ -25,16 +25,19 @@ import com.androidybp.basics.utils.hint.ToastUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.configuration.VueUrl;
+import com.escort.carriage.android.entity.bean.BannerBean;
 import com.escort.carriage.android.entity.bean.home.CircuitListEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.request.home.NewsListReqBean;
 import com.escort.carriage.android.entity.response.home.NewsTitleListBean;
 import com.escort.carriage.android.entity.response.home.ResponseCircuitListEntity;
+import com.escort.carriage.android.entity.response.home.ShengListBean;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.activity.HomeActivity;
 import com.escort.carriage.android.ui.activity.mes.NewsListActivity;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
+import com.escort.carriage.android.ui.adapter.home.ImageAdapter;
 import com.escort.carriage.android.ui.fragment.home.HomeListFragment;
 import com.escort.carriage.android.ui.fragment.home.HomeOpenPushFragment;
 import com.escort.carriage.android.ui.fragment.home.HomePushInfoFragment;
@@ -42,8 +45,13 @@ import com.escort.carriage.android.ui.view.TextSwitchView;
 import com.escort.carriage.android.ui.view.imgview.RoundImageView;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
 import com.tripartitelib.android.iflytek.IflytekUtils;
+import com.youth.banner.Banner;
+import com.youth.banner.config.IndicatorConfig;
+import com.youth.banner.indicator.CircleIndicator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,8 +68,10 @@ public class HomeMainHolder {
     TextSwitchView mTsv;
     @BindView(R.id.userSettingText)
     TextView userSettingText;
+    @BindView(R.id.banner)
+    Banner banner;
 
-
+    List<BannerBean.ListBean> mDatas=new ArrayList<>();
     private View viewGroup;
     private HomeActivity activity;
     private Unbinder bind;
@@ -98,7 +108,26 @@ public class HomeMainHolder {
         startHomeListFragment();
         //获取配置参数
         getPageData(0);
+        getBanner();
     }
+
+    public void setBannerData(BannerBean bannerData){
+        mDatas=bannerData.getList();
+        useBanner();
+    }
+
+
+
+
+    public void useBanner() {
+        //--------------------------简单使用-------------------------------
+        banner.setAdapter(new ImageAdapter(mDatas))
+                .setIndicator(new CircleIndicator(activity))
+                .setIndicatorGravity(IndicatorConfig.Direction.CENTER)
+                .setBannerRound(10)
+                .start();
+    }
+
 
     private void startHomeListFragment() {
         viewShowType = 0;
@@ -262,6 +291,31 @@ public class HomeMainHolder {
 
 
         startHomePushFragment();
+    }
+
+    /**
+     * 获取省
+     */
+    private void getBanner() {
+        //调用接口获取数据
+        RequestEntity requestEntity = new RequestEntity(0);
+        requestEntity.setData(new Object());
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.GET_BANNER, jsonString).execute(new MyStringCallback<BannerBean>() {
+            @Override
+            public void onResponse(BannerBean resp) {
+//                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (resp.isSuccess()) {
+                    setBannerData(resp);
+                }
+            }
+
+            @Override
+            public Class<BannerBean> getClazz() {
+                return BannerBean.class;
+            }
+        });
+
     }
 
     /**
