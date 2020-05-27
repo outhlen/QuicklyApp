@@ -1,10 +1,18 @@
 package com.escort.carriage.android.jpush;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.androidybp.basics.fastjson.JsonManager;
+import com.escort.carriage.android.entity.bean.push.PushEntity;
+import com.escort.carriage.android.ui.activity.HomeActivity;
+import com.escort.carriage.android.ui.activity.mes.MyOrderListActivity;
+import com.escort.carriage.android.ui.activity.my.MyBidActivity;
+import com.escort.carriage.android.ui.activity.play.WalletMenuActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,30 +64,36 @@ public class OpenClickActivity extends Activity {
         if (TextUtils.isEmpty(data)) return;
         try {
             JSONObject jsonObject = new JSONObject(data);
-            String msgId = jsonObject.optString(KEY_MSGID);
-            byte whichPushSDK = (byte) jsonObject.optInt(KEY_WHICH_PUSH_SDK);
-            String title = jsonObject.optString(KEY_TITLE);
-            String content = jsonObject.optString(KEY_CONTENT);
-            String extras = jsonObject.optString(KEY_EXTRAS);
-            StringBuilder sb = new StringBuilder();
-            sb.append("msgId:");
-            sb.append(String.valueOf(msgId));
-            sb.append("\n");
-            sb.append("title:");
-            sb.append(String.valueOf(title));
-            sb.append("\n");
-            sb.append("content:");
-            sb.append(String.valueOf(content));
-            sb.append("\n");
-            sb.append("extras:");
-            sb.append(String.valueOf(extras));
-            sb.append("\n");
-            sb.append("platform:");
-            sb.append(getPushSDKName(whichPushSDK));
-            mTextView.setText(sb.toString());
+            String string = jsonObject.getString(JPushInterface.EXTRA_EXTRA);
+            PushEntity jsonBean = JsonManager.getJsonBean(string, PushEntity.class);
+            Intent intent_into_message = new Intent();
+            intent_into_message.putExtras(new Bundle());
+            intent_into_message.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            switch (jsonBean.getPage()){
+                case 1001://打开APP
+                    intent_into_message.setClass(this, HomeActivity.class);
+                    intent_into_message.putExtra("showListInfo", true);
+                    startActivity(intent_into_message);
+                    break;
+                case 1003://中标列表车主app
+                    intent_into_message.setClass(this, MyBidActivity.class);
+                    startActivity(intent_into_message);
+                    break;
+                case 1005://分润
+                    startActivity(new Intent(this, WalletMenuActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    break;
+                case 1007://评论列表车主app
+                    break;
+                case 1008://订单列表车主app
+                    intent_into_message.setClass(this, MyOrderListActivity.class);
+                    startActivity(intent_into_message);
+                    break;
+
+            }
 
             //上报点击事件
-            JPushInterface.reportNotificationOpened(this, msgId, whichPushSDK);
+           // JPushInterface.reportNotificationOpened(this, msgId, whichPushSDK);
         } catch (JSONException e) {
             Log.w(TAG, "parse notification error");
         }

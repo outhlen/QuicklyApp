@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import com.escort.carriage.android.ui.view.imgview.RoundedImagView;
 import java.util.HashMap;
 
 import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,10 +50,14 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
     TextView tvAddCar;
     @BindView(R.id.main)
     LinearLayout main;
+    @BindView(R.id.zige_et)
+    EditText zgEdit;
+    @BindView(R.id.hege_et)
+    EditText hgEdit;
+
     private SelectPhotoUtils selectPhotoUtils;
-
     String imageUrl;
-
+    String zige,hege;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,10 +130,12 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
                 selectPhotoUtils.selectPhoto(1, main);
                 break;
             case R.id.tvAddCar:
-                if(TextUtils.isEmpty(imageUrl)){
+                 zige = zgEdit.getText().toString().trim();
+                 hege = hgEdit.getText().toString().trim();
+                if (TextUtils.isEmpty(imageUrl)) {
                     ToastUtil.showToastString("请上传驾驶证信息");
                 } else {
-                commitUrl();
+                    commitUrl();
                 }
                 break;
         }
@@ -138,6 +146,8 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("drivingLicencePicture", imageUrl);
+        hashMap.put("employeeQualificationCode", zige);
+        hashMap.put("employeeQualificationType", hege);
         requestEntity.setData(hashMap);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.USER_USERAUTHDRIVER_DRIVERAUTHENTICATION, jsonString).execute(new MyStringCallback<ResponceBean>() {

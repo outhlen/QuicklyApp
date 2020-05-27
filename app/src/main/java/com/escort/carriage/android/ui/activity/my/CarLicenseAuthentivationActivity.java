@@ -63,13 +63,11 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
     @BindView(R.id.ivRcImageView)
     RoundedImagView ivRcImageView;
 
-
     @BindView(R.id.tvAddCar)
     TextView tvAddCar;
     private SelectPhotoUtils selectPhotoUtils;
     String frontUrl, backUrl,imageUrl1;
     private CarLicenseInfoEntity.ListBean jsonBean;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +97,6 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                 finish();
             }
         });
-
 
     }
 
@@ -189,7 +186,6 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
         hashMap.put("frontUrl", frontUrl);
         hashMap.put("backUrl", backUrl);
         hashMap.put("imageUrl1", imageUrl1);
-
         if(jsonBean != null){
             url = ProjectUrl.VEHICLE_INFO_UPDATE;
             hashMap.put("id", jsonBean.id);

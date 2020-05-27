@@ -3,6 +3,7 @@ package com.escort.carriage.android.ui.activity.mes;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,10 +11,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidybp.basics.entity.TabStripItemEntity;
+import com.androidybp.basics.fastjson.JsonManager;
+import com.androidybp.basics.okhttp3.OkgoUtils;
+import com.androidybp.basics.okhttp3.entity.ResponceBean;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
+import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.ui.mvc.adapter.TabStripAdapter;
 import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
+import com.androidybp.basics.utils.hint.ToastUtil;
 import com.escort.carriage.android.R;
+import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.request.RequestEntity;
+import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.ui.fragment.home.HomeListFragment;
 import com.escort.carriage.android.ui.fragment.home.MyOrderListFragment;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
@@ -25,6 +34,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -67,7 +77,6 @@ public class MyOrderListActivity extends ProjectBaseActivity {
             EventBus.getDefault().register(this);
         }
         setTabLayout();
-
     }
 
     private void setTabLayout() {
@@ -108,7 +117,6 @@ public class MyOrderListActivity extends ProjectBaseActivity {
     }
 
     private Bundle getBundle(int x) {
-
         Bundle bundle = new Bundle();
         switch (x) {
             case 0:

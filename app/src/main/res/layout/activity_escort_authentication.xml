@@ -22,12 +22,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/space_10"
-                >
+                android:padding="@dimen/space_10">
 
                 <com.escort.carriage.android.ui.view.imgview.RoundedImagView
                     android:id="@+id/ivDrivingImage"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="15dp"
                     android:layout_height="@dimen/space_x144"
 
                     />

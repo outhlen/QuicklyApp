@@ -400,4 +400,16 @@ public class ProjectUrl {
      * 处理线下支付
      */
     public static String ORDER_UPDATEOFFPAY= baseUrl + "undertake/orderVehicle/updateOffPay";
+
+    /**
+     *  回单处理
+     */
+    public static String ORDER_RETURNBACK = baseUrl + "undertake/orderVehicle/switchBack";
+
+    /**
+     *  广告
+     */
+
+    public static String pageAds = baseUrl + "undertake/ads/list";
+
 }

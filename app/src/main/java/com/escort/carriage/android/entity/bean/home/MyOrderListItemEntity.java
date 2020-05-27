@@ -23,6 +23,7 @@ public class MyOrderListItemEntity {
     public List<OrderInfoEntity> list;
     public List<Integer> navigatepageNums;
 
+
     public String getTotal() {
         return total;
     }

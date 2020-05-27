@@ -35,6 +35,8 @@ import com.escort.carriage.android.ui.activity.my.MyOrderAppraiseActivity;
 import com.escort.carriage.android.ui.activity.my.RouteNavigationActivity;
 import com.escort.carriage.android.ui.activity.my.TransfeOrderActivity;
 import com.escort.carriage.android.ui.activity.play.PlayMesFeesActivity;
+import com.escort.carriage.android.utils.AmapUtils;
+import com.tripartitelib.android.amap.ProjectLocationEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -67,6 +69,8 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
     private int appeal = 11;//申诉
     private int dispose_revoke = 12;//处理撤单
     private int dispose_payment = 13;//线下支付
+    private int turn_car = 14;//转车
+    private int comeback_car = 15;//回转
 
     private String text = "MyOrderListActivity_updata_positon = ";
 
@@ -78,23 +82,21 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
     @Override
     protected void convert(OrderHolder helper, OrderInfoEntity item) {
-         if(!TextUtils.isEmpty(item.imgUrl1)){
-             if(item.imgUrl1.contains(",")){
-                 String[] arrays =  item.imgUrl1.split(",");
-                 GlideManager.getGlideManager().loadImage(arrays[0], helper.ivImage, R.drawable.live_placeholder);
-             }else{
-                 GlideManager.getGlideManager().loadImage(item.imgUrl1, helper.ivImage, R.drawable.live_placeholder);
-             }
-         }
-
-
+        if (!TextUtils.isEmpty(item.imgUrl1)) {
+            if (item.imgUrl1.contains(",")) {
+                String[] arrays = item.imgUrl1.split(",");
+                GlideManager.getGlideManager().loadImage(arrays[0], helper.ivImage, R.drawable.live_placeholder);
+            } else {
+                GlideManager.getGlideManager().loadImage(item.imgUrl1, helper.ivImage, R.drawable.live_placeholder);
+            }
+        }
 
         if (item.addr != null && item.addr.size() > 0) {
             AddrBean addrBean = item.addr.get(0);
             helper.tvStartLocation.setText(addrBean.startCityName);
             helper.tvEndtLocation.setText(addrBean.endCityName);
         }
-        helper.tvOrderNum.setText( "订单号：***"+item.orderNumber.substring(item.orderNumber.length()-4,item.orderNumber.length()));
+        helper.tvOrderNum.setText("订单号：***" + item.orderNumber.substring(item.orderNumber.length() - 4, item.orderNumber.length()));
         helper.tvTime.setText("订单时间:" + ProjectDateUtils.getTimeDay("yyyy-MM-dd HH:mm", item.orderPlaceTime));
         helper.tvCargoName.setText(item.cargoName);
         helper.cargoCount.setText(item.cargoCount + "件");
@@ -120,7 +122,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         } else if (pageType == 8) {
             //待评价
             setAwaitEvaluate(helper, item);
-        }else if (pageType == -1) {
+        } else if (pageType == -1) {
             //已撤单
             setCancleView(helper, item);
         }
@@ -209,8 +211,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         helper.btnFive.setTag(see_order_details);
         helper.btnFive.setTag(R.id.tg_json, item);
         helper.btnFive.setOnClickListener(this);
-
-
         helper.btnFour.setText("开始运输");
         if (item.orderStatus == 4) {
             helper.btnFour.setBackgroundResource(R.drawable.bg_b_3e9fff_bj_3dp);
@@ -223,7 +223,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             helper.btnFour.setTag(R.id.tg_json, item);
             helper.btnFour.setOnClickListener(null);
         }
-
 
         helper.btnThree.setText("装货确认");
         if (item.orderStatus == 4) {
@@ -238,15 +237,30 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             helper.btnThree.setOnClickListener(this);
         }
 
-
         helper.btnTwo.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
         helper.btnTwo.setText("路线导航");
         helper.btnTwo.setTag(path_navigation);
         helper.btnTwo.setTag(R.id.tg_json, item);
         helper.btnTwo.setOnClickListener(this);
-        helper.btnOne.setVisibility(View.INVISIBLE);
-    }
 
+        helper.btnOne.setVisibility(View.VISIBLE);
+        if (item.installTurn == 0) {
+            helper.btnOne.setBackgroundResource(R.drawable.bg_b_3699ff_bj_3dp);
+            helper.btnOne.setText("我要转车");
+            helper.btnOne.setTag(turn_car);
+            helper.btnOne.setTag(R.id.tg_json, item);
+            helper.btnOne.setOnClickListener(this);
+        } else if (item.installTurn == 2) {
+            helper.btnOne.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
+            helper.btnOne.setText("我要回转");
+            helper.btnOne.setTag(comeback_car);
+            helper.btnOne.setTag(R.id.tg_json, item);
+            helper.btnOne.setOnClickListener(this);
+        } else {
+            helper.btnOne.setOnClickListener(null);
+            helper.btnOne.setVisibility(View.INVISIBLE);
+        }
+    }
 
     /**
      * 运输中
@@ -274,15 +288,15 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
 
         if (item.isAllowTurn == 1) {
-            LogUtils.showE("订单类型：",item.orderType);
-            if(item.orderType.equals("1")){
+            LogUtils.showE("订单类型：", item.orderType);
+            if (item.orderType.equals("1")) {
                 helper.btnTwo.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
                 helper.btnTwo.setText("路线导航");
                 helper.btnTwo.setTag(path_navigation);
                 helper.btnTwo.setTag(R.id.tg_json, item);
                 helper.btnTwo.setOnClickListener(this);
                 helper.btnOne.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 helper.btnTwo.setText("分拨中转");
                 helper.btnTwo.setBackgroundResource(R.drawable.bg_b_f56c6c_bj_3dp);
                 helper.btnTwo.setTag(transfer_of_order);
@@ -338,7 +352,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             helper.btnThree.setTag(dispose_payment);
             helper.btnThree.setTag(R.id.tg_json, item);
             helper.btnThree.setOnClickListener(this);
-        }else {
+        } else {
             helper.btnThree.setVisibility(View.GONE);
         }
 
@@ -358,15 +372,15 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         helper.btnFive.setTag(see_order_details);
         helper.btnFive.setTag(R.id.tg_json, item);
         helper.btnFive.setOnClickListener(this);
-        String pingjia  = item.getDriverEvaluate();
+        String pingjia = item.getDriverEvaluate();
         helper.btnFour.setBackgroundResource(R.drawable.bg_b_67c337_bj_3dp);
-        if(!TextUtils.isEmpty(pingjia)){
-            if(pingjia.equals("0")){
+        if (!TextUtils.isEmpty(pingjia)) {
+            if (pingjia.equals("0")) {
                 helper.btnFour.setText("给予评价");
-            }else{
+            } else {
                 helper.btnFour.setText("评价信息");
             }
-        }else{
+        } else {
             helper.btnFour.setText("给予评价");
         }
         helper.btnFour.setTag(reply_evaluate);
@@ -513,6 +527,15 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 intentOne.putExtra("orderNumber", item.orderNumber);
                 intentOne.putExtra("license", item.travelNumberPlate);
                 fragment.startActivityForResult(intentOne, 123);
+            } else if (tag1 == turn_car) { //装货转单
+                //转单
+                Intent intentOne = new Intent(fragment.getActivity(), TransfeOrderActivity.class);
+                intentOne.putExtra("orderNumber", item.orderNumber);
+                intentOne.putExtra("license", item.travelNumberPlate);
+                fragment.startActivityForResult(intentOne, 123);
+            } else if (tag1 == comeback_car) { //回转
+                ProjectLocationEntity projectLocationEntity = AmapUtils.getAmapUtils().getLocation();
+                returnBackOrder(item.orderNumber, projectLocationEntity.latitude, projectLocationEntity.longitude);
             } else if (tag1 == reminder) {
                 //我要催单
                 reminderToService(tag1, item);
@@ -533,7 +556,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //同意
-                                setRepealPaymentMethod(tag1, item, "1", v,4);
+                                setRepealPaymentMethod(tag1, item, "1", v, 4);
                                 dialog.dismiss();
                             }
                         }).setNegativeButton("不同意", new DialogInterface.OnClickListener() {
@@ -546,6 +569,24 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 }).show();
             }
         }
+    }
+
+    /*
+     * 回转订单
+     */
+    private void returnBackOrder(String orderNumber, Double latitude, Double longitude) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("orderNumber", orderNumber);
+        hashMap.put("latitude", String.valueOf(latitude));
+        hashMap.put("longitude", String.valueOf(longitude));
+        hashMap.put("requsetType", "1");
+        toService(ProjectUrl.ORDER_RETURNBACK, 0, hashMap, new ServiceCallback() {
+            @Override
+            public void callback(int type) {
+                ToastUtil.showToastString("操作成功");
+                fragment.onActivityResult(123, 456, null);
+            }
+        });
     }
 
     /**

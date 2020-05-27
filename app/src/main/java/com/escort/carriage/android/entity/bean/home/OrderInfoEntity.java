@@ -133,6 +133,16 @@ public class OrderInfoEntity {
     public List<AddrBean> addr;
     public List<String> turn;
 
+    public int installTurn;
+
+    public int getInstallTurn() {
+        return installTurn;
+    }
+
+    public void setInstallTurn(int installTurn) {
+        this.installTurn = installTurn;
+    }
+
     public String getDriverEvaluate() {
         return driverEvaluate;
     }

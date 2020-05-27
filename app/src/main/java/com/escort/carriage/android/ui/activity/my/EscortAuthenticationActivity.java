@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -62,6 +63,10 @@ public class EscortAuthenticationActivity extends ProjectBaseActivity {
     FillListView filllist;
     @BindView(R.id.tvAddCar)
     TextView tvAddCar;
+//    @BindView(R.id.zige_et)
+//    EditText zgEdit;
+//    @BindView(R.id.hege_et)
+//    EditText hgEdit;
 
    private EscorAuthenticationListAdapter escorAuthenticationListAdapter;
     private DriverInfoEntity driverInfoEntity;//驾驶人信息
@@ -215,6 +220,7 @@ public class EscortAuthenticationActivity extends ProjectBaseActivity {
                 startActivityForResult(intent, 123);
                 break;
             case R.id.tvAddCar:
+
                 Intent intentCar = new Intent(this, CarLicenseAuthentivationActivity.class);
                 startActivityForResult(intentCar, 123);
                 break;
