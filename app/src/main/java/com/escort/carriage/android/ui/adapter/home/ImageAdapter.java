@@ -6,7 +6,11 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.escort.carriage.android.ProjectApplication;
+import com.escort.carriage.android.R;
 import com.escort.carriage.android.entity.bean.BannerBean;
 import com.youth.banner.adapter.BannerAdapter;
 
@@ -29,13 +33,18 @@ public class ImageAdapter extends BannerAdapter<BannerBean.ListBean, ImageAdapte
         imageView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         return new BannerViewHolder(imageView);
     }
 
     @Override
     public void onBindView(BannerViewHolder holder, BannerBean.ListBean data, int position, int size) {
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.ic_place)
+                .error(R.drawable.ic_place)
+                .priority(Priority.HIGH);
         Glide.with(ProjectApplication.getContext()).load(data.getBannerUrl())
+                .apply(options)
                 .into(holder.imageView);
     }
 
