@@ -71,7 +71,7 @@ public class HomeMainHolder {
     @BindView(R.id.banner)
     Banner banner;
 
-    List<BannerBean.ListBean> mDatas=new ArrayList<>();
+    List<BannerBean.ListBean> mDatas;
     private View viewGroup;
     private HomeActivity activity;
     private Unbinder bind;
@@ -125,6 +125,7 @@ public class HomeMainHolder {
                 .setIndicator(new CircleIndicator(activity))
                 .setIndicatorGravity(IndicatorConfig.Direction.CENTER)
                 .setBannerRound(10)
+                .setIndicatorSelectedColor(activity.getResources().getColor(R.color.white))
                 .start();
     }
 
