@@ -74,13 +74,25 @@
             android:layout_alignTop="@+id/iv_head_img_group"
             />
 
+
+        <com.youth.banner.Banner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tv_head_title"
+            android:layout_height="150dp" />
+
+
         <!--头条部分-->
         <LinearLayout
             android:id="@+id/ll_news"
             android:gravity="center_vertical"
             android:background="#ffffff"
             android:layout_marginTop="18dp"
-            android:layout_below="@id/tv_head_title"
+            android:layout_below="@id/banner"
             android:padding="@dimen/space_5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -109,6 +121,10 @@
 
 
         </LinearLayout>
+
+
+
+
 
         <LinearLayout
             android:id="@+id/llInfoGroup"

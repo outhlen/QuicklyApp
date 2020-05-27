@@ -29,6 +29,7 @@ import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRowTransferToKefu;
 import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRowVideo;
 import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRowVoice;
 import com.hyphenate.helpdesk.model.MessageHelper;
+import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.hyphenate.util.EMLog;
 
 import java.lang.ref.WeakReference;
@@ -37,7 +38,6 @@ import java.util.List;
 
 public class MessageAdapter extends BaseAdapter {
 	private final static String TAG = "msg";
-
 	private Context context;
 	
 	private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
@@ -88,7 +88,7 @@ public class MessageAdapter extends BaseAdapter {
     private ListView listView;
 	public int mMinItemWidth;
 	public int mMaxItemWidth;
-
+	private VisitorInfo visitorInfo;
 	/**
 	 * 弱引用刷新UI
 	 */
@@ -149,9 +149,10 @@ public class MessageAdapter extends BaseAdapter {
 		}
 	}
 
-	public MessageAdapter(Context context, String username, ListView listView) {
+	public MessageAdapter(Context context, String username, ListView listView, VisitorInfo visitorInfo) {
 		this.context = context;
 		this.listView = listView;
+		this.visitorInfo = visitorInfo;
 		toChatUsername = username;
 		this.conversation = ChatClient.getInstance().chatManager().getConversation(username);
 		handler = new WeakHandler(this);
@@ -294,7 +295,7 @@ public class MessageAdapter extends BaseAdapter {
 					chatRow = new ChatRowTransferGuideMenu(context, message, position, this);
 					break;
 		        case RobotMenuMsg:
-			        chatRow = new ChatRowRobotMenu(context, message, position, this);
+			        chatRow = new ChatRowRobotMenu(context, message, position, this,visitorInfo);
 			        break;
 				case RobotCommentInviteMsg:
 					chatRow = new ChatRowTextCommentInvite(context, message, position, this);

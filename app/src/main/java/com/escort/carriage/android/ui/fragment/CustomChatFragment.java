@@ -96,7 +96,7 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
         setChatFragmentListener(this);
         super.setUpView();
         //可以在此处设置titleBar(标题栏)的属性
-        titleBar.setLeftImageResource(R.drawable.hd_icon_title_back);
+        titleBar.setLeftImageResource(R.drawable.ic_left);
         titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +108,7 @@ public class CustomChatFragment extends ChatFragment implements ChatFragment.Eas
             }
         });
         titleBar.setTitle("客服服务");
-        titleBar.setRightImageResource(R.drawable.hd_chat_delete_icon);
+        titleBar.setRightImageResource(R.drawable.ic_clear);
         titleBar.setRightLayoutClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

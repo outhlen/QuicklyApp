@@ -3,6 +3,8 @@ package com.escort.carriage.android.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.androidybp.basics.cache.CacheDBMolder;
+import com.androidybp.basics.entity.UserInfoEntity;
 import com.escort.carriage.android.R;
 import com.hyphenate.helpdesk.model.AgentIdentityInfo;
 import com.hyphenate.helpdesk.model.ContentFactory;
@@ -10,6 +12,7 @@ import com.hyphenate.helpdesk.model.OrderInfo;
 import com.hyphenate.helpdesk.model.QueueIdentityInfo;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.hyphenate.helpdesk.model.VisitorTrack;
+import com.tencent.bugly.crashreport.biz.UserInfoBean;
 
 /**
  * 对轨迹跟踪的消息操作 此类不是必须，只是为了演示和初始化一些数据
@@ -24,13 +27,14 @@ public class DemoMessageHelper {
 
 	public static VisitorInfo createVisitorInfo() {
 		VisitorInfo info = ContentFactory.createVisitorInfo(null);
-		info.nickName("菜鸟")
-		    .name("陆科")
-		    .qq("10000")
-			.phone("15811200000")
-		    .companyName("easemob")
-		    .description("")
-		    .email("abc@123.com");
+		UserInfoEntity userInfoEntity = CacheDBMolder.getInstance().getUserInfoEntity(null);
+		info.nickName(userInfoEntity.getNickName())
+				.name(userInfoEntity.getUserName())
+				.qq("10000")
+				.phone(userInfoEntity.getPhoneNumber())
+				.companyName(userInfoEntity.getCompanyName())
+				.description("")
+				.email("abc@123.com");
 		return info;
 	}
 
