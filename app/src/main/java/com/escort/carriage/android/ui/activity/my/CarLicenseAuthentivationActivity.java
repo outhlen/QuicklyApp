@@ -29,6 +29,7 @@ import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.view.imgview.RoundedImagView;
 
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
@@ -174,6 +175,11 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                     imageUrl1 = url;
                     GlideManager.getGlideManager().loadImage(url, ivRcImageView);
                 }
+            }
+
+            @Override
+            public void imageArrayCallback(int openType, List<String> urls) {
+
             }
         });
     }

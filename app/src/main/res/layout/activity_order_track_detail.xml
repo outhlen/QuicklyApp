@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/item_head_bar" />
+
+        <include layout="@layout/head_title_bar" />
 
 
         <com.amap.api.maps2d.MapView

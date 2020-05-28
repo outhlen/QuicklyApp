@@ -270,6 +270,7 @@ public class HomeListFragment extends BaseFragment implements OnRefreshLoadMoreL
                 GoodsBean bean = (GoodsBean) adapter.getData().get(position);
                 Intent intent = new Intent(getActivity(), OrderInfoActivity.class);
                 intent.putExtra("id", bean.getOrderNumber());
+                intent.putExtra("isPrice", true);
                 startActivityForResult(intent, 333);
             }
         });

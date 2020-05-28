@@ -3,6 +3,7 @@ package com.escort.carriage.android.http;
 import android.app.Activity;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.okhttp3.OkgoUtils;
@@ -23,6 +24,7 @@ import com.escort.carriage.android.entity.response.my.ResponseCloudauthGetassume
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RequestEntityUtils {
 
@@ -35,30 +37,30 @@ public class RequestEntityUtils {
         return requestEntity;
     }
 
-    public static PageBean getPageBean(int pageNum, int pageSize){
+    public static PageBean getPageBean(int pageNum, int pageSize) {
         PageBean pageBean = new PageBean();
         pageBean.setPageNumber(pageNum);
         pageBean.setPageSize(pageSize);
         return pageBean;
     }
 
-      public static PageBean getPageBeanOrders(int pageNum, int pageSize){
+    public static PageBean getPageBeanOrders(int pageNum, int pageSize) {
         PageBean pageBean = new PageBean();
         pageBean.setPageNumber(pageNum);
         pageBean.setPageSize(pageSize);
-          PageBean.OrdersBean ordersBean = new PageBean.OrdersBean();
-          ordersBean.setField("id");
-          ordersBean.setDirection("DESC");
-          ArrayList<PageBean.OrdersBean> arrayList = new ArrayList<>();
-          arrayList.add(ordersBean);
-          pageBean.setOrders(arrayList);
-          return pageBean;
+        PageBean.OrdersBean ordersBean = new PageBean.OrdersBean();
+        ordersBean.setField("id");
+        ordersBean.setDirection("DESC");
+        ArrayList<PageBean.OrdersBean> arrayList = new ArrayList<>();
+        arrayList.add(ordersBean);
+        pageBean.setOrders(arrayList);
+        return pageBean;
     }
-
 
 
     /**
      * 专门上传图片用的方法  使用 OSS方式
+     *
      * @param openType
      * @param uri
      * @param imageCallback
@@ -84,8 +86,8 @@ public class RequestEntityUtils {
                                 UploadHelper uploadHelper = new UploadHelper(entity.url, entity.accessKeyId, entity.accessKeySecret, entity.securityToken, entity.bucketName);
                                 String uploaduel = uploadHelper.uploadPortrait(requestFile.getPath());
                                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                                if(!TextUtils.isEmpty(uploaduel)){
-                                    if(imageCallback != null ){
+                                if (!TextUtils.isEmpty(uploaduel)) {
+                                    if (imageCallback != null) {
                                         imageCallback.imageCallback(openType, uploaduel);
                                     }
                                 } else {
@@ -105,10 +107,69 @@ public class RequestEntityUtils {
 
             }
         });
-
     }
-  /**
+
+    /**
+     * 批量上传
+     */
+
+    public static List<String> uploadOssImageArray(Activity activity, int openType, ArrayList<String> arrayList, ImageCallback imageCallback) {
+        List<String> paths = new ArrayList<>();
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(activity, "提交数据");
+        ThreadUtils.openSonThread(new Runnable() {
+            @Override
+            public void run() {
+                if (arrayList.size() > 0) {
+                    for (String path : arrayList) {
+                        File requestFile = ProjectPhotoUtils.compressImage(path);
+                        RequestEntity requestEntity = new RequestEntity(0);
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("param", "undertakeAndriod");
+                        requestEntity.setData(hashMap);
+                        String jsonString = JsonManager.createJsonString(requestEntity);
+                        OkgoUtils.post(ProjectUrl.CLOUDAUTH_GETASSUMEROLE, jsonString).execute(new MyStringCallback<ResponseCloudauthGetassumeroleEntity>() {
+                            @Override
+                            public void onResponse(ResponseCloudauthGetassumeroleEntity s) {
+                                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                                if (s != null) {
+                                    if (s.success && s.data != null) {
+                                        CloudauthGetassumeroleEntity entity = s.data;
+                                        UploadHelper uploadHelper = new UploadHelper(entity.url, entity.accessKeyId, entity.accessKeySecret, entity.securityToken, entity.bucketName);
+                                        String uploaduel = uploadHelper.uploadPortrait(requestFile.getPath());
+                                        UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                                        if (!TextUtils.isEmpty(uploaduel)) {
+                                            Log.e("uploadOssImageArray>>>>","==upload url=="+uploaduel);
+                                            paths.add(uploaduel);
+                                        } else {
+                                            ToastUtil.showToastString("图片上传失败");
+                                        }
+                                    } else {
+                                        ToastUtil.showToastString(s.message);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public Class<ResponseCloudauthGetassumeroleEntity> getClazz() {
+                                return ResponseCloudauthGetassumeroleEntity.class;
+                            }
+                        });
+                    }
+                    if (imageCallback != null) { //传完后回调
+                        imageCallback.imageArrayCallback(openType, paths);
+                    }
+                }
+
+            }
+        });
+        return  paths;
+    }
+
+
+
+    /**
      * 专门上传图片用的方法
+     *
      * @param openType
      * @param uri
      * @param imageCallback
@@ -125,7 +186,7 @@ public class RequestEntityUtils {
                         UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                         if (s != null) {
                             if (s.success) {
-                                if(imageCallback != null){
+                                if (imageCallback != null) {
                                     imageCallback.imageCallback(openType, s.data);
                                 }
                             } else {
@@ -144,7 +205,8 @@ public class RequestEntityUtils {
 
     }
 
-    public interface ImageCallback{
-       void imageCallback(int openType, String url);
+    public interface ImageCallback {
+        void imageCallback(int openType, String url);
+        void imageArrayCallback(int openType, List<String> urls);
     }
 }
