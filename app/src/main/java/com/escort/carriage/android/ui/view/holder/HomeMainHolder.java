@@ -121,6 +121,13 @@ public class HomeMainHolder {
 
 
     public void useBanner() {
+
+        BannerBean.ListBean listBean=new BannerBean.ListBean();
+        listBean.setBannerUrl("");
+        if(mDatas==null||mDatas.size()==0){
+            mDatas = new ArrayList<>();
+            mDatas.add(listBean);
+        }
         //--------------------------简单使用-------------------------------
         banner.setAdapter(new ImageAdapter(mDatas))
                 .setIndicator(new CircleIndicator(activity))

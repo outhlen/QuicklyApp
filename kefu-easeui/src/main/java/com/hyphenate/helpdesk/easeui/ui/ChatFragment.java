@@ -41,6 +41,7 @@ import com.hyphenate.chat.KefuConversationManager;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.callback.ValueCallBack;
+import com.hyphenate.helpdesk.easeui.Constant;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 import com.hyphenate.helpdesk.easeui.recorder.MediaManager;
@@ -154,6 +155,8 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         fragmentArgs = getArguments();
         // IM服务号
         toChatUsername = fragmentArgs.getString(Config.EXTRA_SERVICE_IM_NUMBER);
+        //初始名字
+        Constant.DEFAUT_USER_NAME = fragmentArgs.getString(Config.DEFAUT_NAME);
         // 是否显示用户昵称
         showUserNick = fragmentArgs.getBoolean(Config.EXTRA_SHOW_NICK, false);
         //指定技能组

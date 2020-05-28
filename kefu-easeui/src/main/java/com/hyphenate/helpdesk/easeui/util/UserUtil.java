@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.Constant;
 import com.hyphenate.helpdesk.model.AgentInfo;
 import com.hyphenate.helpdesk.model.MessageHelper;
 
@@ -20,7 +21,7 @@ public class UserUtil {
     public static void setAgentNickAndAvatar(Context context, Message message, ImageView userAvatarView, TextView usernickView){
         AgentInfo agentInfo = MessageHelper.getAgentInfo(message);
         if (usernickView != null){
-            usernickView.setText(message.from());
+            usernickView.setText(Constant.DEFAUT_USER_NAME);//初始名字小二
             if (agentInfo != null){
                 if (!TextUtils.isEmpty(agentInfo.getNickname())) {
                     usernickView.setText(agentInfo.getNickname());

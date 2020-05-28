@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.Html;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
@@ -18,6 +20,7 @@ import com.hyphenate.helpdesk.R;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
+import com.hyphenate.helpdesk.easeui.util.ClickMovementMethod;
 import com.hyphenate.helpdesk.easeui.util.SmileUtils;
 
 public class ChatRowText extends ChatRow{
@@ -43,37 +46,25 @@ public class ChatRowText extends ChatRow{
     public void onSetUpView() {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.body();
 
-        //解析html超链接
-        CharSequence htmpTxt = Html.fromHtml(txtBody.getMessage().replace("<", "&lt;"));
-        //解析表情
-        Spannable span = SmileUtils.getSmiledText(context, htmpTxt);
 
-        //给超链接添加响应
-        URLSpan[] urlSpans = span.getSpans(0, htmpTxt.length(), URLSpan.class);
-        for (URLSpan span1 : urlSpans) {
-            int start = span.getSpanStart(span1);
-            int end = span.getSpanEnd(span1);
-            int flag = span.getSpanFlags(span1);
-            final String link = span1.getURL();
-            span.setSpan(new ClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    //打开超链接
-                    if (link != null && link.startsWith("http")) {
-                        Intent intent = new Intent();
-                        intent.setAction("android.intent.action.VIEW");
-                        Uri content_url = Uri.parse(link);
-                        intent.setData(content_url);
-                        getContext().startActivity(intent);
-                    }
-                }
-            }, start, end, flag);
-            span.removeSpan(span1);
+
+
+
+        Spanned spannedHtml = Html.fromHtml(txtBody.getMessage());
+        //解析表情
+        Spannable clickableHtmlBuilder = SmileUtils.getSmiledText(context, spannedHtml);
+        URLSpan[] urls = clickableHtmlBuilder.getSpans(0, spannedHtml.length(), URLSpan.class);
+
+        for (URLSpan span1 : urls) {
+            setLinkClickable(clickableHtmlBuilder, span1);
         }
 
+
+
         contentView.setLinksClickable(true);
+        contentView.setOnTouchListener(ClickMovementMethod.getInstance());//解决点击和长按事件冲突
         // 设置内容
-        contentView.setText(span, TextView.BufferType.SPANNABLE);
+        contentView.setText(clickableHtmlBuilder, TextView.BufferType.SPANNABLE);
 
         handleTextMessage();
     }
@@ -121,6 +112,31 @@ public class ChatRowText extends ChatRow{
     protected void onBubbleClick() {
         // TODO Auto-generated method stub
 
+    }
+
+
+
+
+
+
+    private void setLinkClickable(final Spannable clickableHtmlBuilder,
+                                  final URLSpan urlSpan) {
+        int start = clickableHtmlBuilder.getSpanStart(urlSpan);
+        int end = clickableHtmlBuilder.getSpanEnd(urlSpan);
+        int flags = clickableHtmlBuilder.getSpanFlags(urlSpan);
+        final String link = urlSpan.getURL();
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                // do someThing
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                Uri content_url = Uri.parse(link);
+                intent.setData(content_url);
+                getContext().startActivity(intent);
+            }
+        };
+        clickableHtmlBuilder.setSpan(clickableSpan, start, end, flags);
     }
 
 

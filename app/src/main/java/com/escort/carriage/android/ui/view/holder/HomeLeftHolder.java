@@ -82,7 +82,7 @@ public class HomeLeftHolder implements View.OnClickListener {
     private View viewGroup;
     private HomeActivity activity;
     private Unbinder bind;
-
+    private String defautName="小二";
     public HomeLeftHolder(HomeActivity activity, FrameLayout leftFrameLayout) {
         this.activity = activity;
         viewGroup = View.inflate(activity, R.layout.view_slide_menu, null);
@@ -200,6 +200,7 @@ public class HomeLeftHolder implements View.OnClickListener {
                 .setScheduleQueue(MessageHelper.createQueueIdentity("客服服务"))
                 .setShowUserNick(true)
                 .setBundle(bundle)
+                .setDefautName(defautName)
                 .build();
         activity.startActivity(intent);
     }
