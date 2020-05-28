@@ -61,6 +61,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".easeui.ui.NewLeaveMessageActivity" />
 
         <!-- 声明sdk所需的service -->
         <service

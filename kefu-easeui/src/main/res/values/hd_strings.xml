@@ -20,6 +20,7 @@
     <string name="connect_failuer_toast">Please check the network or try again later</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="leave_title">Note</string>
     <string name="prompt">Prompt</string>
     <string name="location_recv">[%1$s location]</string>
     <string name="location_message">The location information</string>
