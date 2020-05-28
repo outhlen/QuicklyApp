@@ -21,6 +21,7 @@ public class IntentBuilder {
     private boolean showUserNick;
     private VisitorInfo visitorInfo;
     private String titleName;
+    private String defautName;
     private Bundle bundle;
 
     public IntentBuilder(Context context) {
@@ -62,6 +63,11 @@ public class IntentBuilder {
         return this;
     }
 
+    public IntentBuilder setDefautName(String defautName){
+        this.defautName = defautName;
+        return this;
+    }
+
     public IntentBuilder setBundle(Bundle bundle) {
         this.bundle = bundle;
         return this;
@@ -81,6 +87,9 @@ public class IntentBuilder {
 
         if (agentIdentityInfo != null) {
             intent.putExtra(Config.EXTRA_AGENT_INFO, agentIdentityInfo);
+        }
+        if (defautName != null) {
+            intent.putExtra(Config.DEFAUT_NAME, defautName);
         }
 
         if (titleName != null){

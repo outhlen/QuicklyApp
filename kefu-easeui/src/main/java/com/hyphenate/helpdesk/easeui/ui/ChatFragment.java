@@ -41,6 +41,7 @@ import com.hyphenate.chat.KefuConversationManager;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.callback.ValueCallBack;
+import com.hyphenate.helpdesk.easeui.Constant;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 import com.hyphenate.helpdesk.easeui.recorder.MediaManager;
@@ -113,12 +114,12 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
     protected static final int ITEM_PICTURE = 2;
     protected static final int ITEM_VIDEO = 3;
     protected static final int ITEM_FILE = 4;
+    private static final int ITEM_LEAVE_MSG = 12;
+    protected int[] itemStrings = {R.string.attach_take_pic, R.string.attach_picture, R.string.attach_video, R.string.attach_file,R.string.leave_title};
+    protected int[] itemdrawables = {R.drawable.hd_chat_takepic_selector, R.drawable.hd_chat_image_selector, R.drawable.hd_chat_video_selector, R.drawable.hd_chat_file_selector, R.drawable.em_chat_phrase_selector};
 
-    protected int[] itemStrings = {R.string.attach_take_pic, R.string.attach_picture, R.string.attach_video, R.string.attach_file};
-    protected int[] itemdrawables = {R.drawable.hd_chat_takepic_selector, R.drawable.hd_chat_image_selector, R.drawable.hd_chat_video_selector, R.drawable.hd_chat_file_selector};
-
-    protected int[] itemIds = {ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_VIDEO, ITEM_FILE};
-    protected int[] itemResIds = {R.id.chat_menu_take_pic, R.id.chat_menu_pic, R.id.chat_menu_video, R.id.chat_menu_file};
+    protected int[] itemIds = {ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_VIDEO, ITEM_FILE,ITEM_LEAVE_MSG};
+    protected int[] itemResIds = {R.id.chat_menu_take_pic, R.id.chat_menu_pic, R.id.chat_menu_video, R.id.chat_menu_file, R.id.chat_menu_leave_msg};
     private boolean isMessageListInited;
     protected MyMenuItemClickListener extendMenuItemClickListener;
     private VisitorInfo visitorInfo;
@@ -154,6 +155,8 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         fragmentArgs = getArguments();
         // IM服务号
         toChatUsername = fragmentArgs.getString(Config.EXTRA_SERVICE_IM_NUMBER);
+        //初始名字
+        Constant.DEFAUT_USER_NAME = fragmentArgs.getString(Config.DEFAUT_NAME);
         // 是否显示用户昵称
         showUserNick = fragmentArgs.getBoolean(Config.EXTRA_SHOW_NICK, false);
         //指定技能组
@@ -646,6 +649,11 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
                     //一般文件
                     //demo这里是通过系统api选择文件，实际app中最好是做成qq那种选择发送文件
                     selectFileFromLocal();
+                    break;
+                case ITEM_LEAVE_MSG:
+                    //留言
+                    Intent intent = new Intent(getActivity(), NewLeaveMessageActivity.class);
+                    startActivity(intent);
                     break;
                 default:
                     break;

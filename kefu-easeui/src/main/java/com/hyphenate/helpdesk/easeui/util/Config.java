@@ -15,6 +15,7 @@ public final class Config {
     public static final String EXTRA_TITLE_NAME = "extra_title_name";
 
     public static final String EXTRA_BUNDLE = "extra_bundle";
+    public static final String DEFAUT_NAME = "extra_first_name";
 
 
 }
