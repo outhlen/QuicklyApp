@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_centre_title"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_999999" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_10"
+        android:padding="10dp"
+        android:background="@drawable/bg_b_efefef_bj_5dp"
+        android:gravity="start"
+        android:hint="投诉人手机号"
+        android:maxLength="200"
+        android:textColor="#000"
+        android:textColorHint="@color/color_999999"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_evalute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_10"
+        android:padding="@dimen/space_10"
+        android:background="@drawable/bg_b_efefef_bj_5dp"
+        android:gravity="start"
+        android:hint="请输入申诉具体原因、内容..."
+        android:minLines="8"
+        android:maxLength="200"
+        android:textColor="#000"
+        android:textColorHint="@color/color_999999"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/space_90"
+        android:layout_height="@dimen/space_90"
+        android:layout_margin="@dimen/space_10"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        android:src="@drawable/icon_order_ima_bg"/>
+
+    <com.escort.carriage.android.ui.widget.MyGridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="@dimen/dp_10"
+        android:numColumns="3" />
+
+
+    <Button
+        android:id="@+id/btn_commit_evalute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_login_btn_bg"
+        android:text="确认投诉"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</LinearLayout>

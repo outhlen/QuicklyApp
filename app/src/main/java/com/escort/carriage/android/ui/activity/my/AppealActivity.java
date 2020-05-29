@@ -32,6 +32,7 @@ import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +53,6 @@ public class AppealActivity extends ProjectBaseEditActivity {
     LinearLayout main;
 
     private SelectPhotoUtils selectPhotoUtils;
-
     private String imageUrl;
     private String orderNumber;
 
@@ -63,7 +63,6 @@ public class AppealActivity extends ProjectBaseEditActivity {
         ButterKnife.bind(this);
         orderNumber = getIntent().getStringExtra("orderNumber");
         setPageActionBar();
-
         setSelectUtils();
     }
 
@@ -114,6 +113,11 @@ public class AppealActivity extends ProjectBaseEditActivity {
             public void imageCallback(int openType, String url) {
                 imageUrl = url;
                 GlideManager.getGlideManager().loadImage(url, ivImage, R.drawable.icon_order_ima_bg);
+            }
+
+            @Override
+            public void imageArrayCallback(int openType, List<String> urls) {
+
             }
         });
     }

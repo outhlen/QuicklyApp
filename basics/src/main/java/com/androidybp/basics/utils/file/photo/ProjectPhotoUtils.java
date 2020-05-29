@@ -9,6 +9,7 @@ import com.androidybp.basics.utils.file.FileUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +24,11 @@ public class ProjectPhotoUtils {
      * @param uri
      */
     public static File compressImage(Uri uri) {
-        return compressImage(uri, 960, 200);
+        return compressImage(uri, 960, 400);
+    }
+
+    public static File compressImage(String path) {
+        return compressImageCopy(path, 960, 400);
     }
 
     /**
@@ -111,7 +116,7 @@ public class ProjectPhotoUtils {
             //比例压缩
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
             bitmapOptions.inSampleSize = be;//设置缩放比例
-            bitmapOptions.inDither = true;//optional
+            bitmapOptions.inDither = true;  //optional
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;//optional
             input = ApplicationContext.getInstance().application.getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
@@ -121,7 +126,46 @@ public class ProjectPhotoUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return file;
+    }
 
+
+    public static File compressImageCopy(String url, int width, int size) {
+        File file = null;
+        try {
+            InputStream input  = new FileInputStream(new File(url));
+            BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+            onlyBoundsOptions.inJustDecodeBounds = true;
+            onlyBoundsOptions.inDither = true;//optional
+            onlyBoundsOptions.inPreferredConfig = Bitmap.Config.RGB_565;//optional
+            BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+            //input.close();
+            int originalWidth = onlyBoundsOptions.outWidth;
+            int originalHeight = onlyBoundsOptions.outHeight;
+            if ((originalWidth == -1) || (originalHeight == -1))
+                return null;
+            //图片分辨率以480x800为标准
+            float ww = width;//这里设置宽度为480f
+            //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+            int be = 1;//be=1表示不缩放
+            if (originalWidth > originalHeight && originalWidth > ww) {//如果宽度大的话根据宽度固定大小缩放
+                be = (int) (originalWidth / ww);
+            }
+            if (be <= 0)
+                be = 1;
+            //比例压缩
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmapOptions.inSampleSize = be;//设置缩放比例
+            bitmapOptions.inDither = true;  //optional
+            bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;//optional
+            input = new FileInputStream(new File(url));
+            Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+            input.close();
+            file = new File(FileUtil.getProjectPicturesPath() + File.separator + System.currentTimeMillis() + ".png");
+            compressBmpToFile(bitmap, file, size);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return file;
     }
 

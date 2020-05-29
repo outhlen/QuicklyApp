@@ -251,6 +251,9 @@
         <activity android:name=".ui.activity.SatisfactionActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.ComplaintActivity"
+            android:screenOrientation="portrait"/>
+
         <!--        <activity-->
 <!--            android:name=".wxapi.WXPayEntryActivity"-->
 <!--            android:exported="true"-->

@@ -29,6 +29,7 @@ import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.view.imgview.RoundedImagView;
 
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -106,6 +107,11 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
                 ivImageView.setVisibility(View.VISIBLE);
                 imageUrl = url;
                 GlideManager.getGlideManager().loadImage(url, ivImageView);
+            }
+
+            @Override
+            public void imageArrayCallback(int openType, List<String> urls) {
+
             }
         });
     }

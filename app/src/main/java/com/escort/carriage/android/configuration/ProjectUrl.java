@@ -346,6 +346,11 @@ public class ProjectUrl {
     public static String HANDLE_ADDAPPEAL = baseUrl + "undertake/handle/addAppeal";
 
     /**
+     *  投诉
+     */
+    public static String    TOUSUINFO_URL = baseUrl + "undertake/order/reportOrder";
+
+    /**
      * 申请转车
      */
     public static String ORDERVEHICLE_ADD_EARNESTTURN = baseUrl + "undertake/orderVehicle/add/earnestTurn";
@@ -411,9 +416,9 @@ public class ProjectUrl {
     public static String ORDER_RETURNBACK = baseUrl + "undertake/orderVehicle/switchBack";
 
     /**
-     *  广告
+     *  报告错误信息
      */
 
-    public static String pageAds = baseUrl + "undertake/ads/list";
+    public static String REPORT_ERROR_INFO = baseUrl + "undertake/order/reportErrorOrder";
 
 }

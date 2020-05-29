@@ -36,6 +36,7 @@ import com.escort.carriage.android.ui.view.dialog.EditInfoDialog;
 import com.escort.carriage.android.ui.view.imgview.RoundImageView;
 
 import java.io.File;
+import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
@@ -275,6 +276,11 @@ public class UserInfoActivity extends ProjectBaseActivity implements View.OnClic
                 if (openType == 1) {
                     updateUserImage(url);
                 }
+            }
+
+            @Override
+            public void imageArrayCallback(int openType, List<String> urls) {
+
             }
         });
     }

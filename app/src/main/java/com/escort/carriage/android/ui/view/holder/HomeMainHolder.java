@@ -91,7 +91,6 @@ public class HomeMainHolder {
         leftFrameLayout.removeAllViews();
         leftFrameLayout.addView(viewGroup);
         bind = ButterKnife.bind(this, viewGroup);
-
         initView();
     }
 
@@ -196,7 +195,6 @@ public class HomeMainHolder {
 
     }
 
-    //
     public void getTitleList() {
 
         RequestEntity requestEntity = new RequestEntity(0);

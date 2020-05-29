@@ -45,6 +45,7 @@ import com.androidybp.basics.okhttp3.OkgoUtils;
 import com.androidybp.basics.ui.base.ProjectBaseActivity;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
+import com.androidybp.basics.utils.verification.VerificationUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.AddressListBean;
@@ -56,10 +57,14 @@ import com.escort.carriage.android.entity.bean.OrderListBean;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.home.DeviceInfoEntity;
 import com.escort.carriage.android.entity.response.home.ResponseOrderInfoEntity;
+import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.listener.SimpleOnTrackListener;
+import com.escort.carriage.android.ui.activity.bean.DeviceRequestBean;
 import com.escort.carriage.android.utils.AMapUtil;
+import com.escort.carriage.android.utils.Sh256;
 import com.lzy.okgo.model.Response;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -76,6 +81,11 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class TraceDetailActivity extends ProjectBaseActivity {
 
@@ -91,6 +101,8 @@ public class TraceDetailActivity extends ProjectBaseActivity {
     ImageView backButton;
     @BindView(R.id.item_head_bar_tv_title)
     TextView titleTv;
+    @BindView(R.id.report_btn)
+    LinearLayout reportBtn;
 
     ImageView car;
     LinearLayout lineLayout, positionLayout;
@@ -122,6 +134,8 @@ public class TraceDetailActivity extends ProjectBaseActivity {
     private List<AddressListBean> zhuangList = new ArrayList<>();
     private List<AddressListBean> xieList = new ArrayList<>();
     private List<AddressListBean> zhuangXieList = new ArrayList<>();
+    private List<Point> historyPoints  = null;
+    private boolean isReport = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +193,12 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                 finish();
             }
         });
-
+        reportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reportErrorInfoCar();
+            }
+        });
         lineLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -346,7 +365,6 @@ public class TraceDetailActivity extends ProjectBaseActivity {
 
     // 设置当前位置
     private void setCarPointToMarker() {
-        //Log.e("setCarPointToMarker>>", "位置：" + carPoint.getLatitude() + "," + carPoint.getLongitude());
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         if (locationMarker != null) {
             locationMarker.remove();
@@ -474,6 +492,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                             setCarPointToMarker();
                                             addMarkersToMap(zhuangXieList);
                                         } else {
+
                                             ToastUtil.showToastString("获取车辆位置信息异常，请联系客服");
                                         }
                                     } else {
@@ -489,10 +508,46 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                         Log.e("queryLatestPoint>>", "终端不存在，请先使用轨迹上报示例页面创建终端和上报轨迹");
                     }
                 } else {
+
                     Log.e("queryLatestPoint>>", "终端查询失败，" + queryTerminalResponse.getErrorMsg());
                 }
             }
         });
+
+    }
+
+
+    /**
+     * 上报异常信息
+     */
+    @SuppressLint("CheckResult")
+    private void reportErrorInfoCar() {
+            UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+            RequestEntity requestEntity = new RequestEntity(0);
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("orderNumber", orderNumber);
+            requestEntity.setData(data);
+            String jsonString = JsonManager.createJsonString(requestEntity);
+            OkgoUtils.post(ProjectUrl.REPORT_ERROR_INFO, jsonString).execute(new MyStringCallback<ResponseUserEntity>() {
+                @Override
+                public void onResponse(ResponseUserEntity s) {
+                    UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                    if(s != null ){
+                        if(s.success){
+                            isReport = true;
+                            ToastUtil.showToastString("举报成功");
+                        } else {
+                            isReport = false;
+                            ToastUtil.showToastString(s.message);
+                        }
+                    }
+                }
+
+                @Override
+                public Class<ResponseUserEntity> getClazz() {
+                    return ResponseUserEntity.class;
+                }
+            });
 
     }
 
@@ -501,6 +556,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
      */
     @SuppressLint("CheckResult")
     private void getGaodeHistoryPoint() {
+        historyPoints  = new ArrayList<>();
         RequestEntity requestEntity = new RequestEntity(0);
         HashMap<String, String> data = new HashMap<>();
         data.put("orderNumber", orderNumber);
@@ -610,6 +666,12 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                     }
                     ToastUtil.showToastString("司机未开始运输");
                 }
+
+//                if(historyPoints.size()==0){
+//                    if(!isReport){
+//                        reportErrorInfoCar();
+//                    }
+//                }
             }
 
             @Override

@@ -48,6 +48,7 @@ import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.download.DownLoadManager;
 import com.escort.carriage.android.http.download.DownloadListener;
 import com.escort.carriage.android.ui.ImageLookActivity;
+import com.escort.carriage.android.ui.activity.ComplaintActivity;
 import com.escort.carriage.android.ui.activity.adapter.PhotoListAdapter;
 import com.escort.carriage.android.ui.activity.bean.PhotoBean;
 import com.escort.carriage.android.ui.view.text.DrawableTextView;
@@ -163,6 +164,8 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     TextView orderTv;
     @BindView(R.id.copy_btn)
     TextView copyBtn;
+    @BindView(R.id.tousu_btn)
+    TextView tuosuBtn;
 
     OrderInfoEntity infoEntity;
 
@@ -170,6 +173,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     private String orderID = "";//获取货源大厅的数据时
     private double longitude;//经度
     private double latitude;//纬度
+    private boolean isPriceTag = false;
     private PhotoListAdapter mAdapter;
     List<PhotoBean> list;
     ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
@@ -185,6 +189,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         Intent intent = getIntent();
         orderID = intent.getStringExtra("id");
         openType = intent.getIntExtra("openType", 1);
+        isPriceTag  =  intent.getBooleanExtra("isPrice",false);
         if (openType == 1) {
             showReceipt.setVisibility(View.GONE);
             getLocation();
@@ -192,6 +197,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             if (!TextUtils.isEmpty(orderID)) {
                 getInfo(orderID);
             }
+        }
+        if(isPriceTag){
+            tuosuBtn.setVisibility(View.GONE);
         }
         list = new ArrayList<>();
         photoView.setLayoutManager(new GridLayoutManager(this, 4));
@@ -354,7 +362,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 list.add(photoBean);
             }
             mAdapter.notifyDataSetChanged();
-
             for (int i = 0; i < list.size(); i++) {
                 Rect bounds = new Rect();
                 //new ThumbViewInfo(图片地址);
@@ -430,7 +437,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             tvInvoiceType.setText("不需要发票");
         }
 
-
         //货主姓名
         tvName.setText(infoEntity.shipperName);
         //货主 公司名称
@@ -462,8 +468,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 textView.setBackgroundResource(R.drawable.bg_b_e9f5e4_bj_3dp);
                 textView.setText("同城配送");
                 break;
-
-
         }
     }
 
@@ -487,11 +491,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 case 0:
                     statusName = "待接单";
                     break;
-
                 case 1:
                     statusName = "已接单";
                     break;
-
                 case 2:
                     statusName = "前往装货地";
                     break;
@@ -668,7 +670,8 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         }
     }
 
-    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding, R.id.showReceipt,R.id.copy_btn})
+    @OnClick({R.id.item_head_bar_iv_back, R.id.item_head_bar_iv_right, R.id.ivCallPhone, R.id.btnBidding,
+            R.id.showReceipt,R.id.copy_btn,R.id.tousu_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.item_head_bar_iv_back:
@@ -695,6 +698,11 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             case R.id.showReceipt:
                 // 点击查看货运单，调接口调详情页面 todo:
                 getAssumeRoleByOrderNo(infoEntity.orderNumber);
+                break;
+            case R.id.tousu_btn:
+                Intent intentAction = new Intent(this, ComplaintActivity.class);
+                intentAction.putExtra("orderNumber", infoEntity.orderNumber);
+                startActivity(intentAction);
                 break;
         }
     }
@@ -759,7 +767,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
      * 2. 开始下载
      */
     private void downloadFile(String url) {
-
         downloadDialog = new ProgressDialog(this);
         downloadDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         downloadDialog.setCancelable(false);

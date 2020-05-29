@@ -33,6 +33,8 @@ import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.view.dialog.AuthSuccessDialog;
 import com.escort.carriage.android.utils.HumanFaceAuthenticationUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -183,6 +185,11 @@ public class PersonageAuthenticationActivity extends ProjectBaseActivity impleme
                 } else if(openType == 3){
                     requestPersonageAuthenticationEntity.setHeadPictureReverse(url);
                 }
+            }
+
+            @Override
+            public void imageArrayCallback(int openType, List<String> urls) {
+
             }
         });
     }

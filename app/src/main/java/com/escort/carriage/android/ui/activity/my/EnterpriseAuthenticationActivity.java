@@ -40,6 +40,7 @@ import com.escort.carriage.android.ui.view.dialog.AuthSuccessDialog;
 import com.escort.carriage.android.ui.view.dialog.SelectAddressDialog;
 
 import java.io.File;
+import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
@@ -231,6 +232,11 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
                     requestEntity.setImage(url);
                     toEnterpriseAuthentication(); //开始认证
                 }
+            }
+
+            @Override
+            public void imageArrayCallback(int openType, List<String> urls) {
+
             }
         });
     }
