@@ -43,6 +43,9 @@ import com.escort.carriage.android.utils.MessageHelper;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.callback.Callback;
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
+
+import org.apache.http.util.TextUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -261,6 +264,9 @@ public class HomeLeftHolder implements View.OnClickListener {
                     Log.e("HuanXinData>>","responseData=="+s.getData().getHxUserName().toString());
                     AppConfig.HXUSERNAME  = s.getData().getHxUserName();
                     AppConfig.HXPASSWORD  = s.getData().getHxPassword();
+                    if(!TextUtils.isEmpty(s.getData().getHxKefuName())) {
+                        defautName = s.getData().getHxKefuName();
+                    }
                     ChatClient.getInstance().login(AppConfig.HXUSERNAME, AppConfig.HXPASSWORD, new Callback() {
                         @Override
                         public void onSuccess() {
