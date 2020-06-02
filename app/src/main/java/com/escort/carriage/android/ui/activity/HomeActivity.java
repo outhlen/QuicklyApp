@@ -132,7 +132,7 @@ public class HomeActivity extends ProjectBaseActivity {
         }
         String manufacturer = Build.MANUFACTURER;
         String phoneName = manufacturer.toUpperCase();
-        if(!TextUtils.isEmpty(phoneName) && phoneName.contains("OPPO") || phoneName.contains("VIVO")){
+        if(!TextUtils.isEmpty(phoneName)){
             addWhite(this);
         }
         alarmReceiver = new AlarmReceiver();
