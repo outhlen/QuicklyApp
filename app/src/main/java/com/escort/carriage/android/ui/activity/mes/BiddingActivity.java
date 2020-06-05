@@ -65,6 +65,8 @@ public class BiddingActivity extends Activity {
     Switch switchBtn;
     @BindView(R.id.money_et)
     EditText moneyEt;
+    @BindView(R.id.linearlayout)
+    LinearLayout linearLayout;
 
     private Unbinder bind;
     public Date date;
@@ -72,6 +74,7 @@ public class BiddingActivity extends Activity {
     private String intention;
 
     boolean isPay = false;
+    boolean isShow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class BiddingActivity extends Activity {
         bind = ButterKnife.bind(this);
         orderNumber = getIntent().getStringExtra("orderNumber");
         intention = getIntent().getStringExtra("intention");
+        isShow = getIntent().getBooleanExtra("isShow",false);
+
         tvPageShowText.setText("投标提示:货主意向" + intention + "优先");
 
         switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,6 +101,12 @@ public class BiddingActivity extends Activity {
                 }
             }
         });
+
+        if(isShow){
+            linearLayout.setVisibility(View.VISIBLE);
+        }else{
+            linearLayout.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.ivClose, R.id.tvEndSite, R.id.btnNext})

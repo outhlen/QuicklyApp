@@ -51,6 +51,20 @@
         android:textSize="14sp"
         tools:text="测试数据" />
 
+    <TextView
+        android:id="@+id/tvProtectTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvStartLocation"
+        android:layout_alignBottom="@+id/tvStartLocation"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_10"
+        android:maxLines="1"
+        android:textColor="@color/color_ee4646"
+        android:textSize="12sp"
+        tools:text="需购买保险" />
+
+
     <RelativeLayout
         android:id="@+id/linearlayout"
         android:layout_width="match_parent"

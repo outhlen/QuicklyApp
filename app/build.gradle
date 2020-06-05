@@ -15,19 +15,19 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a",'x86'
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", 'x86'
         }
         manifestPlaceholders = [
-                JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "9217944fa890f724bc68b99b", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL: "developer-default",//暂时填写默认值即可.
-                OPPO_APPKEY : "OP-31e3ef5dd57d4c6fb9a55112c5ec173f", // 设置 OPPO 平台注册的 OPPO_APPKEY
-                OPPO_APPID : "OP-30261562", // OPPO 平台注册的 appid
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY  : "9217944fa890f724bc68b99b", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default",//暂时填写默认值即可.
+                OPPO_APPKEY   : "OP-31e3ef5dd57d4c6fb9a55112c5ec173f", // 设置 OPPO 平台注册的 OPPO_APPKEY
+                OPPO_APPID    : "OP-30261562", // OPPO 平台注册的 appid
                 OPPO_APPSECRET: "OP-129bcf6590f8489797b3553f995d1a35", //OPPO 平台注册的 appsecret
-                VIVO_APPKEY : "6de989439e09221ef98a8fd59ef2fec2", // VIVO平台注册的appkey
-                VIVO_APPID : "103882618", // VIVO平台注册的appid
+                VIVO_APPKEY   : "6de989439e09221ef98a8fd59ef2fec2", // VIVO平台注册的appkey
+                VIVO_APPID    : "103882618", // VIVO平台注册的appid
                 XIAOMI_APPKEY : "MI-5761836643332", // 小米平台注册的appkey
-                XIAOMI_APPID : "MI-2882303761518366332" // 小米平台注册的appid
+                XIAOMI_APPID  : "MI-2882303761518366332" // 小米平台注册的appid
         ]
     }
 
@@ -54,14 +54,14 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             buildConfigField("boolean", "RELEASE", "true")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable true
+            //debuggable true
         }
         debug {
-            debuggable true
+            //debuggable true
             minifyEnabled false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            buildConfigField("boolean", "RELEASE", "false")
+            buildConfigField("boolean", "RELEASE", "true")
         }
     }
 

@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -39,6 +40,7 @@ import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.ResponseDictionaryBean;
 import com.escort.carriage.android.entity.bean.home.AddrBean;
 import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
@@ -67,6 +69,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -177,6 +180,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
     private PhotoListAdapter mAdapter;
     List<PhotoBean> list;
     ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
+    boolean isShow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,7 +229,35 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 return false;
             }
         });
+        initSwitchButton();
+    }
 
+    private void initSwitchButton() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        Map<String,Object> map  = new HashMap<>();
+        map.put("data","isShowDeposit");
+        requestEntity.setData(map);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.QUERY_DICT_INFO, jsonString).execute(new MyStringCallback<ResponseDictionaryBean>() {
+            @Override
+            public void onResponse(ResponseDictionaryBean s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    int code = Integer.valueOf(s.data.get(0).getCode());
+                    Log.e("initSwitchButton>>>","===code=="+code);
+                    if(code>0){
+                        isShow = false;
+                    }else{
+                        isShow = true;
+                    }
+                }
+            }
+            @Override
+            public Class<ResponseDictionaryBean> getClazz() {
+                return ResponseDictionaryBean.class;
+            }
+        });
     }
 
     /**
@@ -326,7 +358,6 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         } else {
             contentStr += "     无需回单";
         }
-
         contentStr += "     " + infoEntity.getIntention() + "优先";
         orderTv.setText(infoEntity.getOrderNumber());
         tvContent.setText(contentStr);
@@ -693,6 +724,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
                 Intent intent = new Intent(this, BiddingActivity.class);
                 intent.putExtra("orderNumber", infoEntity.orderNumber);
                 intent.putExtra("intention", infoEntity.intention);
+                intent.putExtra("isShow", isShow);
                 startActivityForResult(intent, 333);
                 break;
             case R.id.showReceipt:

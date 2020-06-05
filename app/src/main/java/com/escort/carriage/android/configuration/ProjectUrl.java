@@ -420,5 +420,9 @@ public class ProjectUrl {
      */
 
     public static String REPORT_ERROR_INFO = baseUrl + "undertake/order/reportErrorOrder";
+    /**
+     *  字典
+     */
+    public static String QUERY_DICT_INFO = baseUrl + "undertake/dictionary/getChildList";
 
 }

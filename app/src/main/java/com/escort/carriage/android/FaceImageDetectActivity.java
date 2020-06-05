@@ -1,4 +1,4 @@
-package com.escort.carriage.android.ui.activity.my;
+package com.escort.carriage.android;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,13 +23,13 @@ import com.androidybp.basics.utils.file.photo.SelectPhotoUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.verification.VerificationUtil;
-import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.request.my.RequestPersonageAuthenticationEntity;
 import com.escort.carriage.android.entity.response.my.ResponsePersonageAuthenticationInfoEntity;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
+import com.escort.carriage.android.ui.activity.my.PersonageAuthenticationActivity;
 import com.escort.carriage.android.ui.view.dialog.AuthSuccessDialog;
 import com.escort.carriage.android.utils.HumanFaceAuthenticationUtils;
 
@@ -38,10 +38,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * 个人认证
- */
-public class PersonageAuthenticationActivity extends ProjectBaseActivity implements View.OnClickListener {
+public class FaceImageDetectActivity extends ProjectBaseActivity implements View.OnClickListener {
+
     @BindView(R.id.main)
     View main;
     @BindView(R.id.toolbar_centre_title_right_button_title)
@@ -79,12 +77,11 @@ public class PersonageAuthenticationActivity extends ProjectBaseActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_identification);
+        setContentView(R.layout.activity_face_detect);
         ButterKnife.bind(this);
         setPageActionBar();
         status = getIntent().getIntExtra("status", 0);
         requestPersonageAuthenticationEntity = new RequestPersonageAuthenticationEntity();
-
         initView();
         setSelectUtils();
         if (status == 2) {
@@ -142,16 +139,16 @@ public class PersonageAuthenticationActivity extends ProjectBaseActivity impleme
                 //将图片设置到控件上
                 switch (openType) {
                     case 1:
-                        GlideManager.getGlideManager().loadImageUriCenterCrop(PersonageAuthenticationActivity.this, uri, ivMeId);
+                        GlideManager.getGlideManager().loadImageUriCenterCrop(FaceImageDetectActivity.this, uri, ivMeId);
                         tvMeId.setVisibility(View.INVISIBLE);
                         break;
                     case 2:
-                        GlideManager.getGlideManager().loadImageUriCenterCrop(PersonageAuthenticationActivity.this, uri, ivIdZhengMian);
+                        GlideManager.getGlideManager().loadImageUriCenterCrop(FaceImageDetectActivity.this, uri, ivIdZhengMian);
                         tvZhengMian.setVisibility(View.INVISIBLE);
                         break;
                     case 3:
                         tvGuoHui.setVisibility(View.INVISIBLE);
-                        GlideManager.getGlideManager().loadImageUriCenterCrop(PersonageAuthenticationActivity.this, uri, ivIdGuoHui);
+                        GlideManager.getGlideManager().loadImageUriCenterCrop(FaceImageDetectActivity.this, uri, ivIdGuoHui);
                         break;
                 }
                 //将图片上传到服务器上
@@ -284,19 +281,20 @@ public class PersonageAuthenticationActivity extends ProjectBaseActivity impleme
 //                        .show(getSupportFragmentManager());
                 break;
             case R.id.tvSubmit://提交按钮
-                String userName = etUrgentPerson.getText().toString();
-                String phone = etUrgentPhone.getText().toString();
-                if(TextUtils.isEmpty(userName)){
-                    ToastUtil.showToastString("请输入联系人姓名");
-                } else if(TextUtils.isEmpty(phone)){
-                    ToastUtil.showToastString("请输入手机号");
-                } else if(!VerificationUtil.verificationText(phone, VerificationUtil.MOBILE_NUM)){
-                    ToastUtil.showToastString("请输入正确的手机号");
-                } else {
-                    requestPersonageAuthenticationEntity.setUrgentUserName(userName);
-                    requestPersonageAuthenticationEntity.setUrgentPhone(phone);
-                    toPersonageAuthentication();
-                }
+                String userName = "zhnand";
+                String phone = "13098723122";
+                requestPersonageAuthenticationEntity.setUrgentUserName(userName);
+                requestPersonageAuthenticationEntity.setUrgentPhone(phone);
+                toPersonageAuthentication();
+//                if(TextUtils.isEmpty(userName)){
+//                    ToastUtil.showToastString("请输入联系人姓名");
+//                } else if(TextUtils.isEmpty(phone)){
+//                    ToastUtil.showToastString("请输入手机号");
+//                } else if(!VerificationUtil.verificationText(phone, VerificationUtil.MOBILE_NUM)){
+//                    ToastUtil.showToastString("请输入正确的手机号");
+//                } else {
+//
+//                }
                 break;
 
         }

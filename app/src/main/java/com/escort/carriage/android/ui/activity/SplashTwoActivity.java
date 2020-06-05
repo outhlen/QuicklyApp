@@ -54,7 +54,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
         ApplicationContext.getInstance().setResponseInterceptorInterface(new ResponseInterceptorInterfaceIm());
         inspectUserData();
         permissionUtil = new PermissionUtil();
-
         CacheDataEntity cacheDataEntity = CacheDBMolder.getInstance().getCacheDataEntity(null);
         if(cacheDataEntity.firstOpen){
             UserAgreementDialog userAgreementDialog = new UserAgreementDialog(this);
@@ -69,7 +68,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
                             requestPermissionMethod(0);
                             if (dialog != null)
                                 dialog.dismiss();
-
                             break;
                         case 2://推出应用
                             finish();
@@ -86,9 +84,7 @@ public class SplashTwoActivity extends ProjectBaseActivity {
                             intentPrivacyAgreement.putExtra("url", VueUrl.privacyAgreement);
                             startActivity(intentPrivacyAgreement);
                             break;
-
                     }
-
                 }
             });
             userAgreementDialog.getLeftBtn().setTextColor(ResourcesTransformUtil.getColor(com.androidybp.basics.R.color.color_666666));
@@ -98,9 +94,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
         } else {
             requestPermissionMethod(0);
         }
-
-
-
 
     }
 
@@ -160,7 +153,6 @@ public class SplashTwoActivity extends ProjectBaseActivity {
     }
 
     private void openLoginAct() {
-
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();

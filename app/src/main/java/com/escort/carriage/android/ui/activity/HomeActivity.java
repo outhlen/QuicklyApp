@@ -57,6 +57,7 @@ import com.escort.carriage.android.ui.view.dialog.VersionDialog;
 import com.escort.carriage.android.ui.view.holder.HomeLeftHolder;
 import com.escort.carriage.android.ui.view.holder.HomeMainHolder;
 import com.escort.carriage.android.utils.AmapUtils;
+import com.escort.carriage.android.utils.AppUpdateUtils;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.OnDownloadListener;
 import com.hjq.http.model.DownloadInfo;
@@ -71,6 +72,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -505,7 +507,8 @@ public class HomeActivity extends ProjectBaseActivity {
                         if (isAll) {
                             if (mDownloadComplete) {
                                 // 下载完毕，安装 Apk
-                                installApk();
+                               // installApk();
+                                AppUpdateUtils.installApk(HomeActivity.this,mApkFile.getPath());
                             } else if (!mDownloading) {
                                 // 没有下载，开启下载
                                 downloadApk();
@@ -571,7 +574,8 @@ public class HomeActivity extends ProjectBaseActivity {
                         // 标记成下载完成
                         mDownloadComplete = true;
                         // 安装 Apk
-                        installApk();
+                        //installApk();
+                        AppUpdateUtils.installApk(HomeActivity.this,mApkFile.getPath());
                     }
 
                     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -592,11 +596,35 @@ public class HomeActivity extends ProjectBaseActivity {
     }
 
     /**
+     * 安装 apk 文件
+     * @param apkFile apk 文件
+     */
+    private void installApk(File apkFile){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri apkUri = null;
+        //判断版本是否是 7.0 及 7.0 以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            apkUri = FileProvider.getUriForFile(this,  ".fileProvider", apkFile);
+            //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            apkUri = Uri.fromFile(apkFile);
+        }
+        //由于没有在Activity环境下启动Activity,所以设置下面的标签
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        intent.setDataAndType(apkUri,
+                "application/vnd.android.package-archive");
+        startActivity(intent);
+    }
+
+
+
+    /**
      * 安装 Apk
      */
 
     private void installApk() {
-
         try {
             Intent intent = new Intent();
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -653,8 +681,6 @@ public class HomeActivity extends ProjectBaseActivity {
 //                        }
 //                    }
 //                });
-
-
     }
 
     public void addWhite(Activity activity){

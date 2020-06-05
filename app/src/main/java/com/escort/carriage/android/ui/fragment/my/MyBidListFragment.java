@@ -93,7 +93,6 @@ public class MyBidListFragment extends BaseFragment implements BGARefreshLayout.
         } else {
             unbinder = ButterKnife.bind(this, view);
         }
-
         return view;
     }
 

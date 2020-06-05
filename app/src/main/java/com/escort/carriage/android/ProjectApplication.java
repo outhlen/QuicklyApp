@@ -59,7 +59,7 @@ public class ProjectApplication extends MultiDexApplication {
 
         DemoHelper.getInstance().init(this);
 
-        CrashReport.initCrashReport(getApplicationContext(), "0ac3175ca9", true); //日志上报
+     //   CrashReport.initCrashReport(getApplicationContext(), "0ac3175ca9", true); //日志上报
 
         ThreadUtils.openSonThread(new Runnable() {
             @Override

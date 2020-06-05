@@ -126,10 +126,14 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             //已撤单
             setCancleView(helper, item);
         }
+        if (item.isPayFor){
+            helper.protectTv.setVisibility(View.VISIBLE);
+        }else{
+            helper.protectTv.setVisibility(View.GONE);
+        }
     }
 
     private void setCancleView(OrderHolder helper, OrderInfoEntity item) {
-
         helper.btnThree.setBackgroundResource(R.drawable.bg_b_e7a339_bj_3dp);
         helper.btnThree.setText("查看详情");
         helper.btnThree.setTag(see_order_details);
@@ -169,7 +173,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 } else {
                     helper.btnFive.setVisibility(View.GONE);
                 }
-
             }
         } else {
             helper.btnFive.setVisibility(View.GONE);
@@ -260,6 +263,9 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             helper.btnOne.setOnClickListener(null);
             helper.btnOne.setVisibility(View.INVISIBLE);
         }
+
+
+
     }
 
     /**
@@ -763,6 +769,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
         TextView btnThree;
         TextView btnFour;
         TextView btnFive;
+        TextView protectTv;
 
         public OrderHolder(View view) {
             super(view);
@@ -780,6 +787,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
             btnThree = view.findViewById(R.id.btnThree);
             btnFour = view.findViewById(R.id.btnFour);
             btnFive = view.findViewById(R.id.btnFive);
+            protectTv  = view.findViewById(R.id.tvProtectTag);
         }
 
         /**

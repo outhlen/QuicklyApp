@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_10"
-        android:layout_toRightOf="@+id/ivImage"
         android:maxLines="1"
         android:textColor="@color/color_000000"
         android:textSize="14sp"

@@ -11,6 +11,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,6 +26,9 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.ResponcePayStatusBean;
+import com.escort.carriage.android.entity.bean.ResponseDictionaryBean;
+import com.escort.carriage.android.entity.bean.UnionPayEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
@@ -32,6 +36,7 @@ import com.escort.carriage.android.ui.activity.mes.OrderInfoActivity;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -48,6 +53,7 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
     private Switch mSwitch;
     boolean isChecked;
     EditText inputTv;
+    LinearLayout linearLayout;
 
     public BiddingPopupWindow(Activity context, String orderNumber) {
         super(context);
@@ -78,7 +84,6 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
         setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         //这句话，让pop自适应输入状态
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
 //        mMenuView.setOnTouchListener(new OnTouchListener() {
 //
@@ -112,9 +117,12 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
 
     }
 
+
+
     private void setView() {
         mSwitch = mMenuView.findViewById(R.id.switch_btn);
         inputTv = mMenuView.findViewById(R.id.money_et);
+        linearLayout = mMenuView.findViewById(R.id.linearlayout);
         mMenuView.findViewById(R.id.ivClose).setOnClickListener(this);
         mMenuView.findViewById(R.id.tvEndSite).setOnClickListener(this);
         mMenuView.findViewById(R.id.btnNext).setOnClickListener(this);

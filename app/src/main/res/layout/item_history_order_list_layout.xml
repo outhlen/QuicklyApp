@@ -81,7 +81,6 @@
         android:layout_alignBottom="@+id/ivLocation"
         android:layout_marginLeft="@dimen/space_5"
         android:layout_marginRight="@dimen/space_10"
-        android:layout_toLeftOf="@+id/tvBidding"
         android:layout_toRightOf="@+id/ivLocation"
         android:maxLines="1"
         android:textSize="10sp"

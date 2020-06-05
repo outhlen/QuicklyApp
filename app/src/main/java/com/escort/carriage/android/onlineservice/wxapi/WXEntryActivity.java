@@ -30,7 +30,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         button = (Button) findViewById(R.id.button);
         api = WXAPIFactory.createWXAPI(this,UnifyPayPlugin.getInstance(this).getAppId());
         api.handleIntent(getIntent(), this);
-
     }
     @Override
     protected void onNewIntent(Intent intent)

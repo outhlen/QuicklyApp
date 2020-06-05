@@ -20,6 +20,7 @@ import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
@@ -232,6 +233,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                 getDeviceInfo();
             }
         });
+
         getData(orderNumber);
         // 首次进入查看轨迹
         getDeviceInfo(); //定位并获取设备信息
