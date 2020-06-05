@@ -79,7 +79,8 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
     private SelectPhotoUtils selectPhotoUtils;
     private AuthSuccessDialog authSuccessDialog;
     String remoteUrl,areaCode,cityCode,provinceCode ;
-
+    String errorString;
+    boolean isPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +131,7 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
         ivImg.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
         tvSubmit.setOnClickListener(this);
+        ivImageView.setOnClickListener(this);
     }
 
     @Override
@@ -161,6 +163,10 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
                 String companyName = etCompanyName.getText().toString();
                 String code = etCode.getText().toString();
                 String addressDetails = etAddressDetails.getText().toString();
+                if(!isPass){
+                    ToastUtil.showToastString(errorString);
+                    return;
+                }
                 if(TextUtils.isEmpty(companyName)){
                     ToastUtil.showToastString("请填写公司名称");
                     return;
@@ -287,8 +293,11 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
                         etCompanyName.setText(s.data.getCompanyName());
                         etCode.setText(s.data.getCreditCode());
                         etAddressDetails.setText(s.data.getCompanyAddress());
+                        isPass=true;
                     } else {
+                        isPass=false;
                         ToastUtil.showToastString(s.message);
+                        errorString=s.message;
                     }
                 }
             }

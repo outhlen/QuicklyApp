@@ -221,16 +221,16 @@ public class AmapUtils {
         public void onStartTrackCallback(int status, String msg) {
             if (status == ErrorCode.TrackListen.START_TRACK_SUCEE || status == ErrorCode.TrackListen.START_TRACK_SUCEE_NO_NETWORK) {
                 // 成功启动
-                LogUtils.showI("AmapUtils", "启动服务成功");
+                LogUtils.showI("AmapUtilss", "启动服务成功");
                 aMapTrackClient.startGather(onTrackListener);
                 isServiceRunning = true;
             } else if (status == ErrorCode.TrackListen.START_TRACK_ALREADY_STARTED) {
                 // 已经启动
-                LogUtils.showI("AmapUtils", "服务已经启动");
+                LogUtils.showI("AmapUtilss", "服务已经启动");
                 aMapTrackClient.startGather(onTrackListener);
                 isServiceRunning = true;
             } else {
-                LogUtils.showI("AmapUtils", "error onStartTrackCallback, status: " + status + ", msg: " + msg);
+                LogUtils.showI("AmapUtilss", "error onStartTrackCallback, status: " + status + ", msg: " + msg);
             }
 
         }

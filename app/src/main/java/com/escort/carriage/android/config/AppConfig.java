@@ -13,7 +13,7 @@ public final class AppConfig {
 
     public static final String HX_APPKEY= "1460200428068026#kefuchannelapp80531";
     public static final String HX_TENANTID = "80531";
-    public static final String HX_IMNUMBER = "kefuchannelimid_232887";
+    public static final String HX_IMNUMBER = "kefuchannelimid_024243";
     public static String  HXUSERNAME  = "1248555330743730177";
     public static String  HXPASSWORD  = "1248555330743730177";
 
