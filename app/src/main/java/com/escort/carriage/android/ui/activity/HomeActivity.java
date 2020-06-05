@@ -127,9 +127,7 @@ public class HomeActivity extends ProjectBaseActivity {
         //获取更新
         getVersion();
         //开启轨迹
-        if (ProjectDataConfig.isOpenAmap) {
-            getDeviceInfo();
-        }
+
         String manufacturer = Build.MANUFACTURER;
         String phoneName = manufacturer.toUpperCase();
         if(!TextUtils.isEmpty(phoneName)){
@@ -372,6 +370,9 @@ public class HomeActivity extends ProjectBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (ProjectDataConfig.isOpenAmap) {
+            getDeviceInfo();
+        }
     }
 
     //--------- 轨迹 使用 配置参数
