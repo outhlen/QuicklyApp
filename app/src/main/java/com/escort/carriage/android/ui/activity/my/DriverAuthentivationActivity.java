@@ -59,6 +59,7 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
     private SelectPhotoUtils selectPhotoUtils;
     String imageUrl;
     String zige,hege;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +85,6 @@ public class DriverAuthentivationActivity extends ProjectBaseActivity {
                 finish();
             }
         });
-
-
     }
 
     private void setSelectUtils() {
