@@ -236,7 +236,7 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
         RequestEntity requestEntity = new RequestEntity(0);
         Map<String,Object> map  = new HashMap<>();
-        map.put("data","isShowDeposit");
+        map.put("param","isShowDeposit");
         requestEntity.setData(map);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.QUERY_DICT_INFO, jsonString).execute(new MyStringCallback<ResponseDictionaryBean>() {
@@ -244,9 +244,9 @@ public class OrderInfoActivity extends ProjectBaseActivity implements View.OnCli
             public void onResponse(ResponseDictionaryBean s) {
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
-                    int code = Integer.valueOf(s.data.get(0).getCode());
+                    String code = s.getData();
                     Log.e("initSwitchButton>>>","===code=="+code);
-                    if(code>0){
+                    if(code.equals("false")){
                         isShow = false;
                     }else{
                         isShow = true;

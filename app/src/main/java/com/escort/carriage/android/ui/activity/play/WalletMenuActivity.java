@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidybp.basics.fastjson.JsonManager;
@@ -18,6 +19,7 @@ import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.configuration.VueUrl;
+import com.escort.carriage.android.entity.bean.ReponseDictMenuEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.play.ResponseWalletMenuEntity;
 import com.escort.carriage.android.http.MyStringCallback;
@@ -30,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * @author Yangbp
@@ -40,6 +43,8 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
 
     @BindView(R.id.tvMoney)
     TextView tvMoney;
+    @BindView(R.id.wallet_menu_recharge_group)
+    LinearLayout walllayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
         ButterKnife.bind(this);
         setPageActionBar();
         getUserMoney();
-
+        getDictnary();
     }
 
     private void setPageActionBar() {
@@ -66,6 +71,38 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
                 finish();
             }
         });
+    }
+
+
+    private void getDictnary() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("param","rechargeSwitch");
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.QUERY_DICT_INFO, jsonString).execute(new MyStringCallback<ReponseDictMenuEntity>() {
+            @Override
+            public void onResponse(ReponseDictMenuEntity s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    if(s.data!=null){
+                        String isExit  =  s.data.toString();
+                        if(isExit.equals("false")){
+                            walllayout.setVisibility(View.GONE);
+                        }else{
+                            walllayout.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public Class<ReponseDictMenuEntity> getClazz() {
+                return ReponseDictMenuEntity.class;
+            }
+        });
+
     }
 
 

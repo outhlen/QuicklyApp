@@ -423,6 +423,6 @@ public class ProjectUrl {
     /**
      *  字典
      */
-    public static String QUERY_DICT_INFO = baseUrl + "undertake/dictionary/getChildList";
+    public static String QUERY_DICT_INFO = baseUrl + "undertake/config/getSysConfig";
 
 }
