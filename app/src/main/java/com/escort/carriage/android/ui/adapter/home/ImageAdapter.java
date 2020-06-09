@@ -1,5 +1,9 @@
 package com.escort.carriage.android.ui.adapter.home;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -11,7 +15,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.escort.carriage.android.ProjectApplication;
 import com.escort.carriage.android.R;
+import com.escort.carriage.android.configuration.VueUrl;
 import com.escort.carriage.android.entity.bean.BannerBean;
+import com.escort.carriage.android.ui.activity.web.VueActivity;
 import com.youth.banner.adapter.BannerAdapter;
 
 import java.util.List;
@@ -19,10 +25,11 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 
 public class ImageAdapter extends BannerAdapter<BannerBean.ListBean, ImageAdapter.BannerViewHolder> {
-
-    public ImageAdapter(List<BannerBean.ListBean> mDatas) {
+    Context context;
+    public ImageAdapter(List<BannerBean.ListBean> mDatas,Context context) {
         //设置数据，也可以调用banner提供的方法,或者自己在adapter中实现
         super(mDatas);
+        this.context=context;
     }
 
     //创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
@@ -46,6 +53,17 @@ public class ImageAdapter extends BannerAdapter<BannerBean.ListBean, ImageAdapte
         Glide.with(ProjectApplication.getContext()).load(data.getBannerUrl())
                 .apply(options)
                 .into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!TextUtils.isEmpty(data.getLinkUrl())) {
+
+                    Intent intentMes = new Intent(context, VueActivity.class);
+                    intentMes.putExtra("url",data.getLinkUrl());
+                    context.startActivity(intentMes);
+                }
+            }
+        });
     }
 
     class BannerViewHolder extends RecyclerView.ViewHolder {

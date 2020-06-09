@@ -128,7 +128,7 @@ public class HomeMainHolder {
             mDatas.add(listBean);
         }
         //--------------------------简单使用-------------------------------
-        banner.setAdapter(new ImageAdapter(mDatas))
+        banner.setAdapter(new ImageAdapter(mDatas,activity))
                 .setIndicator(new CircleIndicator(activity))
                 .setIndicatorGravity(IndicatorConfig.Direction.CENTER)
                 .setBannerRound(10)
