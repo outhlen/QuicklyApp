@@ -23,6 +23,7 @@ import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
+import com.escort.carriage.android.utils.CheckUtils;
 import com.escort.carriage.android.utils.Sh256;
 
 import java.util.HashMap;
@@ -87,9 +88,10 @@ public class ForgetSetPwdActivity extends ProjectBaseEditActivity {
             ToastUtil.showToastString("请再次输入密码");
         } else if(!TextUtils.equals(pwdStr, pwd2Str)){
             ToastUtil.showToastString("两次密码不一致");
-        } else if(checkPwdIsNo(pwdStr)){
-            ToastUtil.showToastString("请设置6-10位数字和字母组合");
-        } else {
+        } else if (CheckUtils.checkRePwdIsNo(pwdStr)){
+            ToastUtil.showToastString("密码必须至少包含一个大写字母，一个小写字母，一个数字和一个标点符号，且密码长度最短为八位");
+        }
+        else {
             Intent intent = getIntent();
             String phone = intent.getStringExtra("phone");
             String smsCode = intent.getStringExtra("smsCode");
