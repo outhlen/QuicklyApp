@@ -4,13 +4,17 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.biometrics.BiometricPrompt;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
 import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.cache.CacheDBMolder;
@@ -66,6 +71,7 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.security.auth.callback.PasswordCallback;
 
 import butterknife.BindView;
@@ -106,8 +112,12 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
     KeyStore keyStore;
     FingerMarkDialog fingerMarkDialog;
     String  DEFAULT_KEY_NAME = "default_key";
+    BiometricPrompt mBiometricPrompt;
+    CancellationSignal mCancellationSignal;
+    BiometricPrompt.AuthenticationCallback mAuthenticationCallback;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,21 +130,73 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         setPageActionBar();
         removeUserInfo();
         if (supportFingerprint()){
-            initKey();
-            initCipher();
+//            initKey();
+//            initCipher();
             relativeLayout.setVisibility(View.GONE);
             isThum=false;
         }else{
             relativeLayout.setVisibility(View.VISIBLE);
             isThum=true;
         }
+        initDialog();
         initThum();
     }
+
+    private void initDialog() {
+        mBiometricPrompt = new BiometricPrompt.Builder(this)
+                .setTitle("指纹验证")
+                .setDescription("描述")
+                .setNegativeButton("取消", getMainExecutor(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.i("mBiometricPrompt", "Cancel button clicked");
+                    }
+                }).build();
+
+        mCancellationSignal = new CancellationSignal();
+        mCancellationSignal.setOnCancelListener(new CancellationSignal.OnCancelListener() {
+            @Override
+            public void onCancel() {
+                //handle cancel result
+                ToastUtil.showToastString("取消指纹");
+                Log.i("mBiometricPrompt", "Canceled");
+            }
+        });
+
+        mAuthenticationCallback = new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Log.i("mBiometricPrompt", "onAuthenticationError " + errString);
+                ToastUtil.showToastString("指纹识别失败");
+                isPass = false;
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                ToastUtil.showToastString("指纹识别成功");
+                Log.i("mBiometricPrompt", "onAuthenticationSucceeded " + result.toString());
+                isPass = true;
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Log.i("mBiometricPrompt", "onAuthenticationFailed ");
+                ToastUtil.showToastString("指纹识别失败");
+                isPass = false;
+            }
+        };
+
+
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initKey() {
         try {
-            KeyStore  keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
             KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(DEFAULT_KEY_NAME, KeyProperties.PURPOSE_SIGN|KeyProperties.PURPOSE_DECRYPT).setBlockModes(KeyProperties.BLOCK_MODE_CBC)
@@ -142,47 +204,50 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
             keyGenerator.init(builder.build());
             keyGenerator.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initCipher() {
         try {
-            Key key = keyStore.getKey(DEFAULT_KEY_NAME, null);
+            SecretKey key = (SecretKey) keyStore.getKey(DEFAULT_KEY_NAME, null);
             Cipher cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            showFingerPrintDialog(cipher);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            fingerMarkDialog = new FingerMarkDialog(this);
+            fingerMarkDialog.setCipher(cipher);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    private void showFingerPrintDialog(Cipher cipher) {
-        FingerMarkDialog dialog = new FingerMarkDialog(this);
-        dialog.setCipher(cipher);
     }
 
     @SuppressLint("MissingPermission")
     private boolean supportFingerprint() {
+        FingerprintManagerCompat compat  = null;
             if (Build.VERSION.SDK_INT < 23) {
                 Toast.makeText(this, "您的系统版本过低，不支持指纹功能", Toast.LENGTH_SHORT).show();
                 return false;
             } else {
-                KeyguardManager keyguardManager=(KeyguardManager )getSystemService(Context.KEYGUARD_SERVICE);
-                FingerprintManager fingerprintManager = (FingerprintManager)getSystemService(Context.FINGERPRINT_SERVICE);
-                if (!fingerprintManager.isHardwareDetected()) {
-                    Toast.makeText(this, "您的手机不支持指纹功能", Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!keyguardManager.isKeyguardSecure()) {
-                    Toast.makeText(this, "您还未设置锁屏，请先设置锁屏并添加一个指纹", Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!fingerprintManager.hasEnrolledFingerprints()) {
-                    Toast.makeText(this, "您至少需要在系统设置中添加一个指纹", Toast.LENGTH_SHORT).show();
-                    return false;
+                compat = FingerprintManagerCompat.from(getApplicationContext());
+                if(!compat.hasEnrolledFingerprints()){ //是否有输入设备
+                   // Toast.makeText(this, "您的手机不支持指纹功能", Toast.LENGTH_SHORT).show();
+                    return  false;
+                }else{
+                    KeyguardManager keyguardManager=(KeyguardManager )getSystemService(Context.KEYGUARD_SERVICE);
+                    FingerprintManager fingerprintManager = (FingerprintManager)getSystemService(Context.FINGERPRINT_SERVICE);
+                    if (!fingerprintManager.isHardwareDetected()) {
+                        //Toast.makeText(this, "您的手机不支持指纹功能", Toast.LENGTH_SHORT).show();
+                        return false;
+                    } else if (!keyguardManager.isKeyguardSecure()) {
+                        Toast.makeText(this, "您还未设置锁屏，请先设置锁屏并添加一个指纹", Toast.LENGTH_SHORT).show();
+                        return false;
+                    } else if (!fingerprintManager.hasEnrolledFingerprints()) {
+                        Toast.makeText(this, "您至少需要在系统设置中添加一个指纹", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
                 }
             }
             return true;
-
     }
 
     private void initThum() {
@@ -267,7 +332,6 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         CacheDBMolder.getInstance().setUserInfo(jsonBean, null, null);
         CacheDBMolder.getInstance().setUserToken(jsonBean.getToken());
         //打开首页
-//        startActivity(new Intent(this, MainActivity.class));
         HomeActivity.startHomeActivity(this);
     }
 
@@ -284,17 +348,18 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
                     if(isThum) {
                         ToastUtil.showToastString("请先向右滑动完成验证");
                     }else {
-                        fingerMarkDialog.setPassListen(new FingerMarkDialog.onPassListen() {
-                            @Override
-                            public void pass(boolean pass) {
-                                isPass = pass;
-                                if(isPass) {
-                                    login();
-                                }
-                            }
-                        });
-                        fingerMarkDialog.show();
-                        fingerMarkDialog.start();
+                        mBiometricPrompt.authenticate(mCancellationSignal, getMainExecutor(), mAuthenticationCallback);
+//                        fingerMarkDialog.setPassListen(new FingerMarkDialog.onPassListen() {
+//                            @Override
+//                            public void pass(boolean pass) {
+//                                isPass = pass;
+//                                if(isPass) {
+//                                    login();
+//                                }
+//                            }
+//                        });
+//                        fingerMarkDialog.show();
+//                        fingerMarkDialog.start();
                     }
                 }
                 break;
