@@ -26,6 +26,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.cache.CacheDBMolder;
@@ -44,8 +45,10 @@ import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
 import com.escort.carriage.android.LocationService;
 import com.escort.carriage.android.R;
+import com.escort.carriage.android.config.AppConfig;
 import com.escort.carriage.android.configuration.ProjectDataConfig;
 import com.escort.carriage.android.configuration.ProjectUrl;
+import com.escort.carriage.android.entity.bean.ReponseDictMenuEntity;
 import com.escort.carriage.android.entity.bean.home.AmapCacheEntity;
 import com.escort.carriage.android.entity.bean.home.VersionEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
@@ -129,7 +132,7 @@ public class HomeActivity extends ProjectBaseActivity {
         //获取更新
         getVersion();
         //开启轨迹
-
+        getDictnary();
         String manufacturer = Build.MANUFACTURER;
         String phoneName = manufacturer.toUpperCase();
         if(!TextUtils.isEmpty(phoneName)){
@@ -208,6 +211,37 @@ public class HomeActivity extends ProjectBaseActivity {
     public  String getDeviceBrand() {
         return android.os.Build.BRAND;
     }
+
+    private void getDictnary() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("param","rechargeSwitch");
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.QUERY_DICT_INFO, jsonString).execute(new MyStringCallback<ReponseDictMenuEntity>() {
+            @Override
+            public void onResponse(ReponseDictMenuEntity s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    if(s.data!=null){
+                        String isExit  =  s.data.toString();
+                        if(isExit.equals("false")){
+                            AppConfig.userWallet  = false;
+                        }else{
+                            AppConfig.userWallet  = true;                        }
+                    }
+                }
+            }
+
+            @Override
+            public Class<ReponseDictMenuEntity> getClazz() {
+                return ReponseDictMenuEntity.class;
+            }
+        });
+
+    }
+
 
     private void getDeviceInfo() {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "加载中...");

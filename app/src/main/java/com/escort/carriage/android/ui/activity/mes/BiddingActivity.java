@@ -166,8 +166,6 @@ public class BiddingActivity extends Activity {
                 }
 
             }
-
-
         }).build();
         pvTime.show();
     }

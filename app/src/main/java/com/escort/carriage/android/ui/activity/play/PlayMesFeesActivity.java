@@ -25,6 +25,7 @@ import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.chinaums.pppay.unify.UnifyPayListener;
 import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.escort.carriage.android.R;
+import com.escort.carriage.android.config.AppConfig;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.ResponcePayStatusBean;
 import com.escort.carriage.android.entity.bean.UnionPayEntity;
@@ -300,8 +301,9 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
         arr.add(item004);
         arr.add(item001);
         arr.add(item002);
-        arr.add(item003);
-
+        if(AppConfig.userWallet){
+            arr.add(item003);
+        }
         return arr;
     }
 

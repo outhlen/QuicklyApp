@@ -159,6 +159,7 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
                 //特惠充值
                 Intent intent = new Intent(this, ChargeMoneyActivity.class);
                 startActivityForResult(intent, 123);
+
                 break;
             case R.id.iv_wallet_menu_discounts://中间优惠卷
                 Intent intentDiscounts = new Intent(this, VueActivity.class);

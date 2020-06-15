@@ -108,7 +108,7 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
 
     private Unbinder bind;
     public Boolean isPass = false;
-    public Boolean isThum = false;
+    public Boolean isThum = true;
     KeyStore keyStore;
     FingerMarkDialog fingerMarkDialog;
     String  DEFAULT_KEY_NAME = "default_key";
@@ -129,16 +129,15 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         }
         setPageActionBar();
         removeUserInfo();
-        if (supportFingerprint()){
-//            initKey();
-//            initCipher();
-            relativeLayout.setVisibility(View.GONE);
-            isThum=false;
-        }else{
-            relativeLayout.setVisibility(View.VISIBLE);
-            isThum=true;
-        }
-        initDialog();
+        relativeLayout.setVisibility(View.VISIBLE);
+//        if (supportFingerprint()){
+//            relativeLayout.setVisibility(View.GONE);
+//            isThum=false;
+//        }else{
+//            relativeLayout.setVisibility(View.VISIBLE);
+//            isThum=true;
+//        }
+        //initDialog();
         initThum();
     }
 
@@ -230,7 +229,6 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
             } else {
                 compat = FingerprintManagerCompat.from(getApplicationContext());
                 if(!compat.hasEnrolledFingerprints()){ //是否有输入设备
-                   // Toast.makeText(this, "您的手机不支持指纹功能", Toast.LENGTH_SHORT).show();
                     return  false;
                 }else{
                     KeyguardManager keyguardManager=(KeyguardManager )getSystemService(Context.KEYGUARD_SERVICE);
@@ -276,14 +274,12 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
                 }
             }
         });
-
     }
 
     public void removeUserInfo(){
         CacheDBMolder.getInstance().clearData();
         ApplicationContext.getInstance().isRegister = false;
     }
-
 
     private void setPageActionBar() {
         //获取顶部状态栏的高度 给对应View设置高度
@@ -345,22 +341,23 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
                 if(isPass){
                     login();
                 }else{
-                    if(isThum) {
-                        ToastUtil.showToastString("请先向右滑动完成验证");
-                    }else {
-                        mBiometricPrompt.authenticate(mCancellationSignal, getMainExecutor(), mAuthenticationCallback);
-//                        fingerMarkDialog.setPassListen(new FingerMarkDialog.onPassListen() {
-//                            @Override
-//                            public void pass(boolean pass) {
-//                                isPass = pass;
-//                                if(isPass) {
-//                                    login();
-//                                }
-//                            }
-//                        });
-//                        fingerMarkDialog.show();
-//                        fingerMarkDialog.start();
-                    }
+                    ToastUtil.showToastString("请先向右滑动完成验证");
+//                    if(isThum) {
+//                        ToastUtil.showToastString("请先向右滑动完成验证");
+//                    }else {
+//                        mBiometricPrompt.authenticate(mCancellationSignal, getMainExecutor(), mAuthenticationCallback);
+////                        fingerMarkDialog.setPassListen(new FingerMarkDialog.onPassListen() {
+////                            @Override
+////                            public void pass(boolean pass) {
+////                                isPass = pass;
+////                                if(isPass) {
+////                                    login();
+////                                }
+////                            }
+////                        });
+////                        fingerMarkDialog.show();
+////                        fingerMarkDialog.start();
+//                    }
                 }
                 break;
             //忘记密码
