@@ -4,9 +4,28 @@ public class DictionaryInfo {
 
     private String id;
     private String code;
+    private String data;
+    private String success;
     private String name;
     private String pcode;
     private String remark;
+
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public String getId() {
         return id;

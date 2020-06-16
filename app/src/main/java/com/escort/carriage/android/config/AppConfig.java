@@ -17,6 +17,7 @@ public final class AppConfig {
     public static String  HXUSERNAME  = "1248555330743730177";
     public static String  HXPASSWORD  = "1248555330743730177";
 
+    public static boolean userWallet;
     /**
      * 当前是否为 Debug 模式
      */

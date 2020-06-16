@@ -101,6 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
+                    android:background="@null"
                     android:paddingLeft="5dp"
                     android:textStyle="bold"
                     android:textSize="15sp"
@@ -128,19 +129,23 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
                     android:textStyle="bold"
+<<<<<<< HEAD
+=======
+                    android:background="@null"
+>>>>>>> e66910589f2c39611ecf1387b1626043bc74be16
                     android:textSize="15sp"
                     android:hint="输入从业人员资格类型" />
 
             </LinearLayout>
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:textSize="12sp"
-                android:text="使用总质量大于4.6吨及以上普通货运车运输的驾驶员，可不填写从业资格证号和从业资格类型。"/>
+                android:text="使用总质量大于4.5吨及以下普通货运车辆从事普通货物运输经营的驾驶员，可不填写从业资格证号和从业资格类型。"/>
 
 
         </LinearLayout>

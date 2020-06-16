@@ -109,6 +109,7 @@ public class HomeMainHolder {
 
     public void useBanner() {
 
+<<<<<<< HEAD
 //        BannerBean.ListBean listBean=new BannerBean.ListBean();
 //        listBean.setBannerUrl("");
 //        if(mDatas==null||mDatas.size()==0){
@@ -122,6 +123,21 @@ public class HomeMainHolder {
 //                .setBannerRound(10)
 //                .setIndicatorSelectedColor(activity.getResources().getColor(R.color.white))
 //                .start();
+=======
+        BannerBean.ListBean listBean=new BannerBean.ListBean();
+        listBean.setBannerUrl("");
+        if(mDatas==null||mDatas.size()==0){
+            mDatas = new ArrayList<>();
+            mDatas.add(listBean);
+        }
+        //--------------------------简单使用-------------------------------
+        banner.setAdapter(new ImageAdapter(mDatas,activity))
+                .setIndicator(new CircleIndicator(activity))
+                .setIndicatorGravity(IndicatorConfig.Direction.CENTER)
+                .setBannerRound(10)
+                .setIndicatorSelectedColor(activity.getResources().getColor(R.color.white))
+                .start();
+>>>>>>> e66910589f2c39611ecf1387b1626043bc74be16
     }
 
 

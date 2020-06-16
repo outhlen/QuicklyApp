@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         initData(savedInstanceState);
     }
 
+
     public void initData(Bundle savedInstanceState) {
         ButterKnife.bind(this);
          scaleAnim = new ScaleAnimation(1.0f, 0.9f, 1.0f, 0.9f,

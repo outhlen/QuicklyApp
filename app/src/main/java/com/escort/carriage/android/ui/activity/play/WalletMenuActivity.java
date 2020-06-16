@@ -53,6 +53,7 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
         ButterKnife.bind(this);
         setPageActionBar();
         getUserMoney();
+<<<<<<< HEAD
     }
 
     private void getDictnary() {
@@ -84,6 +85,9 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
             }
         });
 
+=======
+        getDictnary();
+>>>>>>> e66910589f2c39611ecf1387b1626043bc74be16
     }
 
     private void setPageActionBar() {
@@ -101,6 +105,38 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
                 finish();
             }
         });
+    }
+
+
+    private void getDictnary() {
+        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
+        RequestEntity requestEntity = new RequestEntity(0);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("param","rechargeSwitch");
+        requestEntity.setData(data);
+        String jsonString = JsonManager.createJsonString(requestEntity);
+        OkgoUtils.post(ProjectUrl.QUERY_DICT_INFO, jsonString).execute(new MyStringCallback<ReponseDictMenuEntity>() {
+            @Override
+            public void onResponse(ReponseDictMenuEntity s) {
+                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+                if (s != null) {
+                    if(s.data!=null){
+                        String isExit  =  s.data.toString();
+                        if(isExit.equals("false")){
+                            walllayout.setVisibility(View.GONE);
+                        }else{
+                            walllayout.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public Class<ReponseDictMenuEntity> getClazz() {
+                return ReponseDictMenuEntity.class;
+            }
+        });
+
     }
 
 
@@ -157,6 +193,7 @@ public class WalletMenuActivity extends ProjectBaseActivity  {
                 //特惠充值
                 Intent intent = new Intent(this, ChargeMoneyActivity.class);
                 startActivityForResult(intent, 123);
+
                 break;
             case R.id.iv_wallet_menu_discounts://中间优惠卷
                 Intent intentDiscounts = new Intent(this, VueActivity.class);

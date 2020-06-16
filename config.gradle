@@ -4,8 +4,13 @@ ext {
             compileSdkVersion: 28,
             minSdkVersion    : 21,
             targetSdkVersion : 28,
+<<<<<<< HEAD
             versionCode      : 11,
             versionName      : "1.0.11"
+=======
+            versionCode      : 13,
+            versionName      : "1.0.13"
+>>>>>>> e66910589f2c39611ecf1387b1626043bc74be16
     ]
 
     manifestPlaceholders = [

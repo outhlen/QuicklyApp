@@ -123,6 +123,38 @@
                 android:layout_height="0.2dp"/>
         </LinearLayout>
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_thum"
+            android:layout_marginTop="20dp">
+
+            <com.escort.carriage.android.ui.view.VerificationSeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:maxHeight="30dp"
+                android:minHeight="30dp"
+                android:progress="0"
+                android:splitTrack="false"
+                android:progressDrawable="@drawable/bg_forgotpassword_seekbar"
+                android:thumb="@drawable/bg_seekbar_thumb"
+                android:id="@+id/sb_progress"
+                android:thumbOffset="10dp"
+                android:padding="1dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="向右滑动完成验证"
+                android:paddingLeft="20dp"
+                android:textColor="#989898"
+                android:textSize="13sp"
+                android:id="@+id/tv_hint"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/tvLogin"
             android:layout_marginTop="38dp"

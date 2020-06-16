@@ -63,7 +63,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_10"
+<<<<<<< HEAD
                 android:background="@color/color_ffffff">
+=======
+                android:background="@color/color_ffffff"
+                >
+>>>>>>> e66910589f2c39611ecf1387b1626043bc74be16
 
                 <LinearLayout
                     android:id="@+id/llBankNumGroup"

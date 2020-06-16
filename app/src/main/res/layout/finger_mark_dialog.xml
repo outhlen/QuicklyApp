@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_zhiwen_back"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/iv_zhiwen"
+            android:background="@drawable/ic_zhiwen"
+            android:layout_height="80dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="请验证指纹"
+            android:id="@+id/tv_hint"
+            android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/gray_e5"
+        android:id="@+id/line"
+        android:layout_height="2dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
+        android:text="取消"
+        android:gravity="center"
+        android:id="@+id/tv_cancel"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+</LinearLayout>
