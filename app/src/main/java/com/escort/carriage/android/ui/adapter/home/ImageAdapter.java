@@ -18,9 +18,9 @@ import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 
-public class ImageAdapter extends BannerAdapter<BannerBean.ListBean, ImageAdapter.BannerViewHolder> {
+public class ImageAdapter extends BannerAdapter<BannerBean.Banner.ListBean, ImageAdapter.BannerViewHolder> {
 
-    public ImageAdapter(List<BannerBean.ListBean> mDatas) {
+    public ImageAdapter(List<BannerBean.Banner.ListBean> mDatas) {
         //设置数据，也可以调用banner提供的方法,或者自己在adapter中实现
         super(mDatas);
     }
@@ -38,7 +38,7 @@ public class ImageAdapter extends BannerAdapter<BannerBean.ListBean, ImageAdapte
     }
 
     @Override
-    public void onBindView(BannerViewHolder holder, BannerBean.ListBean data, int position, int size) {
+    public void onBindView(BannerViewHolder holder, BannerBean.Banner.ListBean data, int position, int size) {
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.ic_place)
                 .error(R.drawable.ic_place)

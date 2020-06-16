@@ -160,7 +160,7 @@
 
     <!--语音播报关闭-->
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/lspeakSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

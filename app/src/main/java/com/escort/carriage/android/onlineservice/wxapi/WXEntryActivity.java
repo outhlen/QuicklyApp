@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.escort.carriage.android.R;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -28,7 +27,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         Log.d(TAG,"WXEntryActivity --- onCreate");
         setContentView(R.layout.activity_wxpay_entry);
         button = (Button) findViewById(R.id.button);
-        api = WXAPIFactory.createWXAPI(this,UnifyPayPlugin.getInstance(this).getAppId());
+        api = WXAPIFactory.createWXAPI(this,"wxa9a0fa1eb7bc4b85");
         api.handleIntent(getIntent(), this);
     }
     @Override
@@ -55,7 +54,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     + baseResp.transaction + " --- openId：" + baseResp.openId + " --- extMsg：" + launchMiniProResp.extMsg;
             Log.d(TAG,msg);
             button.setText(msg);
-            UnifyPayPlugin.getInstance(this).getWXListener().onResponse(this, baseResp);
+          //  UnifyPayPlugin.getInstance(this).getWXListener().onResponse(this, baseResp);
         }
     }
 }

@@ -248,7 +248,7 @@ public class EnterpriseAuthenticationActivity extends ProjectBaseActivity implem
     }
 
     /**
-     * 获取个人认证状态   1 个人认证 2 企业认证 3 司机认证 4 推广员
+     * 获取个人认证状态   1 个人认证 2 企业认证 3 服务认证 4 推广员
      */
     private void getInfo() {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");

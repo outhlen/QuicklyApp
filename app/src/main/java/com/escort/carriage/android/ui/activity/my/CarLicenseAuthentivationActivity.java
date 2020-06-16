@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -147,7 +148,7 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                 } else if(TextUtils.isEmpty(backUrl)){
                     ToastUtil.showToastString("请上传行驶证信息-副页");
                 }else if(TextUtils.isEmpty(imageUrl1)){
-                    ToastUtil.showToastString("请上传司机与车辆合照");
+                    ToastUtil.showToastString("请上传服务与车辆合照");
                 } else {
                     commitUrl();
                 }
@@ -175,6 +176,8 @@ public class CarLicenseAuthentivationActivity extends ProjectBaseActivity {
                     imageUrl1 = url;
                     GlideManager.getGlideManager().loadImage(url, ivRcImageView);
                 }
+
+                Log.e("imageCallback","frontUrl="+frontUrl+"backUrl"+backUrl+"imageUrl1="+imageUrl1);
             }
 
             @Override

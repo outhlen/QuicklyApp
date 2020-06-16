@@ -1,8 +1,6 @@
 package com.escort.carriage.android.ui.view.holder;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -23,26 +21,17 @@ import com.escort.carriage.android.entity.bean.ResponseHXEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.ResponseIntegerBean;
 import com.escort.carriage.android.http.MyStringCallback;
-import com.escort.carriage.android.ui.activity.ChatActivity;
 import com.escort.carriage.android.ui.activity.HomeActivity;
 import com.escort.carriage.android.ui.activity.OrderTraceActivty;
-import com.escort.carriage.android.ui.activity.mes.HistoryOrderListActivity;
-import com.escort.carriage.android.ui.activity.mes.MyOrderListActivity;
 import com.escort.carriage.android.ui.activity.my.EnterpriseAuthenticationActivity;
-import com.escort.carriage.android.ui.activity.my.EscortAuthenticationActivity;
-import com.escort.carriage.android.ui.activity.my.MyBidActivity;
 import com.escort.carriage.android.ui.activity.my.PersonageAuthenticationActivity;
 import com.escort.carriage.android.ui.activity.my.SettingActivity;
 import com.escort.carriage.android.ui.activity.my.UserInfoActivity;
 import com.escort.carriage.android.ui.activity.play.WalletMenuActivity;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
 import com.escort.carriage.android.ui.view.imgview.RoundImageView;
-import com.escort.carriage.android.utils.Constant;
-import com.escort.carriage.android.utils.DemoMessageHelper;
-import com.escort.carriage.android.utils.MessageHelper;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.callback.Callback;
-import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 
 import org.apache.http.util.TextUtils;
 
@@ -116,7 +105,7 @@ public class HomeLeftHolder implements View.OnClickListener {
 
     public void updataUserInfo(UserInfoEntity userInfoEntity) {
         tvName.setText(userInfoEntity.getNickName());
-        tvUseDay.setText("使用小二押镖" + userInfoEntity.days + "天");
+        tvUseDay.setText("使用公共服务" + userInfoEntity.days + "天");
         GlideManager.getGlideManager().loadImageRoundFitCrop(userInfoEntity.headPictureUrl, iv_head_img, 100, R.mipmap.ic_launcher_round);
     }
 
@@ -127,13 +116,13 @@ public class HomeLeftHolder implements View.OnClickListener {
                 activity.startActivityForResult(new Intent(activity, UserInfoActivity.class), 123);
                 break;
             case R.id.myBid:
-                activity.startActivity(new Intent(activity, MyBidActivity.class));
+               // activity.startActivity(new Intent(activity, MyBidActivity.class));
                 break;
             case R.id.myOrderList:
-                activity.startActivity(new Intent(activity, MyOrderListActivity.class));
+                //activity.startActivity(new Intent(activity, MyOrderListActivity.class));
                 break;
             case R.id.ll_history_group:
-                activity.startActivity(new Intent(activity, HistoryOrderListActivity.class));
+               // activity.startActivity(new Intent(activity, HistoryOrderListActivity.class));
                 break;
             case R.id.ll_my_money:
                 activity.startActivity(new Intent(activity, WalletMenuActivity.class));
@@ -143,8 +132,8 @@ public class HomeLeftHolder implements View.OnClickListener {
                 break;
             case R.id.llEscortAuthentication:
                 //押镖认证
-                Intent intent = new Intent(activity, EscortAuthenticationActivity.class);
-                activity.startActivity(intent);
+               // Intent intent = new Intent(activity, EscortAuthenticationActivity.class);
+               // activity.startActivity(intent);
                 break;
             case R.id.llPersonageAuthentication:
                 //获取认证状态
@@ -194,18 +183,18 @@ public class HomeLeftHolder implements View.OnClickListener {
     }
 
     private void toChatActivity() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constant.INTENT_CODE_IMG_SELECTED_KEY, 0);
-        Intent intent = new IntentBuilder(activity)
-                .setTargetClass(ChatActivity.class)
-                .setVisitorInfo(DemoMessageHelper.createVisitorInfo())
-                .setServiceIMNumber(AppConfig.HX_IMNUMBER)
-                .setScheduleQueue(MessageHelper.createQueueIdentity("客服服务"))
-                .setShowUserNick(true)
-                .setBundle(bundle)
-                .setDefautName(defautName)
-                .build();
-        activity.startActivity(intent);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(Constant.INTENT_CODE_IMG_SELECTED_KEY, 0);
+//        Intent intent = new IntentBuilder(activity)
+//                .setTargetClass(ChatActivity.class)
+//                .setVisitorInfo(DemoMessageHelper.createVisitorInfo())
+//                .setServiceIMNumber(AppConfig.HX_IMNUMBER)
+//                .setScheduleQueue(MessageHelper.createQueueIdentity("客服服务"))
+//                .setShowUserNick(true)
+//                .setBundle(bundle)
+//                .setDefautName(defautName)
+//                .build();
+//        activity.startActivity(intent);
     }
 
 //    private ProgressDialog getProgressDialog() {
@@ -296,7 +285,7 @@ public class HomeLeftHolder implements View.OnClickListener {
     }
 
     /**
-     * 获取个人认证状态   1 个人认证 2 企业认证 3 司机认证 4 推广员
+     * 获取个人认证状态   1 个人认证 2 企业认证 3 服务认证 4 推广员
      */
     private void getPersonageAuthentication(int type) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(activity, "获取数据");

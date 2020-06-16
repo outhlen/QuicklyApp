@@ -69,7 +69,7 @@ public class DemoMessageHelper {
 		switch(index) {
 		case 1:
 			info.title("订单1")
-			    .orderTitle(String.format("%s：7890",context.getString(R.string.order_number)))
+			    .orderTitle(String.format("%s：7890","订单号"))
 			    .price("￥8000")
 			    .desc("订单测试")
 			    .imageUrl(IMAGE_URL_1)
@@ -77,7 +77,7 @@ public class DemoMessageHelper {
 			break;
 		case 2:
 			info.title("订单2")
-				.orderTitle(String.format("%s：7890",context.getString(R.string.order_number)))
+				.orderTitle(String.format("%s：7890","订单号"))
 		        .price("￥158000")
 		        .desc("订单测试2")
 		        .imageUrl(IMAGE_URL_2)

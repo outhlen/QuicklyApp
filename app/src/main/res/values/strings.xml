@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">小二押镖司机端</string>
+    <string name="app_name">公共服务端</string>
 
     <item name="tg_json" type="id" />
 

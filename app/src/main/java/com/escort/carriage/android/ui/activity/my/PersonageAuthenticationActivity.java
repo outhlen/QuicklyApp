@@ -84,7 +84,6 @@ public class PersonageAuthenticationActivity extends ProjectBaseActivity impleme
         setPageActionBar();
         status = getIntent().getIntExtra("status", 0);
         requestPersonageAuthenticationEntity = new RequestPersonageAuthenticationEntity();
-
         initView();
         setSelectUtils();
         if (status == 2) {
@@ -194,7 +193,7 @@ public class PersonageAuthenticationActivity extends ProjectBaseActivity impleme
     }
 
     /**
-     * 获取个人认证状态   1 个人认证 2 企业认证 3 司机认证 4 推广员
+     * 获取个人认证状态   1 个人认证 2 企业认证 3 服务认证 4 推广员
      */
     private void getInfo() {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");

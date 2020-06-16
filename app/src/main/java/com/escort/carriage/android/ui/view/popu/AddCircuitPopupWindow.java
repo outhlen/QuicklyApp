@@ -30,7 +30,6 @@ import com.escort.carriage.android.entity.response.home.QuListBean;
 import com.escort.carriage.android.entity.response.home.ShengListBean;
 import com.escort.carriage.android.entity.response.home.ShiListBean;
 import com.escort.carriage.android.http.MyStringCallback;
-import com.escort.carriage.android.ui.fragment.home.HomePushInfoFragment;
 import com.escort.carriage.android.ui.view.dialog.SelectpRrovinceCityDialog;
 
 import java.util.ArrayList;
@@ -336,36 +335,36 @@ public class AddCircuitPopupWindow extends PopupWindow {
 
     private void requestEntity(AddCircuitEntity addCircuitEntity) {
         //调用接口获取数据
-        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(context, "获取数据");
-        RequestEntity requestEntity = new RequestEntity(0);
-        requestEntity.setData(addCircuitEntity);
-        String jsonString = JsonManager.createJsonString(requestEntity);
-        String url = null;
-        if(pageType == 0){
-            url = ProjectUrl.DRIVELINE_ADD;
-        } else {
-            url = ProjectUrl.DRIVELINE_UPDATE;
-        }
-        OkgoUtils.post(url, jsonString).execute(new MyStringCallback<ResponceBean>() {
-            @Override
-            public void onResponse(ResponceBean entity) {
-                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
-                if (entity != null) {
-                    if (entity.success) {
-                        HomePushInfoFragment fragment = (HomePushInfoFragment) AddCircuitPopupWindow.this.fragment;
-                        fragment.getPageData();
-                        dismiss();
-                    } else {
-                        ToastUtil.showToastString(entity.message);
-                    }
-                }
-            }
-
-            @Override
-            public Class<ResponceBean> getClazz() {
-                return ResponceBean.class;
-            }
-        });
+//        UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(context, "获取数据");
+//        RequestEntity requestEntity = new RequestEntity(0);
+//        requestEntity.setData(addCircuitEntity);
+//        String jsonString = JsonManager.createJsonString(requestEntity);
+//        String url = null;
+//        if(pageType == 0){
+//            url = ProjectUrl.DRIVELINE_ADD;
+//        } else {
+//            url = ProjectUrl.DRIVELINE_UPDATE;
+//        }
+//        OkgoUtils.post(url, jsonString).execute(new MyStringCallback<ResponceBean>() {
+//            @Override
+//            public void onResponse(ResponceBean entity) {
+//                UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
+//                if (entity != null) {
+//                    if (entity.success) {
+//                        HomePushInfoFragment fragment = (HomePushInfoFragment) AddCircuitPopupWindow.this.fragment;
+//                        fragment.getPageData();
+//                        dismiss();
+//                    } else {
+//                        ToastUtil.showToastString(entity.message);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public Class<ResponceBean> getClazz() {
+//                return ResponceBean.class;
+//            }
+//        });
     }
 
     @Override

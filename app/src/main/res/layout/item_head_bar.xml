@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/item_head_bar_rl"
         android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+       android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
         android:orientation="horizontal">
 
@@ -13,7 +13,19 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:padding="14dp"
+            android:visibility="gone"
             android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/left_menu_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:layout_centerVertical="true"
+        android:text="菜单" />
 
         <TextView
             android:id="@+id/item_head_bar_tv_title"

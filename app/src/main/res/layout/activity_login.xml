@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorFF"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <View
         android:id="@+id/statusBarView"
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         <TextView
             android:textColor="@color/color00"
             android:textSize="22sp"
-            android:text="欢迎登录小二押镖"
+            android:text="欢迎登录"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="司机端"
+                android:text="服务端"
                 android:background="#1285FD"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"
@@ -159,6 +159,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@color/color0E"
             android:text="其他登录方式"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

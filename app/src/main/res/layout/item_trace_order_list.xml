@@ -306,7 +306,7 @@
             android:textSize="@dimen/text_size_12"
             android:layout_toLeftOf="@id/trace_tv"
             android:background="@drawable/bg_b_3e9fff_bj_3dp"
-            android:text="联系司机" />
+            android:text="联系服务" />
 
 
     </RelativeLayout>

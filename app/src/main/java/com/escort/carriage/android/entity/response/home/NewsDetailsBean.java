@@ -19,12 +19,12 @@ public class NewsDetailsBean extends ResponceJsonEntity<NewsDetailsBean.DataBean
     public static class DataBean {
         /**
          * id : 1236214820001935362
-         * title : 小二押镖在2019：增长、创新
-         * subTitle : 小二押镖物流
+         * title : 公共服务在2019：增长、创新
+         * subTitle : 公共服务物流
          * author : admin
          * source : 原创
          * keywords : 物流
-         * intro : 小二押镖物流
+         * intro : 公共服务物流
          * newsType : 1
          * content : <p><span style="font-family: 宋体; text-indent: 24px;">&nbsp;&nbsp;&nbsp;&nbsp;刚刚过去的2019年，对于物流业来说，是非常值得一提的一年。在这一年，物流业跑赢了中国大多数实体经济部门的增速。更为重要的是，高增长的背后，不仅是需求的刺激，更有市场结构优化和技术变革等供给端的改变。</span></p><p><span style="font-family: 宋体; text-indent: 24px;">&nbsp; &nbsp;<img src="http://huipushenghuo.oss-cn-beijing.aliyuncs.com/20200307/64a3f72d839b44248d59dbf948c0e012.png" title="" alt="image.png"/></span></p><p><span style="font-family: 宋体; text-indent: 24px;"><span style="font-family: 宋体; text-indent: 24px; font-size: 12pt;">&nbsp;&nbsp;&nbsp;&nbsp;不过，在经历创新和增长的同时，我们发现物流从业人员普遍怀有较大的危机感。这是因为市场竞争的白热化、疲软需求的潜在预期触动着他们的神经。而2019年，这样的趋势很可能持续下去。&nbsp;</span><br/><br/><span style="font-family: 宋体; text-indent: 24px; font-size: 12pt; font-weight: bold;">增长，仍将保持较快速度&nbsp;</span><br/><br/><span style="font-family: 宋体; text-indent: 24px; font-size: 12pt;">近几年，经济环境不景气，物流是少数几个保持高于平均水准增长的行业之一。截至11月，2019年全国社会物流总费用接近12万亿元，同比增长13.3%（参见图1），显著高于GDP增速，显示了经济对物流的需求仍然强劲。</span>&nbsp;</span></p>
          * imageUrl1 : http://huipushenghuo.oss-cn-beijing.aliyuncs.com/20200307/64a3f72d839b44248d59dbf948c0e012.png

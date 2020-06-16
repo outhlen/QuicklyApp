@@ -48,7 +48,6 @@ public class BottomView extends LinearLayout implements RadioGroup.OnCheckedChan
         mRbReleaseSource = view.findViewById(R.id.rb_release_source);
         mRbDirect = view.findViewById(R.id.rb_direct);
         mRbCityDelivery = view.findViewById(R.id.rb_city_delivery);
-
         mRgBox.setOnCheckedChangeListener(this);
         mRbReleaseSource.setChecked(true);
         mRbDirect.setChecked(true);

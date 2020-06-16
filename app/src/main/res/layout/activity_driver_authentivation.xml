@@ -93,7 +93,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
                     android:textSize="15dp"
                     android:text="从业资格证号"/>
 
@@ -104,7 +103,6 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
                     android:textStyle="bold"
-                    android:background="@drawable/login_input_bg"
                     android:textSize="15sp"
                     android:hint="输入从业人员资格证号" />
 
@@ -121,7 +119,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
                     android:textSize="15dp"
                     android:text="从业资格证类型"/>
                 <EditText
@@ -131,7 +128,6 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
                     android:textStyle="bold"
-                    android:background="@drawable/login_input_bg"
                     android:textSize="15sp"
                     android:hint="输入从业人员资格类型" />
 

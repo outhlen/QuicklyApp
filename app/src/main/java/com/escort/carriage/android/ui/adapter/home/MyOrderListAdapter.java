@@ -15,25 +15,14 @@ import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.date.ProjectDateUtils;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
-import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.home.AddrBean;
-import com.escort.carriage.android.entity.bean.home.GoodsBean;
-import com.escort.carriage.android.entity.bean.home.MyOrderListItemEntity;
 import com.escort.carriage.android.entity.bean.home.OrderInfoEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
-import com.escort.carriage.android.entity.response.my.ResponseEnterpriseAuthenticationEntity;
 import com.escort.carriage.android.http.MyStringCallback;
-import com.escort.carriage.android.ui.activity.mes.OrderInfoActivity;
-import com.escort.carriage.android.ui.activity.my.AppealActivity;
-import com.escort.carriage.android.ui.activity.my.AppraiseActivity;
-import com.escort.carriage.android.ui.activity.my.LoadingUnloadListActivity;
-import com.escort.carriage.android.ui.activity.my.MyOrderAppraiseActivity;
-import com.escort.carriage.android.ui.activity.my.RouteNavigationActivity;
-import com.escort.carriage.android.ui.activity.my.TransfeOrderActivity;
 import com.escort.carriage.android.ui.activity.play.PlayMesFeesActivity;
 import com.escort.carriage.android.utils.AmapUtils;
 import com.tripartitelib.android.amap.ProjectLocationEntity;
@@ -466,16 +455,16 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 }).show();
             } else if (tag1 == see_order_details) {
                 //查看详情
-                Intent intent = new Intent(fragment.getActivity(), OrderInfoActivity.class);
-                intent.putExtra("id", item.orderNumber);
-                intent.putExtra("openType", 2);
-                fragment.startActivityForResult(intent, 333);
+//                Intent intent = new Intent(fragment.getActivity(), OrderInfoActivity.class);
+//                intent.putExtra("id", item.orderNumber);
+//                intent.putExtra("openType", 2);
+//                fragment.startActivityForResult(intent, 333);
             } else if (tag1 == path_navigation) {
                 //路线导航
-                String jsonString = JsonManager.createJsonString(item);
-                Intent intent = new Intent(fragment.getActivity(), RouteNavigationActivity.class);
-                intent.putExtra("json", jsonString);
-                fragment.startActivity(intent);
+//                String jsonString = JsonManager.createJsonString(item);
+//                Intent intent = new Intent(fragment.getActivity(), RouteNavigationActivity.class);
+//                intent.putExtra("json", jsonString);
+//                fragment.startActivity(intent);
             } else if (tag1 == go_shipment) {
 
                 //前往装货
@@ -499,11 +488,11 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
             } else if (tag1 == shipment_confirm) {
                 //装货确认
-                Intent intentOne = new Intent(fragment.getActivity(), LoadingUnloadListActivity.class);
-                intentOne.putExtra("orderNumber", item.orderNumber);
-                intentOne.putExtra("orderStatus", item.orderStatus);
-                intentOne.putExtra("pageType", 0);
-                fragment.startActivityForResult(intentOne, 123);
+//                Intent intentOne = new Intent(fragment.getActivity(), LoadingUnloadListActivity.class);
+//                intentOne.putExtra("orderNumber", item.orderNumber);
+//                intentOne.putExtra("orderStatus", item.orderStatus);
+//                intentOne.putExtra("pageType", 0);
+//                fragment.startActivityForResult(intentOne, 123);
             } else if (tag1 == unload_accomplish) {
                 new AlertDialog.Builder(fragment.getContext()).setMessage("您是否要确定卸货完成？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -522,23 +511,23 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
 
             } else if (tag1 == unload_affirm) {
                 //卸货确认
-                Intent intentOne = new Intent(fragment.getActivity(), LoadingUnloadListActivity.class);
-                intentOne.putExtra("orderNumber", item.orderNumber);
-                intentOne.putExtra("orderStatus", item.orderStatus);
-                intentOne.putExtra("pageType", 1);
-                fragment.startActivityForResult(intentOne, 123);
+//                Intent intentOne = new Intent(fragment.getActivity(), LoadingUnloadListActivity.class);
+//                intentOne.putExtra("orderNumber", item.orderNumber);
+//                intentOne.putExtra("orderStatus", item.orderStatus);
+//                intentOne.putExtra("pageType", 1);
+//                fragment.startActivityForResult(intentOne, 123);
             } else if (tag1 == transfer_of_order) {
                 //转单
-                Intent intentOne = new Intent(fragment.getActivity(), TransfeOrderActivity.class);
-                intentOne.putExtra("orderNumber", item.orderNumber);
-                intentOne.putExtra("license", item.travelNumberPlate);
-                fragment.startActivityForResult(intentOne, 123);
+//                Intent intentOne = new Intent(fragment.getActivity(), TransfeOrderActivity.class);
+//                intentOne.putExtra("orderNumber", item.orderNumber);
+//                intentOne.putExtra("license", item.travelNumberPlate);
+//                fragment.startActivityForResult(intentOne, 123);
             } else if (tag1 == turn_car) { //装货转单
                 //转单
-                Intent intentOne = new Intent(fragment.getActivity(), TransfeOrderActivity.class);
-                intentOne.putExtra("orderNumber", item.orderNumber);
-                intentOne.putExtra("license", item.travelNumberPlate);
-                fragment.startActivityForResult(intentOne, 123);
+//                Intent intentOne = new Intent(fragment.getActivity(), TransfeOrderActivity.class);
+//                intentOne.putExtra("orderNumber", item.orderNumber);
+//                intentOne.putExtra("license", item.travelNumberPlate);
+//                fragment.startActivityForResult(intentOne, 123);
             } else if (tag1 == comeback_car) { //回转
                 ProjectLocationEntity projectLocationEntity = AmapUtils.getAmapUtils().getLocation();
                 returnBackOrder(item.orderNumber, projectLocationEntity.latitude, projectLocationEntity.longitude);
@@ -547,14 +536,14 @@ public class MyOrderListAdapter extends BaseQuickAdapter<OrderInfoEntity, MyOrde
                 reminderToService(tag1, item);
             } else if (tag1 == reply_evaluate) {
                 //回复评价
-                Intent intentOne = new Intent(fragment.getActivity(), MyOrderAppraiseActivity.class);
-                intentOne.putExtra("orderNumber", item.orderNumber);
-                fragment.startActivityForResult(intentOne, 123);
+//                Intent intentOne = new Intent(fragment.getActivity(), MyOrderAppraiseActivity.class);
+//                intentOne.putExtra("orderNumber", item.orderNumber);
+//                fragment.startActivityForResult(intentOne, 123);
             } else if (tag1 == appeal) {
                 //申诉
-                Intent intentOne = new Intent(fragment.getActivity(), AppealActivity.class);
-                intentOne.putExtra("orderNumber", item.orderNumber);
-                fragment.startActivityForResult(intentOne, 123);
+//                Intent intentOne = new Intent(fragment.getActivity(), AppealActivity.class);
+//                intentOne.putExtra("orderNumber", item.orderNumber);
+//                fragment.startActivityForResult(intentOne, 123);
             } else if (tag1 == dispose_payment) {
                 //线下付款
                 new AlertDialog.Builder(fragment.getContext()).setMessage("您是否同意货主线下付款？")

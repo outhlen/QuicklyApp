@@ -37,7 +37,6 @@ dependencies {
     implementation(name: 'alipaySdk-15.7.4-20200228192259', ext: 'aar')
    // api files('libs/AMap3DMap_6.9.2_AMapNavi_6.9.0_AMapSearch_6.9.2_AMapTrack_1.1.0_AMapLocation_4.7.0_20190710.jar')
    // implementation files('libs/AMapTrack_1.2.0_AMapLocation_4.8.0_20200108.jar')
-    implementation files('libs/Msc.jar')
 
 
 }

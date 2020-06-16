@@ -20,4 +20,6 @@
         android:singleLine="true"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_20" />
+
+
 </androidx.appcompat.widget.Toolbar>

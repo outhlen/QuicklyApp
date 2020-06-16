@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.config.AppConfig;
-import com.escort.carriage.android.ui.activity.ChatActivity;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.ChatManager;
 import com.hyphenate.chat.EMCmdMessageBody;
@@ -133,7 +132,7 @@ public class DemoHelper {
             public Intent getLaunchIntent(Message message) {
                 //设置点击通知栏跳转事件
                 Intent intent = new IntentBuilder(context)
-                        .setTargetClass(ChatActivity.class)
+                        //.setTargetClass(ChatActivity.class)
                         .setServiceIMNumber(message.getFrom())
                         .setShowUserNick(true)
                         .build();

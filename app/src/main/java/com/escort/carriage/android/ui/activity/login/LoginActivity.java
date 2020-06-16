@@ -26,6 +26,7 @@ import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.verification.VerificationUtil;
+import com.escort.carriage.android.FunctionListActivity;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.login.WxLoginDataEntity;
@@ -36,6 +37,7 @@ import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.jpush.JPushUtil;
 import com.escort.carriage.android.jpush.JpushConfig;
 import com.escort.carriage.android.ui.activity.HomeActivity;
+import com.escort.carriage.android.ui.activity.UserInfoManagerActivity;
 import com.escort.carriage.android.utils.Sh256;
 import com.lzy.okgo.model.Response;
 import com.tripartitelib.android.wechat.WechatUtils;
@@ -73,6 +75,7 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
     EditText etPwd;
     private Unbinder bind;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,20 +87,16 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         }
         setPageActionBar();
         removeUserInfo();
-//        etUserName.setText("17865159987");
-//        etPwd.setText("123456a");
-
+        etUserName.setText("13700000002");
+        etPwd.setText("123456a");
 //        etUserName.setText("13700000003");
 //        etPwd.setText("123456a");
-
-
     }
 
     public void removeUserInfo(){
         CacheDBMolder.getInstance().clearData();
         ApplicationContext.getInstance().isRegister = false;
     }
-
 
     private void setPageActionBar() {
         //获取顶部状态栏的高度 给对应View设置高度
@@ -111,7 +110,7 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         toolbar.setNavigationIcon(R.drawable.ic_back);
         TextView tvTitle = findViewById(R.id.toolbar_centre_title_right_button_title);
         tvTitle.setTextColor(ResourcesTransformUtil.getColor(R.color.color_000000));
-        tvTitle.setText("欢迎登录司机端");
+        tvTitle.setText("欢迎登录公共服务服务端");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,10 +145,8 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
         CacheDBMolder.getInstance().setUserInfo(jsonBean, null, null);
         CacheDBMolder.getInstance().setUserToken(jsonBean.getToken());
         //打开首页
-//        startActivity(new Intent(this, MainActivity.class));
-        HomeActivity.startHomeActivity(this);
+        startActivity(new Intent(this, FunctionListActivity.class));
     }
-
 
 
     @OnClick({R.id.tvLogin, R.id.tvForgetPwd, R.id.tvRegister, R.id.ivPhoneLogin, R.id.ivWxLogin})
@@ -176,7 +173,6 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
                     public void wechatLoginCallback(String uid, boolean success, int type, @Nullable WechatResponceGetUserInfoEntity entity) {
                         LogUtils.showE("微信授权登录", "uid = " + uid + "    entity = " + JsonManager.createJsonString(entity));
                         wxLoginStep2(entity.getUnionid(), entity.headimgurl, entity.nickname);
-//                        wxLoginStep1(uid);
                     }
                 });
                 break;
@@ -197,7 +193,6 @@ public class LoginActivity extends ProjectBaseEditActivity implements LoginActIn
             RequestEntity requestEntity = new RequestEntity(0);
             HashMap<String, Object> data = new HashMap<>();
             data.put("phone", name);
-//            data.put("password", pwd);
             data.put("password", Sh256.getSHA256(pwd));
             data.put("registerId", JPushInterface.getRegistrationID(this));
             requestEntity.setData(data);

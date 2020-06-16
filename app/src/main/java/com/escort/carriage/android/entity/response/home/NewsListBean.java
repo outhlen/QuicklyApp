@@ -20,7 +20,7 @@ public class NewsListBean extends ResponceJsonEntity<NewsListBean.DataBean> impl
     public static class DataBean implements Serializable {
         /**
          * total : 1
-         * list : [{"id":"1236214820001935362","title":"小二押镖在2019：增长、创新","subTitle":"小二押镖物流","author":"admin","source":"原创","publishTime":null}]
+         * list : [{"id":"1236214820001935362","title":"公共服务在2019：增长、创新","subTitle":"公共服务物流","author":"admin","source":"原创","publishTime":null}]
          * pageNum : 1
          * pageSize : 100
          * size : 1
@@ -205,8 +205,8 @@ public class NewsListBean extends ResponceJsonEntity<NewsListBean.DataBean> impl
         public static class ListBean implements Serializable {
             /**
              * id : 1236214820001935362
-             * title : 小二押镖在2019：增长、创新
-             * subTitle : 小二押镖物流
+             * title : 公共服务在2019：增长、创新
+             * subTitle : 公共服务物流
              * author : admin
              * source : 原创
              * publishTime : null

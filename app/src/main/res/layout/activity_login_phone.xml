@@ -25,7 +25,7 @@
             <TextView
                 android:textColor="@color/color00"
                 android:textSize="22sp"
-                android:text="欢迎登录小二押镖"
+                android:text="欢迎登录公共服务"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="司机端"
+                android:text="服务端"
                 android:background="#1285FD"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"

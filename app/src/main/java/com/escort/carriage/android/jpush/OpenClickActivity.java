@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.androidybp.basics.fastjson.JsonManager;
 import com.escort.carriage.android.entity.bean.push.PushEntity;
 import com.escort.carriage.android.ui.activity.HomeActivity;
-import com.escort.carriage.android.ui.activity.mes.MyOrderListActivity;
-import com.escort.carriage.android.ui.activity.my.MyBidActivity;
 import com.escort.carriage.android.ui.activity.play.WalletMenuActivity;
 
 import org.json.JSONException;
@@ -76,8 +74,8 @@ public class OpenClickActivity extends Activity {
                     startActivity(intent_into_message);
                     break;
                 case 1003://中标列表车主app
-                    intent_into_message.setClass(this, MyBidActivity.class);
-                    startActivity(intent_into_message);
+//                    intent_into_message.setClass(this, MyBidActivity.class);
+//                    startActivity(intent_into_message);
                     break;
                 case 1005://分润
                     startActivity(new Intent(this, WalletMenuActivity.class)
@@ -86,8 +84,8 @@ public class OpenClickActivity extends Activity {
                 case 1007://评论列表车主app
                     break;
                 case 1008://订单列表车主app
-                    intent_into_message.setClass(this, MyOrderListActivity.class);
-                    startActivity(intent_into_message);
+//                    intent_into_message.setClass(this, MyOrderListActivity.class);
+//                    startActivity(intent_into_message);
                     break;
 
             }

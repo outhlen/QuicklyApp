@@ -59,6 +59,8 @@ public class AmapUtils {
         mLocationOption = new AMapLocationClientOption();
         //15s 定位一次
         mLocationOption.setInterval(15000);
+        mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setNeedAddress(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位

@@ -74,7 +74,7 @@ public class LoginPhoneActivity extends ProjectBaseEditActivity{
         toolbar.setNavigationIcon(R.drawable.ic_back);
         TextView tvTitle = findViewById(R.id.toolbar_centre_title_right_button_title);
         tvTitle.setTextColor(ResourcesTransformUtil.getColor(R.color.color_000000));
-        tvTitle.setText("欢迎登录司机端");
+        tvTitle.setText("欢迎登录服务端");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

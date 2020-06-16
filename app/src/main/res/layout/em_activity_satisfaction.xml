@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip"
                         android:gravity="center"
-                        android:text="小二押镖司机端" />
+                        android:text="公共服务服务端" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -143,7 +143,6 @@
                 android:hint="输入内容"
                 android:minLines="2"
                 android:textColor="@android:color/black"
-                android:textColorHint="@color/gray_pressed"
                 android:textSize="16sp" />
 
             <Button
@@ -151,7 +150,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:background="@drawable/hd_bg_sumbit_button"
                 android:padding="10dip"
                 android:text="提交"
                 android:textColor="@android:color/white"

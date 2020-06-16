@@ -12,10 +12,7 @@ import com.androidybp.basics.fastjson.JsonManager;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.escort.carriage.android.entity.bean.push.PushEntity;
 import com.escort.carriage.android.ui.activity.HomeActivity;
-import com.escort.carriage.android.ui.activity.mes.MyOrderListActivity;
-import com.escort.carriage.android.ui.activity.my.MyBidActivity;
 import com.escort.carriage.android.ui.activity.play.WalletMenuActivity;
-import com.tripartitelib.android.iflytek.IflytekUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
@@ -71,7 +68,7 @@ public class MyReceiver extends BroadcastReceiver {
                 Log.d("测试",speakCheck);
                 // 初始化设置语音开关
                 if(speakCheck == null || speakCheck.equals("") || speakCheck.equals("0")){
-                    IflytekUtils.getIflytekUtils().startSpeaking(context, message);
+                    //IflytekUtils.getIflytekUtils().startSpeaking(context, message);
                 }
             }
             if(jsonBean.page == 1001){
@@ -114,8 +111,8 @@ public class MyReceiver extends BroadcastReceiver {
                     context.startActivity(intent_into_message);
                     break;
                 case 1003://中标列表车主app
-                    intent_into_message.setClass(context, MyBidActivity.class);
-                    context.startActivity(intent_into_message);
+//                    intent_into_message.setClass(context, MyBidActivity.class);
+//                    context.startActivity(intent_into_message);
                     break;
                 case 1005://分润
                     context.startActivity(new Intent(context, WalletMenuActivity.class)
@@ -124,8 +121,8 @@ public class MyReceiver extends BroadcastReceiver {
                 case 1007://评论列表车主app
                     break;
                 case 1008://订单列表车主app
-                    intent_into_message.setClass(context, MyOrderListActivity.class);
-                    context.startActivity(intent_into_message);
+//                    intent_into_message.setClass(context, MyOrderListActivity.class);
+//                    context.startActivity(intent_into_message);
                     break;
 
             }

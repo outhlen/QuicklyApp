@@ -22,8 +22,6 @@ import com.androidybp.basics.utils.action_bar.StatusBarCompatManager;
 import com.androidybp.basics.utils.hint.LogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
-import com.chinaums.pppay.unify.UnifyPayListener;
-import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.ResponcePayStatusBean;
@@ -70,7 +68,7 @@ import butterknife.OnClick;
  * 7 支付宝PC端H5支付，
  * 8 支付宝App端支付
  */
-public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterView.OnItemClickListener, UnifyPayListener {
+public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.tvMoney)
     TextView tvMoney;
     @BindView(R.id.tvYjMoney)
@@ -386,13 +384,13 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
                                 UnionPayUtil payUtil =  UnionPayUtil.getUnionPayUtil(PlayMesFeesActivity.this);
                                 JSONObject  object = new JSONObject(s.data);
                                 JSONObject obj   = object.getJSONObject("appPayRequest");
-                                if(type==10){ //微信
-                                    payUtil.payWX(obj.toString());
-                                }else if(type==11){ //支付宝
-                                    payUtil.payAliPay(obj.toString());
-                                }else if(type == 12){ //云闪付
-                                    payUtil.payCloudQuickPay(obj.toString());
-                                }
+//                                if(type==10){ //微信
+//                                    payUtil.payWX(obj.toString());
+//                                }else if(type==11){ //支付宝
+//                                    payUtil.payAliPay(obj.toString());
+//                                }else if(type == 12){ //云闪付
+//                                    payUtil.payCloudQuickPay(obj.toString());
+//                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -413,7 +411,6 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
     }
 
     private void finishPage(){
-        UnifyPayPlugin.getInstance(this).clean();
         setResult(456);
         finish();
     }
@@ -448,15 +445,15 @@ public class PlayMesFeesActivity extends ProjectBaseActivity implements AdapterV
         ToastUtil.showToastString(msg);
     }
 
-    @Override
-    public void onResult(String s, String s1) {
-        try {
-            JSONObject json = new JSONObject(s1);
-            String result  = json.getString("resultMsg");
-            ToastUtil.showToastString(result);
-            finishPage();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void onResult(String s, String s1) {
+//        try {
+//            JSONObject json = new JSONObject(s1);
+//            String result  = json.getString("resultMsg");
+//            ToastUtil.showToastString(result);
+//            finishPage();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -22,8 +22,7 @@ import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.chinaums.pppay.unify.UnifyPayListener;
-import com.chinaums.pppay.unify.UnifyPayPlugin;
+
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
 import com.escort.carriage.android.entity.bean.OrderListBean;
@@ -65,7 +64,7 @@ import butterknife.OnClick;
 /**
  * 充值特惠
  */
-public class ChargeMoneyActivity extends ProjectBaseEditActivity implements AdapterView.OnItemClickListener ,UnifyPayListener{
+public class ChargeMoneyActivity extends ProjectBaseEditActivity implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.list)
     FillListView filllist;
@@ -91,7 +90,7 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         setPageActionBar();
         setList();
         getServiceList();
-        UnifyPayPlugin.getInstance(this).setListener(this);
+       // UnifyPayPlugin.getInstance(this).setListener(this);
     }
 
     @Override
@@ -412,13 +411,13 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
                             String tn_code  = object.getString("payParam");
                             JSONObject object1 = new JSONObject(tn_code);
                             JSONObject obj   = object1.getJSONObject("appPayRequest");
-                            if(type==10){ //微信
-                                payUtil.payWX(obj.toString());
-                            }else if(type==11){ //支付宝
-                                payUtil.payAliPay(obj.toString());
-                            }else if(type == 12){
-                                payUtil.payCloudQuickPay(obj.toString());
-                            }
+//                            if(type==10){ //微信
+//                                payUtil.payWX(obj.toString());
+//                            }else if(type==11){ //支付宝
+//                                payUtil.payAliPay(obj.toString());
+//                            }else if(type == 12){
+//                                payUtil.payCloudQuickPay(obj.toString());
+//                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -438,7 +437,7 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
     }
 
     private void finishPage(){
-        UnifyPayPlugin.getInstance(this).clean();
+      //  UnifyPayPlugin.getInstance(this).clean();
         setResult(456);
         finish();
     }
@@ -473,16 +472,16 @@ public class ChargeMoneyActivity extends ProjectBaseEditActivity implements Adap
         ToastUtil.showToastString(msg);
     }
 
-    @Override
-    public void onResult(String s, String s1) {
-        try {
-            JSONObject json = new JSONObject(s1);
-            String result  = json.getString("resultMsg");
-            ToastUtil.showToastString(result);
-            finishPage();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    @Override
+//    public void onResult(String s, String s1) {
+//        try {
+//            JSONObject json = new JSONObject(s1);
+//            String result  = json.getString("resultMsg");
+//            ToastUtil.showToastString(result);
+//            finishPage();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }

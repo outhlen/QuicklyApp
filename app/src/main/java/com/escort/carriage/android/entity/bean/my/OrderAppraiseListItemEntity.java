@@ -11,8 +11,8 @@ public class OrderAppraiseListItemEntity {
      "evaluationContent": "发货端评价666", // 评价内容
      "isAnonymous": "1", // 是否匿名评价(0 否 1是)
      "createTime": 1584014869000, // 创建时间
-     "type": "1", // 类型 0司机端 1发货方
-     "appealType": null, // 申诉类型 0司机端 1发货方
+     "type": "1", // 类型 0服务端 1发货方
+     "appealType": null, // 申诉类型 0服务端 1发货方
      "appealId": null, // 申诉id
      "appealResault": null, // 申诉结果
      "isAppeal": "0" // 是否申诉(0 否 1是)

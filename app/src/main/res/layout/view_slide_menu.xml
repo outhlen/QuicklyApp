@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_name"
                     android:textColor="@color/color_ffffff"
-                    android:text="使用小二押镖0天" />
+                    android:text="使用公共服务0天" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -619,7 +619,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="司机认证"
+                    android:text="服务认证"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     android:textStyle="bold" />

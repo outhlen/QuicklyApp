@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.entity.response.home.NewsListBean;
-import com.escort.carriage.android.ui.activity.mes.NewsDetailsActivity;
 
 import java.util.List;
 
@@ -63,9 +62,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, NewsDetailsActivity.class);
-                    intent.putExtra("bean", bean);
-                    mContext.startActivity(intent);
+//                    Intent intent = new Intent(mContext, NewsDetailsActivity.class);
+//                    intent.putExtra("bean", bean);
+//                    mContext.startActivity(intent);
                 }
             });
         }

@@ -6,7 +6,6 @@
     <permission
         android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="com.escort.carriage.android.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -51,21 +50,24 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup, android:theme, android:label,android:hardwareAccelerated">
+
         <activity
             android:name=".ui.activity.SplashTwoActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <meta-data
                 android:name="android.notch_support"
                 android:value="true" />
-        </activity> <!-- <activity -->
+        </activity>
+
+        <!-- <activity -->
         <!-- android:name=".ui.activity.SplashActivity" -->
         <!-- android:hardwareAccelerated="true" -->
         <!-- android:screenOrientation="portrait" -->
@@ -79,6 +81,8 @@
         <!-- android:value="true" /> -->
         <!-- </activity> -->
         <!-- 登录页面 -->
+
+        <activity android:name=".ui.activity.UserInfoManagerActivity"></activity>
         <meta-data
             android:name="CurrentEnvironment"
             android:value="PROD"> <!-- PROD or TEST -->
@@ -91,19 +95,19 @@
             android:name="org.simalliance.openmobileapi"
             android:required="false" />
 
-        <activity
-            android:name="com.unionpay.uppay.PayActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.unionpay.UPPayWapActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog"
-            android:windowSoftInputMode="adjustResize" />
+<!--        <activity-->
+<!--            android:name="com.unionpay.uppay.PayActivity"-->
+<!--            android:configChanges="orientation|keyboardHidden"-->
+<!--            android:excludeFromRecents="true"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@android:style/Theme.Dialog"-->
+<!--            android:windowSoftInputMode="adjustResize" />-->
+<!--        <activity-->
+<!--            android:name="com.unionpay.UPPayWapActivity"-->
+<!--            android:configChanges="orientation|keyboardHidden"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@android:style/Theme.Dialog"-->
+<!--            android:windowSoftInputMode="adjustResize" />-->
         <activity
             android:name=".ui.activity.login.LoginActivity"
             android:launchMode="singleTask"
@@ -131,22 +135,11 @@
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" /> <!-- 头条 列表页面 -->
-        <activity
-            android:name=".ui.activity.mes.NewsListActivity"
-            android:screenOrientation="portrait" /> <!-- 头条 详情页面 -->
-        <activity
-            android:name=".ui.activity.mes.NewsDetailsActivity"
-            android:screenOrientation="portrait" /> <!-- 首页 信息 详情页面 -->
-        <activity
-            android:name=".ui.activity.mes.OrderInfoActivity"
-            android:screenOrientation="portrait" /> <!-- 首页选择 数据页面 -->
-        <activity
-            android:name=".ui.activity.mes.SelectOrderActivity"
-            android:theme="@style/transparent_activity" /> <!-- 首页选择 数据页面 -->
-        <activity
-            android:name=".ui.activity.mes.BiddingActivity"
-            android:theme="@style/transparent_activity"
-            android:windowSoftInputMode="adjustResize" /> <!-- 设置页面 -->
+        <!-- 头条 详情页面 -->
+        <!-- 首页 信息 详情页面 -->
+        <!-- 首页选择 数据页面 -->
+        <!-- 首页选择 数据页面 -->
+        <!-- 设置页面 -->
         <activity
             android:name=".ui.activity.my.SettingActivity"
             android:screenOrientation="portrait" /> <!-- 修改密码 -->
@@ -172,44 +165,19 @@
         <activity
             android:name=".ui.activity.my.UserInfoActivity"
             android:screenOrientation="portrait" /> <!-- 押镖认证 -->
-        <activity
-            android:name=".ui.activity.my.EscortAuthenticationActivity"
-            android:screenOrientation="portrait" /> <!-- 行驶证信息认证 -->
+        <!-- 行驶证信息认证 -->
         <activity
             android:name=".ui.activity.my.CarLicenseAuthentivationActivity"
             android:screenOrientation="portrait" /> <!-- 驾驶证信息认证 -->
         <activity
             android:name=".ui.activity.my.DriverAuthentivationActivity"
             android:screenOrientation="portrait" /> <!-- 我的订单 -->
-        <activity
-            android:name=".ui.activity.mes.MyOrderListActivity"
-            android:screenOrientation="portrait" /> <!-- 我的投标 -->
-        <activity
-            android:name=".ui.activity.my.MyBidActivity"
-            android:screenOrientation="portrait" /> <!-- 信息缴费 -->
+        <!-- 我的投标 -->
+        <!-- 信息缴费 -->
         <activity
             android:name=".ui.activity.play.PlayMesFeesActivity"
             android:screenOrientation="portrait" /> <!-- 装卸车 列表 页面 -->
-        <activity
-            android:name=".ui.activity.my.LoadingUnloadListActivity"
-            android:theme="@style/transparent_activity" /> <!-- 装卸车 列表 页面 -->
-        <activity
-            android:name=".ui.activity.my.RouteNavigationActivity"
-            android:theme="@style/transparent_activity" /> <!-- 历史订单 -->
-        <activity
-            android:name=".ui.activity.mes.HistoryOrderListActivity"
-            android:screenOrientation="portrait" /> <!-- 评价 -->
-        <activity
-            android:name=".ui.activity.my.MyOrderAppraiseActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" /> <!-- 申诉 -->
-        <activity
-            android:name=".ui.activity.my.AppealActivity"
-            android:screenOrientation="portrait" /> <!-- 转单 -->
-        <activity
-            android:name=".ui.activity.my.TransfeOrderActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" /> <!-- 我的钱包 -->
+
         <activity
             android:name=".ui.activity.play.WalletMenuActivity"
             android:screenOrientation="portrait" /> <!-- 特惠充值 -->
@@ -239,20 +207,26 @@
             android:name=".ui.activity.OrderTraceActivty"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ChatActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.TraceDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ContextMenuActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SatisfactionActivity"
+            android:name=".SignatureActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ComplaintActivity"
-            android:screenOrientation="portrait" /> <!-- <activity -->
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".MapMangerActivity"></activity>
+
+        <activity android:name=".FunctionListActivity"></activity>
+        <activity android:name=".InviteActivity"></activity>
+        <activity android:name=".PersonBounsActvitiy"></activity>
+        <activity android:name=".ShowMenuActivity"></activity>
+        <activity android:name=".ui.WebPageActivity"></activity>
+        <!-- <activity -->
         <!-- android:name=".wxapi.WXPayEntryActivity" -->
         <!-- android:exported="true" -->
         <!-- android:launchMode="singleTop" /> &lt;!&ndash; 微信 结束 &ndash;&gt; -->
@@ -322,13 +296,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="cn.jpush.android.service.PluginHuaweiPlatformsService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
         <service
             android:name=".LocationService"
             android:enabled="true"

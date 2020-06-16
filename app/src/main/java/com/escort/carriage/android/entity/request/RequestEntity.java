@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class RequestEntity {
     private HashMap<String, Object> header;
     private Object data;
+    private Object param;
 
     public RequestEntity(){}
 
@@ -30,8 +31,6 @@ public class RequestEntity {
             //说明没有token
         } else {
             header.put("token", getToken());
-
-
         }
     }
 
@@ -60,5 +59,13 @@ public class RequestEntity {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public Object getParam() {
+        return param;
+    }
+
+    public void setParam(Object param) {
+        this.param = param;
     }
 }

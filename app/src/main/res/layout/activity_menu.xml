@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/item_head_bar" />
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_below="@id/item_head_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+       <fragment
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:name="com.escort.carriage.android.BlankFragment"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>

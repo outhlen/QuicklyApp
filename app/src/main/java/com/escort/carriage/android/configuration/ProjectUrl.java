@@ -115,12 +115,12 @@ public class ProjectUrl {
 
 
     /**
-     * 司机端设备获取
+     * 服务端设备获取
      */
     public static String GETDEVICEINFO = baseUrl + "undertake/order/getGoldFalcon";
 
     /**
-     *  司机历史轨迹查询
+     *  服务历史轨迹查询
      */
 
     public static String DRIVER_HISTORY_INFO = baseUrl + "undertake/order/getHistoryTrace";
@@ -246,11 +246,11 @@ public class ProjectUrl {
     public static String USERINFO_UPDATEHEADPORTRAIT = baseUrl + "undertake/userInfo/updateHeadPortrait";
 
     /**
-     * 获取司机认证信息 和 审核状态
+     * 获取服务认证信息 和 审核状态
      */
     public static String USER_USERAUTHDRIVER_GETDRIVERAUTHENTICATIONINFO = baseUrl + "undertake/user/userAuthDriver/getDriverAuthenticationInfo";
     /**
-     * 司机认证
+     * 服务认证
      */
     public static String USER_USERAUTHDRIVER_DRIVERAUTHENTICATION = baseUrl + "undertake/user/userAuthDriver/driverAuthentication";
 
@@ -423,6 +423,6 @@ public class ProjectUrl {
     /**
      *  字典
      */
-    public static String QUERY_DICT_INFO = baseUrl + "undertake/dictionary/getChildList";
+    public static String QUERY_DICT_INFO = baseUrl + "undertake/config/getSysConfig";
 
 }

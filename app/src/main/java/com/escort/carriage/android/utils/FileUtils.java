@@ -3,7 +3,9 @@ package com.escort.carriage.android.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.widget.Toast;
@@ -13,13 +15,16 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -1245,5 +1250,50 @@ public class FileUtils {
                 return aMIME_MapTable[1];
         }
         return type;
+    }
+
+    /**
+     * 保存比bitmap
+     * @param bmp
+     * @return
+     */
+    public static int saveImageToGallery(Bitmap bmp,Context context) {
+        //生成路径
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String dirName = "signed_pad";
+        File appDir = new File(root , dirName);
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
+        //文件名为时间
+        long timeStamp = System.currentTimeMillis();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sd = sdf.format(new Date(timeStamp));
+        String fileName = sd + ".jpg";
+        //获取文件
+        File file = new File(appDir, fileName);
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            //通知系统相册刷新
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                    Uri.fromFile(new File(file.getPath()))));
+            return 2;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
     }
 }

@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.androidybp.basics.ApplicationContext;
 import com.androidybp.basics.cache.CacheDBMolder;
 import com.androidybp.basics.entity.UserInfoEntity;
 import com.androidybp.basics.fastjson.JsonManager;
@@ -32,20 +30,14 @@ import com.escort.carriage.android.entity.request.home.NewsListReqBean;
 import com.escort.carriage.android.entity.response.home.BannerEntity;
 import com.escort.carriage.android.entity.response.home.NewsTitleListBean;
 import com.escort.carriage.android.entity.response.home.ResponseCircuitListEntity;
-import com.escort.carriage.android.entity.response.home.ShengListBean;
 import com.escort.carriage.android.http.MyStringCallback;
 import com.escort.carriage.android.http.RequestEntityUtils;
 import com.escort.carriage.android.ui.activity.HomeActivity;
-import com.escort.carriage.android.ui.activity.mes.NewsListActivity;
 import com.escort.carriage.android.ui.activity.web.VueActivity;
-import com.escort.carriage.android.ui.adapter.home.ImageAdapter;
-import com.escort.carriage.android.ui.fragment.home.HomeListFragment;
-import com.escort.carriage.android.ui.fragment.home.HomeOpenPushFragment;
-import com.escort.carriage.android.ui.fragment.home.HomePushInfoFragment;
+
 import com.escort.carriage.android.ui.view.TextSwitchView;
 import com.escort.carriage.android.ui.view.imgview.RoundImageView;
 import com.escort.carriage.android.utils.mes.MesNumUtils;
-import com.tripartitelib.android.iflytek.IflytekUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.config.IndicatorConfig;
 import com.youth.banner.indicator.CircleIndicator;
@@ -72,14 +64,12 @@ public class HomeMainHolder {
     @BindView(R.id.banner)
     Banner banner;
 
-    List<BannerBean.ListBean> mDatas;
+    //List<BannerBean.ListBean> mDatas;
     private View viewGroup;
     private HomeActivity activity;
     private Unbinder bind;
 
-    private HomeListFragment homeListFragment;
-    private HomeOpenPushFragment homeOpenPushFragment;
-    private HomePushInfoFragment homePushInfoFragment;
+
     private Fragment currentFragment;
 
     private int viewShowType = 0;//当前显示的类型
@@ -105,75 +95,37 @@ public class HomeMainHolder {
     public void initView() {
         setStatusBar();
         getTitleList();
-        startHomeListFragment();
+
         //获取配置参数
         getPageData(0);
         getBanner();
     }
 
     public void setBannerData(BannerBean bannerData){
-        mDatas=bannerData.getList();
-        useBanner();
+//        mDatas=bannerData.getList();
+//        useBanner();
     }
-
-
 
 
     public void useBanner() {
 
-        BannerBean.ListBean listBean=new BannerBean.ListBean();
-        listBean.setBannerUrl("");
-        if(mDatas==null||mDatas.size()==0){
-            mDatas = new ArrayList<>();
-            mDatas.add(listBean);
-        }
-        //--------------------------简单使用-------------------------------
-        banner.setAdapter(new ImageAdapter(mDatas))
-                .setIndicator(new CircleIndicator(activity))
-                .setIndicatorGravity(IndicatorConfig.Direction.CENTER)
-                .setBannerRound(10)
-                .setIndicatorSelectedColor(activity.getResources().getColor(R.color.white))
-                .start();
+//        BannerBean.ListBean listBean=new BannerBean.ListBean();
+//        listBean.setBannerUrl("");
+//        if(mDatas==null||mDatas.size()==0){
+//            mDatas = new ArrayList<>();
+//            mDatas.add(listBean);
+//        }
+//        //--------------------------简单使用-------------------------------
+//        banner.setAdapter(new ImageAdapter(mDatas))
+//                .setIndicator(new CircleIndicator(activity))
+//                .setIndicatorGravity(IndicatorConfig.Direction.CENTER)
+//                .setBannerRound(10)
+//                .setIndicatorSelectedColor(activity.getResources().getColor(R.color.white))
+//                .start();
     }
 
 
-    private void startHomeListFragment() {
-        viewShowType = 0;
-        if(homeListFragment == null){
-            homeListFragment = new HomeListFragment();
-        }
-        showFragment(homeListFragment);
-    }
 
-     private void startHomePushFragment() {
-        viewShowType = 1;
-        //未开启推送
-         if(cuitListEntity.isOpen == 1){
-            openHomePushInfoFragment();
-        } else {
-            openHomeOpenPushFragment();
-        }
-
-    }
-
-    public void openHomeOpenPushFragment() {
-        if(homeOpenPushFragment == null){
-            homeOpenPushFragment = new HomeOpenPushFragment();
-        }
-        //将描述改为
-        userSettingText.setText("未开启，订单暂不推送");
-        homeOpenPushFragment.setMainHolder(this);
-        showFragment(homeOpenPushFragment);
-    }
-
-    public void openHomePushInfoFragment() {
-        if(homePushInfoFragment == null){
-            homePushInfoFragment = new HomePushInfoFragment();
-        }
-        userSettingText.setText("已开启，订单正在推送");
-        homePushInfoFragment.setMainHolder(this);
-        showFragment(homePushInfoFragment);
-    }
 
     private void setStatusBar() {
         int statusBarHeight = StatusBarUtil.getStatusBarHeight(activity);
@@ -199,7 +151,7 @@ public class HomeMainHolder {
 
         RequestEntity requestEntity = new RequestEntity(0);
         NewsListReqBean reqBean = new NewsListReqBean();
-        reqBean.setNewsType("2");//类别（1 发货方 2 司机端）
+        reqBean.setNewsType("2");//类别（1 发货方 2 服务端）
         requestEntity.setData(reqBean);
         String jsonString = JsonManager.createJsonString(requestEntity);
         OkgoUtils.post(ProjectUrl.SYSNEW_GETTITLELIST, jsonString).execute(new MyStringCallback<NewsTitleListBean>() {
@@ -273,32 +225,17 @@ public class HomeMainHolder {
                         //请求数据
                         getPageData(1);
                     } else {
-                        startFragment(cuitListEntity);
+                       // startFragment(cuitListEntity);
                     }
                 }
 
                 break;
             case R.id.ll_goods_lobby:
-                showHomeListFrag();
+               // showHomeListFrag();
                 break;
         }
     }
 
-    /**
-     * 显示货源大厅
-     */
-    public void showHomeListFrag() {
-        if(viewShowType == 1){
-            startHomeListFragment();
-        }
-    }
-
-
-    private void startFragment(CircuitListEntity cuitListEntity) {
-
-
-        startHomePushFragment();
-    }
 
     /**
      * 获取banner
@@ -354,7 +291,7 @@ public class HomeMainHolder {
                             userSettingText.setText("已开启，订单正在推送");
                         }
                         if(type == 1){
-                            startFragment(cuitListEntity);
+                            //startFragment(cuitListEntity);
                         }
 
                     } else {

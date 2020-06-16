@@ -172,7 +172,7 @@ public class UserInfoActivity extends ProjectBaseActivity implements View.OnClic
         tvUserName.setText(userInfoEntity.getUserName());
         tvEditUserName.setText(userInfoEntity.nickName);
         tvBindPhone.setText(userInfoEntity.phoneNumber);
-        mTvUseDay.setText("使用小二押镖" + userInfoEntity.days + "天");
+        mTvUseDay.setText("使用公共服务" + userInfoEntity.days + "天");
         Glide.with(this).load(userInfoEntity.headPictureUrl)
                 .into(ivImg);
         // 公司信息
@@ -182,7 +182,7 @@ public class UserInfoActivity extends ProjectBaseActivity implements View.OnClic
     }
 
     /**
-     * 获取个人认证状态   1 个人认证 2 企业认证 3 司机认证 4 推广员
+     * 获取个人认证状态   1 个人认证 2 企业认证 3 服务认证 4 推广员
      */
     private void getPersonageAuthentication(int type) {
         UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
@@ -199,7 +199,7 @@ public class UserInfoActivity extends ProjectBaseActivity implements View.OnClic
                         status = s.data;
                     }
                     if (s.success) {
-                        if (status == 0) { //认证类型 1 个人认证 2 企业认证 3 司机认证 4 推广员
+                        if (status == 0) { //认证类型 1 个人认证 2 企业认证 3 服务认证 4 推广员
                             llAuth.setVisibility(View.VISIBLE);
                         } else {
                             llAuth.setVisibility(View.GONE);
@@ -298,7 +298,6 @@ public class UserInfoActivity extends ProjectBaseActivity implements View.OnClic
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-
                         Glide.with(UserInfoActivity.this).load(url)
                                 .into(ivImg);
                     }

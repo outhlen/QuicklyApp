@@ -21,6 +21,7 @@ import com.androidybp.basics.utils.permission.CuttingModel;
 import com.androidybp.basics.utils.permission.PermissionUtil;
 import com.androidybp.basics.utils.resources.ResourcesTransformUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
+import com.escort.carriage.android.FunctionListActivity;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ResponseInterceptorInterfaceIm;
 import com.escort.carriage.android.configuration.VueUrl;
@@ -147,8 +148,8 @@ public class SplashTwoActivity extends ProjectBaseActivity {
     }
 
     private void openMainAct() {
-//        startActivity(new Intent(this, MainActivity.class));
-        HomeActivity.startHomeActivity(this);
+        startActivity(new Intent(this, FunctionListActivity.class));
+   //    HomeActivity.startHomeActivity(this);
         finish();
     }
 

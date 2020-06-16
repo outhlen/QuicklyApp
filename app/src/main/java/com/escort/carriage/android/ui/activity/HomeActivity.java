@@ -65,7 +65,6 @@ import com.hjq.http.model.HttpMethod;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
-import com.tripartitelib.android.iflytek.IflytekUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -125,7 +124,7 @@ public class HomeActivity extends ProjectBaseActivity {
         homeLeftHoler = new HomeLeftHolder(this, leftFrameLayout);
         homeMainHoler = new HomeMainHolder(this, homeFrameLayout);
         getUserInfo();
-        IflytekUtils.getIflytekUtils().initTts(ApplicationContext.getInstance().application);
+        //IflytekUtils.getIflytekUtils().initTts(ApplicationContext.getInstance().application);
         //获取更新
         getVersion();
         //开启轨迹
@@ -271,9 +270,9 @@ public class HomeActivity extends ProjectBaseActivity {
                     }
                 }
                 //显示货源大厅
-                if (homeMainHoler != null) {
-                    homeMainHoler.showHomeListFrag();
-                }
+//                if (homeMainHoler != null) {
+//                    homeMainHoler.showHomeListFrag();
+//                }
 
             }
         }

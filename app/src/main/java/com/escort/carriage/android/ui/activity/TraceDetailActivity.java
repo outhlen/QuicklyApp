@@ -337,7 +337,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
             // 查询历史轨迹
             getGaodeHistoryPoint(); //历史轨迹
         } else {
-            // 根据当前订单获取运输司机设备信息
+            // 根据当前订单获取运输服务设备信息
             UploadAnimDialogUtils.singletonDialogUtils().showCustomProgressDialog(this, "获取数据");
             RequestEntity requestEntity = new RequestEntity(0);
             HashMap<String, String> data = new HashMap<>();
@@ -608,7 +608,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                         HistoryTrack historyTrack = historyTrackResponse.getHistoryTrack();
                                         Log.e("","historyTrackResponse==>>"+historyTrack.getPoints().size());
                                         if (historyTrack == null || historyTrack.getCount() == 0) {
-                                            ToastUtil.showToastString("司机未上报轨迹");
+                                            ToastUtil.showToastString("服务未上报轨迹");
                                             return;
                                         }
                                         List<Point> points = historyTrack.getPoints();
@@ -619,7 +619,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                             setMapPointView("start", points.get(0).getLat(), points.get(0).getLng());
                                         }
                                     } else {
-                                        ToastUtil.showToastString("司机未上报轨迹");
+                                        ToastUtil.showToastString("服务未上报轨迹");
                                     }
                                 }
                             });
@@ -649,14 +649,14 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                                     if (historyTrackResponse.isSuccess()) {
                                         HistoryTrack historyTrack = historyTrackResponse.getHistoryTrack();
                                         if (historyTrack == null || historyTrack.getCount() == 0) {
-                                            ToastUtil.showToastString("司机未上报轨迹");
+                                            ToastUtil.showToastString("服务未上报轨迹");
                                             return;
                                         }
                                         List<Point> points = historyTrack.getPoints();
                                         Log.e("onHistoryTrackCallback", "历史轨迹==" + points.size());
                                         drawTrackOnMap(points, historyTrack.getStartPoint(), historyTrack.getEndPoint());
                                     } else {
-                                        ToastUtil.showToastString("司机未上报轨迹");
+                                        ToastUtil.showToastString("服务未上报轨迹");
                                     }
                                 }
                             });
@@ -666,7 +666,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
                     if (zhuangXieList.size() > 0) {
                         addMarkersToMap(zhuangXieList);
                     }
-                    ToastUtil.showToastString("司机未开始运输");
+                    ToastUtil.showToastString("服务未开始运输");
                 }
 
 //                if(historyPoints.size()==0){
@@ -679,7 +679,7 @@ public class TraceDetailActivity extends ProjectBaseActivity {
             @Override
             public void onError(Response<String> response) {
                 super.onError(response);
-                ToastUtil.showToastString("司机未开始运输");
+                ToastUtil.showToastString("服务未开始运输");
             }
 
             @Override

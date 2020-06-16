@@ -15,7 +15,6 @@ import com.androidybp.basics.okhttp3.OkHttpManager;
 import com.androidybp.basics.ui.dialog.UploadAnimDialogUtils;
 import com.androidybp.basics.utils.hint.ToastUtil;
 import com.androidybp.basics.utils.thread.ThreadUtils;
-import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -108,7 +107,7 @@ public abstract class WXEntryBaseActivity extends Activity implements IWXAPIEven
                     String msg = "onResp   ---   errStr：" + baseResp.errStr + " --- errCode： " + baseResp.errCode + " --- transaction： "
                             + baseResp.transaction + " --- openId：" + baseResp.openId + " --- extMsg：" + launchMiniProResp.extMsg;
                     Log.d(TAG, msg);
-                    UnifyPayPlugin.getInstance(this).getWXListener().onResponse(this, baseResp);
+                    //UnifyPayPlugin.getInstance(this).getWXListener().onResponse(this, baseResp);
                     finish();
                 } else if (type == RETURN_MSG_TYPE_SHARE) {
                     ToastUtil.showToastString("微信分享成功");

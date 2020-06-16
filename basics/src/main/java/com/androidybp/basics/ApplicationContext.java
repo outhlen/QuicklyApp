@@ -22,8 +22,6 @@ import com.androidybp.basics.utils.hint.ToastUtil;
 
 public class ApplicationContext {
 
-
-
     public Application application = null;
     public Context context = null;
 

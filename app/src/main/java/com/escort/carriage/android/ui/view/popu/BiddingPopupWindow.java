@@ -2,7 +2,6 @@ package com.escort.carriage.android.ui.view.popu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,19 +25,12 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.escort.carriage.android.R;
 import com.escort.carriage.android.configuration.ProjectUrl;
-import com.escort.carriage.android.entity.bean.ResponcePayStatusBean;
-import com.escort.carriage.android.entity.bean.ResponseDictionaryBean;
-import com.escort.carriage.android.entity.bean.UnionPayEntity;
 import com.escort.carriage.android.entity.request.RequestEntity;
 import com.escort.carriage.android.entity.response.login.ResponseUserEntity;
 import com.escort.carriage.android.http.MyStringCallback;
-import com.escort.carriage.android.ui.activity.mes.OrderInfoActivity;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * 竞价 弹框
@@ -192,9 +184,9 @@ public class BiddingPopupWindow extends PopupWindow implements View.OnClickListe
                 UploadAnimDialogUtils.singletonDialogUtils().deleteCustomProgressDialog();
                 if (s != null) {
                     if (s.success) {
-                        ToastUtil.showToastString("竞价成功");
-                        OrderInfoActivity context = (OrderInfoActivity) BiddingPopupWindow.this.context;
-                        context.biddingFinishpage();
+//                        ToastUtil.showToastString("竞价成功");
+//                        OrderInfoActivity context = (OrderInfoActivity) BiddingPopupWindow.this.context;
+//                        context.biddingFinishpage();
                     } else {
                         ToastUtil.showToastString(s.message);
                     }

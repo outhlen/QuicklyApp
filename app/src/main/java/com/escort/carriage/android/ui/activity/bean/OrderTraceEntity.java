@@ -50,7 +50,7 @@ public class OrderTraceEntity {
     private String driverCompId;      //"driverCompId": null, //车主公司ID
     private String driverUserLoginId;      //"driverUserLoginId": null, //车主登录ID
     private String driverVehicleId;        // "driverVehicleId": null, //车辆ID
-    private double payToDriver;         //"payToDriver": 0.00, //应付司机金额
+    private double payToDriver;         //"payToDriver": 0.00, //应付服务金额
     private double payInCash;         // "payInCash": 0.00, //付现金
     private double payInBank;          //"payInBank": 0.00, //打卡金额
     private double payInOil;            // "payInOil": 0.00, //油卡金额

@@ -21,15 +21,11 @@ import com.escort.carriage.android.server.TestServer;
 import com.escort.carriage.android.utils.DemoHelper;
 import com.hjq.http.EasyConfig;
 import com.hjq.http.config.IRequestServer;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.tripartitelib.android.TripartiteLibInitUtils;
-import com.tripartitelib.android.iflytek.IflytekUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -67,7 +63,7 @@ public class ProjectApplication extends MultiDexApplication {
                 initOkgo();
                 TripartiteLibInitUtils.getUtils().registerToWX(ProjectApplication.this);
                 initJPush();
-                IflytekUtils.getIflytekUtils().initIflytek(ProjectApplication.this);
+             //  IflytekUtils.getIflytekUtils().initIflytek(ProjectApplication.this);
                 try {
                    CloudRealIdentityTrigger.initialize(ProjectApplication.this, true, buildALBiometricsConfig());//第二个参数是本地日志能力（若打开 会记录问题到本地，方便后期排查线上用户问题）
                 } catch (Exception e) {

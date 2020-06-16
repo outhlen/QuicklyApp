@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space_10"
                 android:layout_marginTop="@dimen/space_20"
-                android:text="对方司机车牌号"
+                android:text="对方服务车牌号"
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/color_000000"
                 />
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space_10"
                 android:layout_marginTop="@dimen/space_20"
-                android:text="司机手机号"
+                android:text="服务手机号"
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/color_000000"
                 />
@@ -84,7 +84,7 @@
                     android:inputType="phone"
                     android:background="@null"
                     android:id="@+id/etPhone"
-                    android:hint="请输入中转司机的手机号"
+                    android:hint="请输入中转服务的手机号"
                     android:textColor="@color/color_000000"
                     android:textColorHint="@color/color_999999"
                     android:layout_width="match_parent"

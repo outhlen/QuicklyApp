@@ -243,14 +243,12 @@ public class RegisterPhoneActivity extends ProjectBaseEditActivity implements On
             if (!TextUtils.isEmpty(nickname)) {
                 data.put("nickname", nickname);
             }
-
             if (longitude != 0) {
                 data.put("longitudeRegister", longitude);
             }
             if (latitude != 0) {
                 data.put("latitudeRegister", latitude);
             }
-
             requestEntity.setData(data);
             String jsonString = JsonManager.createJsonString(requestEntity);
             OkgoUtils.post(ProjectUrl.LOGIN_REGISTER, jsonString).execute(new MyStringCallback<ResponseUserEntity>() {
